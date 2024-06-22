@@ -3,9 +3,9 @@ package roomSet;
 import base.Stobj;
 
 
-public class SalaArmi extends RoomWDoor {
+public class ArmourRoom extends RoomWDoor {
 
-    public SalaArmi() {
+    public ArmourRoom() {
         Stobj obj = new Stobj();
         obj.setName("Libro con enigma");
         obj.setAlias(new String[]{"enigma", "indovinello"});

@@ -51,6 +51,6 @@ public class ShamanRoom extends RoomWDoor{
         } else {
             this.setMsg("Non hai nulla da inserire ne nulla in cui inserire :(");
         }
-        }
+    }
 }
 
