@@ -41,7 +41,7 @@ public class CastleEntrance extends RoomWDoor{
     }
 
     /**
-     * Interazione di dalogo con la mamma. Interazione aggiuntiva e finale in caso di possesso dello Stobj con nome "Pozione Millecure"
+     * Interazione di dalogo con il guardiano. Interazione aggiuntiva e finale in caso di possesso dello Stobj con nome "Pozione Millecure"
      * @param p
      * @param person 
      */
@@ -59,34 +59,6 @@ public class CastleEntrance extends RoomWDoor{
             } else {
                 this.setMsg("\"Benvenuto, Sono Elias, custode di queste mura millenarie. Prima di proseguire, sappi che il pericolo e i segreti si nascondono dietro ogni angolo di questo luogo misterioso. Se hai \nbisogno di saggezza o consigli, non esitare a chiedere. Ma ricorda, il destino di questo \ncastello è nelle tue mani ora.\"");
             }
-        }
-    }
-    
-    /**
-     * Interazione di cessione dello Stobj con nome "Pozione Millecure". In caso la pozione, indicata da obj, fosse presente nella lista Inventory del Player p, trigger dell dialogo finale del gioco
-     * @param p
-     * @param obj 
-     */
-    @Override
-    public void give(Player p, Stobj obj){
-        if (obj.getName().equals("Pozione") || obj.getName().equals("Pozione Millecure")){
-        int pm = -1;
-            for (int i = 0; i<p.getInventory().size(); i++)
-                    if (p.getInventory().get(i).getName().equals("Pozione Millecure"))
-                        pm = i;
-            if (pm > -1){
-                p.removeFromInventory(pm);
-               this.setMsg ("FINE");
-            } else {
-                for (int i = 0; i<p.getInventory().size(); i++)
-                    if (p.getInventory().get(i).getName().equals("Pozione"))
-                        pm = i;
-                 if (pm > -1)
-                     this.setMsg("Nessun'altra pozione se non quella dello sciamano può curarla,\nnon ha senso consumarne inutilmente");
-                 
-            }
-        } else {
-             this.setMsg("Non succede niente");
         }
     }
 }

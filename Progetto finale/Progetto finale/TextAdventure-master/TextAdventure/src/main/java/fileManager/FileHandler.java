@@ -31,8 +31,8 @@ public class FileHandler {
 
             objectStream.writeObject(map);
 
-            objectStream.close();   
-            fileStream.close();   
+            objectStream.close();
+            fileStream.close();
 
             System.out.println("Save map state successfully.");
             savemap = true;

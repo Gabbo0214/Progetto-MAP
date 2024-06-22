@@ -4,14 +4,13 @@
 package roomSet;
 
 import base.Stobj;
-import monsterSet.Monster_Hobgoblin;
 import objectSet.Door;
 
 
 public class MountFork extends RoomWDoor{
 
     public MountFork(){
-        this.setMonster(new Monster_Hobgoblin());
+        
         Stobj obj = new Stobj();
         Door door = new Door();
         obj.setName("Muro con enigma");
