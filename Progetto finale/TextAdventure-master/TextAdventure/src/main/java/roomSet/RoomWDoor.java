@@ -5,6 +5,7 @@ package roomSet;
 
 import objectSet.Door;
 import base.Room;
+import gameCore.Player;
 
 public class RoomWDoor extends Room {
 
@@ -16,7 +17,7 @@ public class RoomWDoor extends Room {
      * @param idir 
      */
     @Override
-    public void openDoor(String idir){
+    public void openDoor(String idir, Player p){
         int[] d = {0, 0, 0, 0};
         int numd = 0;
         String[] dir = {"", "", "", ""};

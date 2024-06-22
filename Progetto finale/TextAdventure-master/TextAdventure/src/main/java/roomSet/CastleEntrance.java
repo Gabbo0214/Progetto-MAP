@@ -36,8 +36,6 @@ public class CastleEntrance extends RoomWDoor{
         this.addObject(door);
 
         this.addObject(Guardian);
-
-        this.setMoney(5);
     }
 
     /**

@@ -211,7 +211,7 @@ public class Story {
             if (par.getCommand().getName().equals("apri")) {
                 if (par.getObject() != null) {
                     if (par.getObject().getName().equals("Porta")) {
-                        map.getCurrentRoom().openDoor(par.getDir());
+                        map.getCurrentRoom().openDoor(par.getDir(), p);
                     }
                 } else {
                     vm.writeOnScreen(

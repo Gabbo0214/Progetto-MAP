@@ -7,6 +7,7 @@ import java.io.Serializable;
 
 import base.Room;
 import base.Stobj;
+import objectSet.Key;
 import objectSet.Door;
 import objectSet.Potion;
 import roomSet.AlchemicalLaboratory;
@@ -47,6 +48,7 @@ public class Map implements Serializable{
     private Room storage=new RoomWDoor();
     private Room shamanRoom=new ShamanRoom();
     private Room closet=new ShamSecretRoom();
+    private Room memoryRoom=new RoomWDoor();
     private Room eternityRoom=new EternityRoom();
     private Room end=new DestinyRoom();
 
@@ -120,8 +122,33 @@ public class Map implements Serializable{
         timeRoom.setName("Sala del tempo");
         timeRoom.setDescription("Sei ora nella sala del tempo del castello. Si dice che qui il tempo scorra più lentamente.\nIl passato, il presente ed il futuro sembrano mescolarsi.");
         //timeRoom.setWest(darkCrypt);
-        //timeRoom.SetEast(memoriesRoom);
+        timeRoom.setNextEast(memoryRoom);
         timeRoom.setSouth(prophecyChamber);
+
+        // sala dei ricordi
+        memoryRoom.setName("Sala dei ricordi");
+        memoryRoom.setDescription("Sei in una stanza che sembra essere dove lo sciamano conserva le sue cianfrusaglie.");
+        Stobj chiave = new Key();
+        chiave.setName("Chiave");
+        chiave.setDescription("Guarda c'è una chiave , potrebbe servirti a qualcosa potrei consigliarti di prenderla poi fai come vuoi ! non dire che non ti avevo avvisato!!");
+        chiave.setPickupable(true);
+        chiave.setUsable(true);
+        memoryRoom.addObject(chiave);
+        door = new Door();
+        door.setName("Porta");
+        door.setDescription("Guarda una porta non serve a nulla . E' chiusa");
+        door.setOpen(false);
+        door.setDirection("n");
+        memoryRoom.addObject(door);
+        door = new Door();
+        door.setName("Porta");
+        door.setDescription("Guarda una porta non serve a nulla . E' chiusa");
+        door.setOpen(true);
+        door.setDirection("w");
+        memoryRoom.addObject(door);
+        memoryRoom.setNextNorth(eternityRoom);
+        memoryRoom.setWest(timeRoom);
+        memoryRoom.setNextWest(timeRoom);
 
         //Sala delle illusioni 
         obj.setName("bacca");
@@ -352,6 +379,14 @@ public class Map implements Serializable{
 
     public void setMisteryR(Room misteryr) {
         this.misteryRoom = misteryr;
+    }
+
+    public Room getMemoryRoom() {
+        return memoryRoom;
+    }
+
+    public void setMemoryRoom(Room memoryRoom) {
+        this.memoryRoom = memoryRoom;
     }
     
     public Room getEternityroom() {

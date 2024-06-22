@@ -51,6 +51,8 @@ public class ProphecyChamber extends Room {
         } else if (this.getObjects().get(1).getAlias().contains(lever)) {
             leverFound = true;
             c = !c;
+            if (d)
+                d = !d;
             if (!c)
                 this.setMsg("Senti un suono di ingranaggi in movimento.\nLa leva è nel suo stato normale.\n");
             else
@@ -65,7 +67,7 @@ public class ProphecyChamber extends Room {
         }
 
         // Controlla la condizione dopo aver aggiornato tutti gli stati
-        if (s == false && c == true && d == true) {
+        if (!s && c && d) {
             Stobj memory = new Stobj("Memoria del passato", "Un ricordo lontano.");
             memory.setVisible(false);
             p.addToInventory(memory);

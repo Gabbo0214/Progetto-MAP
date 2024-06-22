@@ -190,7 +190,7 @@ public class Room implements Serializable {
      * Interazione di base dell'apertura delle porte.
      * @param idir 
      */
-    public void openDoor(String idir){};
+    public void openDoor(String idir, Player p){};
 
     /**
      * Interazione di base per la chiusura delle porte
