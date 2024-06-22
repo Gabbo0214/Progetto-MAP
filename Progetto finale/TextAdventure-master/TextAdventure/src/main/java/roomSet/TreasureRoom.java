@@ -9,8 +9,6 @@ import gameCore.Player;
 
 public class TreasureRoom extends Room {
 
-    // private boolean open = false;
-
     public TreasureRoom() {
 
         Stobj enigma = new Stobj();
@@ -27,7 +25,7 @@ public class TreasureRoom extends Room {
         silverCoin.setAlias(
                 new String[] { "monetaargentata", "monetad'argento", "monetadiargento", "monetaa", "monetadue", "moneta" });
         silverCoin.setDescription(
-                "Una moneta argentata raffigurante un drago dormiente /n I rilievi sembrano essere fatti a mano.");
+                "Una moneta argentata raffigurante un drago dormiente\nI rilievi sembrano essere fatti a mano.");
         silverCoin.setPickupable(true);
         this.addObject(silverCoin);
 

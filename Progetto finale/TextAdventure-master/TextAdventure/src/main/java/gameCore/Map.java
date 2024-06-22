@@ -21,6 +21,7 @@ import roomSet.RoomWDoor;
 import roomSet.ArmourRoom;
 import roomSet.TreasureRoom;
 import roomSet.ProphecyChamber;
+import roomSet.TimeRoom;
 import roomSet.ShamSecretRoom;
 import roomSet.ShamanRoom;
 import roomSet.WeaponRoom;
@@ -35,6 +36,7 @@ public class Map implements Serializable{
     private Room armourRoom = new ArmourRoom();
     private Room treasureRoom = new TreasureRoom();
     private Room prophecyChamber = new ProphecyChamber();
+    private Room timeRoom = new TimeRoom();
     private Room illusionRoom= new Room();
     private Room oblivionRoom = new Room();
     private Room misteryRoom = new MisteryRoom();
@@ -86,13 +88,11 @@ public class Map implements Serializable{
         //Armeria
         armour.setName("Armiere");
         armour.setDescription("Sei nella piccola Armeria. Ti accoglie  un uomo abbastanza muscolosovche ti chiede come può esserti utile.");
-
         armour.setWest(moonRoom);
         
         //Camera dei segreti
         rSecrets.setName("Camera dei segreti");
         rSecrets.setDescription("Ti avvicini alla camera dei segreti che si trova esettamente a nord dalla Sala della luna.\nSai che oltre questa stanza si troverà la cosidetta sala delle armature.\nLa porta è chiusa per aprirla dovrai parlare con il custode");
-
         rSecrets.setNextNorth(armourRoom);
         rSecrets.setSouth(moonRoom);
 
@@ -113,8 +113,15 @@ public class Map implements Serializable{
         //Camera delle profezie
         prophecyChamber.setName("Camera delle profezie");
         prophecyChamber.setDescription("La camera delle profezie è riempita da macchinari ed aggeggi che sembrano essere usati per lo studio dello spazio e delle magie.\nI motivi a tema astronomico e cosmologico fanno si che il tuo sguardo si perda nel vuoto.");
-        //prophecyChamber.setNorth(timeRoom);
+        prophecyChamber.setNorth(timeRoom);
         prophecyChamber.setSouth(treasureRoom);
+
+        //Camera delle profezie
+        timeRoom.setName("Sala del tempo");
+        timeRoom.setDescription("Sei ora nella sala del tempo del castello. Si dice che qui il tempo scorra più lentamente.\nIl passato, il presente ed il futuro sembrano mescolarsi.");
+        //timeRoom.setWest(darkCrypt);
+        //timeRoom.SetEast(memoriesRoom);
+        timeRoom.setSouth(prophecyChamber);
 
         //Sala delle illusioni 
         obj.setName("bacca");
@@ -234,6 +241,7 @@ public class Map implements Serializable{
        this.setArmour(m.getArmour());
        this.setTreasureRoom(m.getTreasureRoom());
        this.setProphecyChamber(m.getProphecyChamber());
+       this.setTimeRoom(m.getTimeRoom());
        this.setRsecrets(m.getRsecrets());
        this.setArmourRoom(m.getArmourRoom());
        this.setIllusionRoom(m.getIllusionRoom());
@@ -296,6 +304,14 @@ public class Map implements Serializable{
 
     public void setProphecyChamber(Room prophecyChamber) {
         this.prophecyChamber = prophecyChamber;
+    }
+
+    public Room getTimeRoom() {
+        return timeRoom;
+    }
+
+    public void setTimeRoom(Room timeRoom) {
+        this.timeRoom = timeRoom;
     }
 
     public Room getRsecrets() {

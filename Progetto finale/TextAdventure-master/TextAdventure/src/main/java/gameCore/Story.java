@@ -195,13 +195,11 @@ public class Story {
             if (par.getCommand().getName().equals("premi")) {
                 if (par.getObject() != null) {
                     if (par.getObject().getName().equals("Leva destra")
-                            || par.getObject().getName().equals("Leva sinistra")) {
+                            || par.getObject().getName().equals("Leva sinistra") || par.getObject().getName().equals("Leva centrale")) {
                         map.getCurrentRoom().activate(par.getObject().getName().split("\\s")[1], p); // p.cR = map.pR,
                                                                                                      // p.pR = map.cR
                         if (par.getObject().getName().split("\\s")[1].equals("sinistra")
-                                && par.getObject().isUsable()) { // La leva sinistra è quella sbagliata: porta alla
-                                                                 // stanza precedente
-                            map.back();
+                                && par.getObject().isUsable()) {
                         }
                     }
                 } else {
