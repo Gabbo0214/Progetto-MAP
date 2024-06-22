@@ -16,7 +16,7 @@ public class MisteryRoom extends Room {
    }
 
    /**
-    * Interazione di dialogo con la ninfa del lago. Interazione basata sul nome di Stobj person. Nell'interazione con la ninfa, all'arma contenuta nella lista Inventory del Player p viene incrementato il Dmg di 5. Inoltre viene aggiunto uno Stobj con nome "Consiglio" all'inventario. Al termine dell'interazione la ninfa viene rimossa dalla  lista degli interagibili della stanza
+    * Interazione di dialogo con il vigilante. Interazione basata sul nome di Stobj person. Nell'interazione con la ninfa, all'arma contenuta nella lista Inventory del Player p viene incrementato il Dmg di 5. Inoltre viene aggiunto uno Stobj con nome "Consiglio" all'inventario. Al termine dell'interazione la ninfa viene rimossa dalla  lista degli interagibili della stanza
     * @param p
     * @param person 
     */

@@ -5,7 +5,7 @@ package roomSet;
 
 import base.Stobj;
 import gameCore.Player;
-import monsterSet.Monster_RagnoGigante;
+
 
 public class MountStart extends RoomWDoor{
 
@@ -21,7 +21,6 @@ public class MountStart extends RoomWDoor{
         this.addObject(dxlever);
         this.addObject(sxlever);
         this.addObject(trapdoor);
-        this.setMonster(new Monster_RagnoGigante());
     }
 
     /**
@@ -29,7 +28,6 @@ public class MountStart extends RoomWDoor{
      * @param lever
      * @param p 
      */
-    
     public void activate(String lever, Player p){
         boolean adv = false;
         for (Stobj inv : p.getInventory()) {

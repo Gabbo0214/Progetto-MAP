@@ -225,6 +225,12 @@ public class Story {
                 if (par.getCommand().getName().equals("silenzio")) {
                     map.getCurrentRoom().riddle();
                 }
+
+
+                //Inserimento "adesso " per risoluzione di riddle2
+                if (par.getCommand().getName().equals("adesso")) {
+                    map.getCurrentRoom().riddle2();
+                }
             }
             
             //Inserimento "attacca" o sinonimi

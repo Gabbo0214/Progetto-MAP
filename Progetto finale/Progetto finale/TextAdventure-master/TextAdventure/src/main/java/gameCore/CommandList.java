@@ -100,6 +100,9 @@ public class CommandList {
         Command give = new Command("dai");
         give.setAlias(new String[]{"porgi", "offri", "scambia", "vendi"});
         this.commands.add(give);
+
+        Command adesso = new Command("adesso");
+        this.commands.add(adesso);
     }
 
     public List<Command> getCommands() {
