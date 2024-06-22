@@ -23,6 +23,7 @@ import roomSet.ArmourRoom;
 import roomSet.TreasureRoom;
 import roomSet.ProphecyChamber;
 import roomSet.TimeRoom;
+import roomSet.DarkCrypt;
 import roomSet.ShamSecretRoom;
 import roomSet.ShamanRoom;
 import roomSet.WeaponRoom;
@@ -38,6 +39,7 @@ public class Map implements Serializable{
     private Room treasureRoom = new TreasureRoom();
     private Room prophecyChamber = new ProphecyChamber();
     private Room timeRoom = new TimeRoom();
+    private Room darkCrypt = new DarkCrypt();
     private Room illusionRoom= new Room();
     private Room oblivionRoom = new Room();
     private Room misteryRoom = new MisteryRoom();
@@ -118,12 +120,17 @@ public class Map implements Serializable{
         prophecyChamber.setNorth(timeRoom);
         prophecyChamber.setSouth(treasureRoom);
 
-        //Camera delle profezie
+        //Sala del tempo
         timeRoom.setName("Sala del tempo");
         timeRoom.setDescription("Sei ora nella sala del tempo del castello. Si dice che qui il tempo scorra più lentamente.\nIl passato, il presente ed il futuro sembrano mescolarsi.");
-        //timeRoom.setWest(darkCrypt);
+        timeRoom.setWest(darkCrypt);
         timeRoom.setNextEast(memoryRoom);
         timeRoom.setSouth(prophecyChamber);
+
+        //Cripta Oscura
+        darkCrypt.setName("Cripta Oscura");
+        darkCrypt.setDescription("Un grezzo buco nel muro ti ha portato in una camera buia e dall'atmosfera inquietante.\nL'aria è capace di far salire brividi gelidi lungo la tua spina dorsale.\nIl tetto basso della stanza rende il tutto opprimente.\nSenti dozzine di presenze toccare le tue spalle.");
+        darkCrypt.setEast(timeRoom);    
 
         // sala dei ricordi
         memoryRoom.setName("Sala dei ricordi");
@@ -269,6 +276,7 @@ public class Map implements Serializable{
        this.setTreasureRoom(m.getTreasureRoom());
        this.setProphecyChamber(m.getProphecyChamber());
        this.setTimeRoom(m.getTimeRoom());
+       this.setDarkCrypt(m.getDarkCrypt());
        this.setRsecrets(m.getRsecrets());
        this.setArmourRoom(m.getArmourRoom());
        this.setIllusionRoom(m.getIllusionRoom());
@@ -339,6 +347,14 @@ public class Map implements Serializable{
 
     public void setTimeRoom(Room timeRoom) {
         this.timeRoom = timeRoom;
+    }
+
+    public Room getDarkCrypt() {
+        return darkCrypt;
+    }
+
+    public void setDarkCrypt(Room darkCrypt) {
+        this.darkCrypt = darkCrypt;
     }
 
     public Room getRsecrets() {

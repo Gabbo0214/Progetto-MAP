@@ -10,7 +10,7 @@ public class DestinyRoom extends RoomWDoor {
     public DestinyRoom() {
         Stobj obj = new Stobj();
         
-        obj.setName("pergamena");
+        obj.setName("Pergamena");
         obj.setAlias(new String[]{"enigma", "indovinello"});
         obj.setDescription("Aprendo la pergamena riesci a leggere a stento:\n\n" +
                    "\"Tre mani del tempo si muovono senza sosta,\n" +
