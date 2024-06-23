@@ -203,6 +203,13 @@ public class Room implements Serializable {
      */
     public void riddle(){}
 
+
+
+    /* 
+ * interazione secondo enigma
+*/
+public void riddle2(){}
+
     /**
      * Interazione di base per i dialoghi
      * @param p

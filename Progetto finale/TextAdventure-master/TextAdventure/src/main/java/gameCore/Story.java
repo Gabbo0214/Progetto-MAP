@@ -36,7 +36,8 @@ public class Story {
         } else {
             boolean noroom = false;
             boolean move = false;
-            // Inserimento "nord" (o sinonimi). Modifica la stanza corrente con il relativo nord
+            // Inserimento "nord" (o sinonimi). Modifica la stanza corrente con il relativo
+            // nord
             if (par.getCommand().getName().equals("nord")) {
                 if (map.getCurrentRoom().getNorth() != null) {
                     map.setPreviousRoom(map.getCurrentRoom());
@@ -195,7 +196,8 @@ public class Story {
             if (par.getCommand().getName().equals("premi")) {
                 if (par.getObject() != null) {
                     if (par.getObject().getName().equals("Leva destra")
-                            || par.getObject().getName().equals("Leva sinistra") || par.getObject().getName().equals("Leva centrale")) {
+                            || par.getObject().getName().equals("Leva sinistra")
+                            || par.getObject().getName().equals("Leva centrale")) {
                         map.getCurrentRoom().activate(par.getObject().getName().split("\\s")[1], p); // p.cR = map.pR,
                                                                                                      // p.pR = map.cR
                         if (par.getObject().getName().split("\\s")[1].equals("sinistra")
@@ -235,7 +237,11 @@ public class Story {
             if (par.getCommand().getName().equals("silenzio")) {
                 map.getCurrentRoom().riddle();
             }
-
+            
+            // Inserimento "adesso " per risoluzione di riddle2
+            if (par.getCommand().getName().equals("adesso")) {
+                map.getCurrentRoom().riddle2();
+            }
             // Inserimento "inventario". Consente di visualizzare l'elenco di ciò che è
             // contenuto nell'inventario
             if (par.getCommand().getName().equals("inventario")) {
