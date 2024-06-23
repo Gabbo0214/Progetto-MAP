@@ -7,25 +7,25 @@ import java.io.Serializable;
 
 import base.Room;
 import base.Stobj;
-import objectSet.Key;
 import objectSet.Door;
+import objectSet.Key;
 import objectSet.Potion;
 import roomSet.AlchemicalLaboratory;
+import roomSet.ArmourRoom;
 import roomSet.CastleEntrance;
+import roomSet.DarkCrypt;
 import roomSet.DestinyRoom;
 import roomSet.EternityRoom;
 import roomSet.MisteryRoom;
 import roomSet.MountFork;
 import roomSet.MountStart;
+import roomSet.ProphecyChamber;
 import roomSet.RoomSecrets;
 import roomSet.RoomWDoor;
-import roomSet.ArmourRoom;
-import roomSet.TreasureRoom;
-import roomSet.ProphecyChamber;
-import roomSet.TimeRoom;
-import roomSet.DarkCrypt;
 import roomSet.ShamSecretRoom;
 import roomSet.ShamanRoom;
+import roomSet.TimeRoom;
+import roomSet.TreasureRoom;
 import roomSet.WeaponRoom;
 
 
@@ -246,7 +246,30 @@ public class Map implements Serializable{
         closet.setNextNorth(castle);
 
         this.setCurrentRoom(castle);
-    }
+
+
+
+               //stanza dell' Eternità
+               eternityRoom.setName("Stanza dell'eternità");
+               eternityRoom.setDescription("Sei nella Stanza dell'Eternità Lungo la parete sinistra si estende un'enorme muro. Al centro della parete di fronte a te, noti un piccolo incavo, forse una serratura. La parete opposta è dominata da una massiccia scrivania, dove una figura incappucciata è seduta, dando le spalle al centro della stanza. Ricordi di aver trovato una chiave nella stanza precedente. Potrebbe essere cruciale qui.");
+               eternityRoom.setNextNorth(end);
+               eternityRoom.setSouth(memoryRoom);
+               eternityRoom.setNextSouth(memoryRoom);
+               
+               //sala del destino 
+               end.setName("Sala del destino");
+               end.setDescription("Sei nella Stanza del Destino.\nLe pareti sono rivestite di antichi arazzi che raffigurano il ciclo della vita.\n" +
+               "Chissà quali segreti celano queste mura...\n" +
+               "Al centro della stanza, un altare d'oro brillante risplende sotto una luce misteriosa.\n" +
+               "I tuoi occhi cadono su un antica pergamena posata sull'altare, apparentemente l'oggetto del tuo viaggio.\n" +
+               "Complimenti, nessuno era mai arrivato fino a questo punto.\nRiuscirai a risolvere l'enigma finale che ti porterà alla vita eterna, oppure sarai dimenticato nel passato?");
+               end.setSouth(eternityRoom);
+               end.setNextNorth(castle);
+               this.setCurrentRoom(castle);
+            }
+
+
+
 
     public void setCurrentRoom(Room r){
         this.currentRoom = r;

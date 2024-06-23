@@ -234,6 +234,13 @@ public class Story {
             // Inserimento "silenzio " per risoluzione di riddle
             if (par.getCommand().getName().equals("silenzio")) {
                 map.getCurrentRoom().riddle();
+
+
+
+                //Inserimento "adesso " per risoluzione di riddle2
+                if (par.getCommand().getName().equals("adesso")) {
+                    map.getCurrentRoom().riddle2();
+                }
             }
 
             // Inserimento "inventario". Consente di visualizzare l'elenco di ciò che è
