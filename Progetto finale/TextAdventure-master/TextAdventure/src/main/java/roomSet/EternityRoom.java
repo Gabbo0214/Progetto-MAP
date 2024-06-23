@@ -21,12 +21,7 @@ public class EternityRoom extends RoomWDoor{
         Stobj obj = new Stobj();
         obj.setName("Serratura");
         obj.setAlias(new String[]{"buco"});
-        obj.setDescription("Una semplice serattura , sarebbe bello avere la chiave corretta per poterla aprire....");
-        this.addObject(obj);
-        obj = new Stobj();
-        obj.setName("Guardiano");
-        obj.setAlias(new String[]{"figura"});
-        obj.setDescription("E'solo una tua immaginazione sarebbe bello poter arrivare nuovamente all'entrata del castello e consegnare l'anello dell'eternità al guardiano. Peccato! non ci sei ancora riuscito.");
+        obj.setDescription("Una semplice serattura , sarebbe bello avere la chiave corretta per poterla aprire...");
         this.addObject(obj);
     }
 
@@ -45,13 +40,13 @@ public class EternityRoom extends RoomWDoor{
             }
         }
         if (g){
-              this.setMsg("Appena avvicini la chiave nella serratura,sembra inserirsi subito di colpo. Non riesci a capire cosa sta succedendo" +
-                "\nDi botto la porta si apre e adesso puoi proseguire a nord.");
+              this.setMsg("Appena avvicini la chiave nella serratura, sembra inserirsi subito di colpo, come attratta dalla serratura.\n Non riesci a capire cosa stia succedendo." +
+                "\nImprovvisamente la porta si apre permettendoti di proseguire a nord.");
              p.removeFromInventory(k);
             this.getObjects().removeIf(obj -> obj.getName().equals("Serratura"));
             this.setNorth(this.getNextNorth());
         } else {
-            this.setMsg("Non hai nulla da inserire ne nulla in cui inserire :(");
+            this.setMsg("Non hai nulla da inserire da alcuna parte.");
         }
         }
 }

@@ -97,7 +97,7 @@ public class Game {
                       //Se end == true viene visualizzata l'ultima interazione prima della schermata finale
                       if (end){
                           vm.backToMenu();
-                          story.ending(player, map.getCurrentRoom(), vm);
+                          story.ending(player, vm);
                           }
                       break;
 
@@ -106,16 +106,6 @@ public class Game {
                       vm.showSaved(fw.saveMapDataToFile(mapfile, map), fw.savePlayerDataToFile(playerfile, player));
                       vm.campoFocus();
                       break;
-
-                   case "scappa": //Click su "scappa" in fase di combattimento, scappa dal combattimento e torna alla stanza precendente specificandone il nome
-                           vm.hideSaved();
-                           vm.setNormalFont(18);
-                           map.back();
-                           vm.hideFightButtons();
-                           vm.setMainTextPanelSize(50,100,650,300);
-                           vm.writeOnScreen("Sei scappato dalla battaglia. Sei tornato qui: " + map.getCurrentRoom().getName());
-                           combat = false;
-                       break;
 
                    case "exitMenu": //Click su "Esci". Porta alla schermata di conferma dell'uscita
                        vm.hideSaved();

@@ -378,16 +378,6 @@ public class UI{
         attackButton.setActionCommand("attacca");
         fightPanel.add(attackButton);
         
-        //Pulsante Usa pozione in combattimento
-        JButton useButton = new JButton("Usa pozione");
-        useButton.setBackground(Color.black);        
-        useButton.setForeground(Color.white);
-        useButton.setFont(new Font("Times New Roman", Font.PLAIN, 13));
-        useButton.setFocusPainted(false);
-        useButton.addActionListener(cHandler);
-        useButton.setActionCommand("usa");
-        fightPanel.add(useButton);
-        
         //Pulsante Scappa in combattimento
         JButton runButton = new JButton("Scappa");
         runButton.setBackground(Color.black);        

@@ -68,19 +68,13 @@ public class CommandList {
         talk.setAlias(new String[]{"conversa", "rivolgiti"});
         this.commands.add(talk);
 
-        Command eat = new Command("mangia");
-        eat.setAlias(new String[]{"addenta"});
-        this.commands.add(eat);
-
         Command use = new Command("usa");
         use.setAlias(new String[]{"utilizza"});
         this.commands.add(use);
 
-        Command drink = new Command("bevi");
-        this.commands.add(drink);
-
-        Command read = new Command("leggi");
-        this.commands.add(read);
+        Command useRing = new Command("infila");
+        use.setAlias(new String[]{"indossa"});
+        this.commands.add(useRing);
 
         Command silenzio = new Command("silenzio");
         this.commands.add(silenzio);
@@ -90,7 +84,7 @@ public class CommandList {
         this.commands.add(inventory);
 
         Command insert = new Command("inserisci");
-        insert.setAlias(new String[]{"appoggia", "infila", "incastra", "avvicina", "metti"});
+        insert.setAlias(new String[]{"appoggia", "incastra", "avvicina", "metti"});
         this.commands.add(insert);
         
         Command give = new Command("dai");
