@@ -51,7 +51,6 @@ public class DestinyRoom extends RoomWDoor {
         this.addObject(this.anello);
     }
 
-    // Optionally, you can add a method to check if the enigma is resolved
     public boolean isEnigmaResolved() {
         return this.enigmaResolved;
     }
