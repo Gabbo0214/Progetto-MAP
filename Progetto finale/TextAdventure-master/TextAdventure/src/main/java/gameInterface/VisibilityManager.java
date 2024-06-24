@@ -63,31 +63,12 @@ public class VisibilityManager {
         ui.getPlayerPanel().setVisible(false);
         ui.getStartButton().setVisible(false);
         ui.getContinueButton().setVisible(false);
-        ui.getFightPanel().setVisible(false);
         ui.getExitButton1().setVisible(false);
         ui.getYnPanel().setVisible(false);
         ui.getReturnToMenu().setVisible(false);
         ui.getMainTextAreaExit().setVisible(false);
     }
-    
-     /**
-     * Mostra tutti i tasti utili alla fase di combattimento e nasconde "Submit" e il campo di inserimento input
-     */
-     public void showFightButtons(){
-        ui.getFightPanel().setVisible(true);
-        ui.getChoiceButtonPanel().setVisible(false);
-        ui.getYnPanel().setVisible(false);
-        ui.getReturnToMenu().setVisible(false);
-    }
-    
-     /**
-     * Mostra "Submit" e il campo di inserimento input e nasconde tutti i tasti della fase di combattimento
-     */
-     public void hideFightButtons(){
-        ui.getFightPanel().setVisible(false);
-        ui.getChoiceButtonPanel().setVisible(true);
-    }
-    
+
      /**
      * Se il salvataggio del player p e della mappa m vanno a buon fine, mostra il lable "Salvato!", altrimenti mostra il lable "Save error"
      * @param m
@@ -117,7 +98,6 @@ public class VisibilityManager {
         ui.getTitleNamePanel().setVisible(false);
         ui.getStartButtonPanel().setVisible(false);
         ui.getInventoryPanel().setVisible(false);
-        ui.getFightPanel().setVisible(false);
         ui.getYnPanel().setVisible(false);
         ui.getReturnToMenu().setVisible(false);
         ui.getMainTextAreaExit().setVisible(false);
@@ -146,7 +126,6 @@ public class VisibilityManager {
          ui.getPlayerPanel().setVisible(false);
          ui.getInventoryPanel().setVisible(false);
          ui.getChoiceButtonPanel().setVisible(false);
-         ui.getFightPanel().setVisible(false);
          ui.getMainTextAreaExit().setVisible(false);
          ui.getStartButton1().setVisible(false);
          ui.getYesButton().setVisible(false);
@@ -161,7 +140,6 @@ public class VisibilityManager {
          ui.getPlayerPanel().setVisible(false);
          ui.getInventoryPanel().setVisible(false);
          ui.getChoiceButtonPanel().setVisible(false);
-         ui.getFightPanel().setVisible(false);
          ui.getMainTextArea().setVisible(false);
          
          ui.getMainTextAreaExit().setVisible(true);
@@ -187,7 +165,6 @@ public class VisibilityManager {
          ui.getPlayerPanel().setVisible(false);
          ui.getInventoryPanel().setVisible(false);
          ui.getChoiceButtonPanel().setVisible(false);
-         ui.getFightPanel().setVisible(false);
          ui.getMainTextArea().setVisible(false);
          ui.getYesButton().setVisible(false);
          ui.getNoButton().setVisible(false);

@@ -294,7 +294,7 @@ public class UI{
         campo.setFont(normalFont);
         campo.addActionListener(cHandler);
         campo.setActionCommand("submit");
-        campo.setText("                            Cosa devo fare?");
+        campo.setText("                            Cosa devo fare?"); 
 
         //Al click del mouse su campo, la scritta "Cosa devo fare?" scompare
         campo.addMouseListener(new MouseAdapter(){
@@ -410,7 +410,7 @@ public class UI{
         hpNumberLabel.setFont(normalFont);
         playerPanel.add(hpNumberLabel);
         
-        //Label per le Monete del giocatore
+        //Label per il tempo del timer
         JLabel timer = new JLabel("TEMPO:");
         timer.setForeground(Color.white);
         timer.setFont(normalFont);
@@ -501,10 +501,6 @@ public class UI{
         return inventoryPanel;
     }
 
-    public JPanel getFightPanel() {
-        return fightPanel;
-    }
-
     public JPanel getSavePanel() {
         return savePanel;
     }
@@ -555,6 +551,10 @@ public class UI{
 
     public void setPressed(boolean pressed) {
         this.pressed = pressed;
+    }
+   
+    public void updateTimer(int secondsRemaining) {
+        timerCountLabel.setText(""+secondsRemaining); // Aggiorna il testo del timerCountLabel
     }
     
     

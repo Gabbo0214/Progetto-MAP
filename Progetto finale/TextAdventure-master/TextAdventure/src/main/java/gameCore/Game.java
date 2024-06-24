@@ -27,7 +27,6 @@ public class Game {
     Parser parser = new Parser();
     CommandList cl = new CommandList();
     String inventoryStatus = "";
-    boolean combat = false;
 
     public static void main(String[] args){
         new Game();
@@ -117,14 +116,11 @@ public class Game {
                        map = new Map();
                        player = new Player();
                        vm.hideExitConfirm();
-                       combat = false;
                        break;
 
                    case "no": //Click su "No" nella schermata di conferma dell'uscita. Torna al gioco
                        vm.hideExitConfirm();
                        vm.showMainGameScreen();
-                       if (combat)
-                           vm.showFightButtons();
                        break;
 
                    case "exit": //Click su "Esci" nel menù principale. Chiude la finestra del gioco

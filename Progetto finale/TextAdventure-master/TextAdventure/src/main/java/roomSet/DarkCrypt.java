@@ -1,10 +1,17 @@
 package roomSet;
 
+import gameInterface.UI;
 import base.Room;
 import base.Stobj;
 import gameCore.Player;
 
 public class DarkCrypt extends Room {
+
+    private UI ui; // Riferimento all'istanza di UI
+
+    public DarkCrypt(UI ui) {
+        this.ui = ui; // Inizializzazione dell'istanza di UI
+    }
 
     public DarkCrypt() {
         Stobj weepingStatue = new Stobj();
@@ -98,7 +105,7 @@ public class DarkCrypt extends Room {
                 try {
                     Thread.sleep(1000); // Pausa di un secondo
                 } catch (InterruptedException e) {
-                    //stampare a schermo nell'elemento UI corretto il timer
+                    ui.updateTimer(count); 
                 }
             }
 
