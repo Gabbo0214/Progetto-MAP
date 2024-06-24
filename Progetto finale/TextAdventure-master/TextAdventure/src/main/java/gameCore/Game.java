@@ -78,7 +78,6 @@ public class Game {
                       vm.hideSaved();
                       vm.titleToGame();
                       defaultSetup();
-                      vm.setMoneyCount(player.getMoney());
                       break;
 
                   case "submit": //Click su "Submit " o pressione del tasto Invio (Enter)
@@ -92,7 +91,6 @@ public class Game {
                       boolean end = story.nextMove(par, player, map, vm); //true se si è raggiunti l'ultima interazione, false altrimenti
                       vm.setHpLabel(player.getCurrentHp(),player.getTotHp());
                       vm.campoFocus();
-                      vm.setMoneyCount(player.getMoney());
                       
                       //Se end == true viene visualizzata l'ultima interazione prima della schermata finale
                       if (end){
@@ -168,7 +166,6 @@ public class Game {
             player = new Player();
             
             vm.setHpLabel(player.getCurrentHp(),player.getTotHp());
-            vm.setMoneyCount(0);
             inventoryStatus="close";
             vm.writeOnScreen(map.getCurrentRoom().getName() + "\n================================================\n" + map.getCurrentRoom().getDescription());
             vm.campoFocus();
@@ -179,7 +176,6 @@ public class Game {
         public void loadSetup(){
         String uitxt = "";
             vm.setHpLabel(player.getCurrentHp(),player.getTotHp());
-            vm.setMoneyCount(player.getMoney());
             inventoryStatus="close";
             uitxt = (map.getCurrentRoom().getName() + "\n================================================\n" + map.getCurrentRoom().getDescription());
             vm.writeOnScreen(uitxt);

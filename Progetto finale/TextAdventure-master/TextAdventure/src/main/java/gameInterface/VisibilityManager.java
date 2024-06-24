@@ -242,11 +242,11 @@ public class VisibilityManager {
     }
 
      /**
-     * Imposta il lable per il conteggio delle monete m che vengono raccolte
+     * Imposta il lable per il conteggio del timer quando viene triggerato
      * @param m 
      */
-     public void setMoneyCount(int m){
-         ui.getMoneyCountLabel().setText(Integer.toString(m));
+     public void setTimerCount(int m){
+         ui.getTimerCountLabel().setText(Integer.toString(m));
      }
 
      /**

@@ -23,8 +23,8 @@ import gameCore.Game.ChoiceHandler;
 
 public class UI{
     private JPanel titleNamePanel, startButtonPanel, mainTextPanel, choiceButtonPanel, playerPanel, inventoryPanel, fightPanel, savePanel, ynPanel;
-    private JLabel hpNumberLable;
-    private JLabel moneyCountLabel;
+    private JLabel hpNumberLabel;
+    private JLabel timerCountLabel;
     private JLabel saveConfirm;
     private JButton startButton;
     private JButton submit;
@@ -405,22 +405,22 @@ public class UI{
         playerPanel.add(hpLabel);
         
         //Label per il numero effettivo degli HP del giocatore (Correnti/Totali)
-        hpNumberLable= new JLabel();
-        hpNumberLable.setForeground(Color.white);
-        hpNumberLable.setFont(normalFont);
-        playerPanel.add(hpNumberLable);
+        hpNumberLabel= new JLabel();
+        hpNumberLabel.setForeground(Color.white);
+        hpNumberLabel.setFont(normalFont);
+        playerPanel.add(hpNumberLabel);
         
         //Label per le Monete del giocatore
-        JLabel moneyLabel = new JLabel("MONETE:");
-        moneyLabel.setForeground(Color.white);
-        moneyLabel.setFont(normalFont);
-        playerPanel.add(moneyLabel);
+        JLabel timer = new JLabel("TEMPO:");
+        timer.setForeground(Color.white);
+        timer.setFont(normalFont);
+        playerPanel.add(timer);
         
         //Label per il numero effettivo di monete del giocatore 
-        moneyCountLabel= new JLabel();
-        moneyCountLabel.setForeground(Color.white);
-        moneyCountLabel.setFont(normalFont);
-        playerPanel.add(moneyCountLabel); 
+        timerCountLabel= new JLabel();
+        timerCountLabel.setForeground(Color.white);
+        timerCountLabel.setFont(normalFont);
+        playerPanel.add(timerCountLabel); 
 
         //Pulsante Zaino per l'apertura e chiusura dell'inventario
         JButton inventoryButton = new JButton("Zaino");
@@ -514,11 +514,11 @@ public class UI{
     }
 
     public JLabel getHpNumberLable() {
-        return hpNumberLable;
+        return hpNumberLabel;
     }
 
-    public JLabel getMoneyCountLabel() {
-        return moneyCountLabel;
+    public JLabel getTimerCountLabel() {
+        return timerCountLabel;
     }
 
     public JLabel getSaveConfirm() {
