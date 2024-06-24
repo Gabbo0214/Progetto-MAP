@@ -18,7 +18,7 @@ public class Game {
     ChoiceHandler cHandler= new ChoiceHandler();
     UI ui= new UI();
     VisibilityManager vm= new VisibilityManager(ui);
-    Story story= new Story();
+    Story story= new Story(ui);
     Player player= new Player();
     Map map = new Map();
     File mapfile = new File(".\\MapSaveFile.txt");

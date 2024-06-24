@@ -8,17 +8,19 @@ import gameInterface.VisibilityManager;
 import objectSet.Door;
 import roomSet.DarkCrypt;
 import parser.ParserOutput;
+import gameInterface.UI;
 
 public class Story {
 
     private Thread timerThread;
     private DarkCrypt.Timer timer;
+    private UI ui;
 
-    public Story() {
-        timerThread = null;
-        timer = null;
+    public Story(UI ui) {
+        this.timerThread = null;
+        this.timer = null;
+        this.ui = ui; // Initialize ui
     }
-
     /**
      * Traduzione dei comandi ottenuti in ingresso già processati dal Parser e
      * contenuti in par. I comandi attivano determinate interazioni di gioco a
@@ -83,7 +85,7 @@ public class Story {
                     // Avvia il timer solo se non è già attivo
                     if (timerThread == null || !timerThread.isAlive()) {
                         DarkCrypt darkCrypt = (DarkCrypt) map.getCurrentRoom();
-                        timer = darkCrypt.new Timer(p);
+                        timer = darkCrypt.new Timer(p, ui);
                         timerThread = new Thread(timer);
                         timerThread.start();
                     }

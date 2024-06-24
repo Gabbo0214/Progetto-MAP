@@ -7,12 +7,6 @@ import gameCore.Player;
 
 public class DarkCrypt extends Room {
 
-    private UI ui; // Riferimento all'istanza di UI
-
-    public DarkCrypt(UI ui) {
-        this.ui = ui; // Inizializzazione dell'istanza di UI
-    }
-
     public DarkCrypt() {
         Stobj weepingStatue = new Stobj();
         Stobj plaque = new Stobj();
@@ -87,15 +81,18 @@ public class DarkCrypt extends Room {
         }
     }
 
-    // Classe Timer che implementa Runnable per un countdown tramite l'uso di un thread
+    // Classe Timer che implementa Runnable per un countdown tramite l'uso di un
+    // thread
     public class Timer implements Runnable {
         private volatile boolean running = true;
         private Player player;
-    
-        public Timer(Player player) {
+        private UI ui;
+
+        public Timer(Player player, UI ui) {
             this.player = player;
+            this.ui = ui;
         }
-    
+
         @Override
         public void run() {
             int count = 30;
@@ -103,6 +100,9 @@ public class DarkCrypt extends Room {
                 System.out.println("Timer: " + count);
                 ui.updateTimer(count); // Aggiorna l'interfaccia utente ogni secondo
                 count--;
+                if (count == 0) { // Verifica se il timer non è stato fermato
+                    handleTimeout();
+                }
                 try {
                     Thread.sleep(1000); // Pausa di un secondo
                 } catch (InterruptedException e) {
@@ -110,19 +110,17 @@ public class DarkCrypt extends Room {
                     break; // Esce dal ciclo se interrotto
                 }
             }
-    
-            if (running && count == 0) { // Verifica se il timer non è stato fermato
-                handleTimeout();
-            }
         }
-    
+
         public void stop() {
             running = false;
         }
-    
+
         private void handleTimeout() {
             player.setCurrentHp(player.getCurrentHp() - 10);
-            DarkCrypt.this.getEast().setMsg("Le presenze sono diventate irrequiete! Sei rimasto nella stanza per troppo a lungo e ti hanno cacciato!\n\n" + "Sei tornato a: " + DarkCrypt.this.getEast().getName());
+            DarkCrypt.this.getEast().setMsg(
+                    "Le presenze sono diventate irrequiete! Sei rimasto nella stanza per troppo a lungo e ti hanno cacciato!\n\n"
+                            + "Sei tornato a: " + DarkCrypt.this.getEast().getName());
         }
     }
 }
