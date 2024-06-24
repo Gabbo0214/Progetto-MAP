@@ -13,31 +13,33 @@ public class DarkCrypt extends Room {
         Stobj pulsatingHeart = new Stobj();
 
         weepingStatue.setName("statua piangente");
-        weepingStatue.setAlias(new String[]{"statua", "figura", "scultura"});
-        weepingStatue.setDescription("La statua di una donna piangente.\nUna larga fessura è presente nel mezzo del petto.");
+        weepingStatue.setAlias(new String[] { "statua", "figura", "scultura" });
+        weepingStatue
+                .setDescription("La statua di una donna piangente.\nUna larga fessura è presente nel mezzo del petto.");
         weepingStatue.setPickupable(false);
         this.addObject(weepingStatue);
 
         plaque.setName("strana roccia");
-        plaque.setAlias(new String[]{"masso", "sasso", "roccia"});
-        plaque.setDescription("Ispezionando più da vicino la roccia, è possibile scorgere una scritta incavata sulla superficie.\n" + //
+        plaque.setAlias(new String[] { "masso", "sasso", "roccia" });
+        plaque.setDescription(
+                "Ispezionando più da vicino la roccia, è possibile scorgere una scritta incavata sulla superficie.\n" + //
                         "Recita: Il malvagio si maschera con le pelli dei giusti e degli innocenti.\n" + //
                         "Trafiggerai il suo cuore?");
         plaque.setPickupable(false);
         this.addObject(plaque);
 
         demonStatue.setName("statua inquietante");
-        demonStatue.setAlias(new String[]{"statua", "demone", "scultura"});
+        demonStatue.setAlias(new String[] { "statua", "demone", "scultura" });
         demonStatue.setDescription("La figura irrequieta trafitta dalla spada fa accaponare la pelle.\n" + //
-                        "Ti passa immediatamente la voglia di fissarla.");
+                "Ti passa immediatamente la voglia di fissarla.");
         demonStatue.setPickupable(false);
         demonStatue.setVisible(false);
         this.addObject(demonStatue);
 
         pulsatingHeart.setName("cuore pulsante");
-        pulsatingHeart.setAlias(new String[]{"cuore"});
+        pulsatingHeart.setAlias(new String[] { "cuore" });
         pulsatingHeart.setDescription("Ciò che sembra essere un cuore pulsante fatto di pietra.\n" + //
-                        "La bocca della statua lo ha lasciato cadere una volta che è stata trafitta.");
+                "La bocca della statua lo ha lasciato cadere una volta che è stata trafitta.");
         pulsatingHeart.setPickupable(false);
         pulsatingHeart.setVisible(false);
         this.addObject(pulsatingHeart);
@@ -55,7 +57,8 @@ public class DarkCrypt extends Room {
             }
         }
         if (g) {
-            this.setMsg("Hai trafitto la statua con la tua spada.\nImprovvisamente, la faccia della donna sembra trasformarsi\nnel ghigno di quello che pare essere un demone.\nDalla bocca della statua cade qualcosa.");
+            this.setMsg(
+                    "Hai trafitto la statua con la tua spada.\nImprovvisamente, la faccia della donna sembra trasformarsi\nnel ghigno di quello che pare essere un demone.\nDalla bocca della statua cade qualcosa.");
             p.removeFromInventory(k);
             this.getObjects().removeIf(obj -> obj.getName().equals("statua piangente"));
             for (Stobj obj : this.getObjects()) {
@@ -74,6 +77,43 @@ public class DarkCrypt extends Room {
             }
         } else {
             this.setMsg("Non hai nulla da inserire");
+        }
+    }
+
+    // Classe Timer che implementa Runnable per un countdown tramite l'uso di un thread
+    public class Timer implements Runnable {
+        private volatile boolean running = true;
+        private Player player;
+
+        public Timer(Player player) {
+            this.player = player;
+        }
+
+        @Override
+        public void run() {
+            int count = 30;
+            while (count >= 0 && running) {
+                System.out.println("Timer: " + count);
+                count--;
+                try {
+                    Thread.sleep(1000); // Pausa di un secondo
+                } catch (InterruptedException e) {
+                    //stampare a schermo nell'elemento UI corretto il timer
+                }
+            }
+
+            if (count == 0) {
+                handleTimeout();
+            }
+        }
+
+        public void stop() {
+            running = false;
+        }
+
+        private void handleTimeout() {
+            player.setCurrentHp(player.getCurrentHp() - 10);
+            DarkCrypt.this.getEast().setMsg("Le presenze sono diventate irrequiete! Sei rimasto nella stanza per troppo a lungo e ti hanno cacciato!\n\n" + "Sei tornato a: " + DarkCrypt.this.getEast().getName());
         }
     }
 }

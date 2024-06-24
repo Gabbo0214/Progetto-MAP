@@ -6,11 +6,17 @@ package gameCore;
 import base.Stobj;
 import gameInterface.VisibilityManager;
 import objectSet.Door;
+import roomSet.DarkCrypt;
 import parser.ParserOutput;
 
 public class Story {
 
+    private Thread timerThread;
+    private DarkCrypt.Timer timer;
+
     public Story() {
+        timerThread = null;
+        timer = null;
     }
 
     /**
@@ -68,6 +74,26 @@ public class Story {
                     move = true;
                 } else {
                     noroom = true;
+                }
+            }
+
+            // Verifica se il giocatore è entrato nella stanza DarkCrypt e fa partire il timer
+            // Controllo se siamo nella DarkCrypt e gestisco il timer
+            if (map.getCurrentRoom() == map.getDarkCrypt()) {
+                // Avvia il timer solo se non è già attivo
+                if (timerThread == null || !timerThread.isAlive()) {
+                    DarkCrypt darkCrypt = (DarkCrypt) map.getCurrentRoom();
+                    timer = darkCrypt.new Timer(p);
+                    timerThread = new Thread(timer);
+                    timerThread.start();
+                }
+            } else {
+                // Se usciamo dalla DarkCrypt, fermiamo il timer
+                if (timerThread != null && timerThread.isAlive()) {
+                    timer.stop();
+                    timerThread.interrupt();
+                    timerThread = null;
+                    timer = null;
                 }
             }
 
@@ -172,7 +198,8 @@ public class Story {
                                 p.addToInventory(map.getCurrentRoom().getObjects().get(i));
                                 vm.writeOnScreen(map.getCurrentRoom().getObjects().get(i).getName()
                                         + " aggiunto al tuo inventario");
-                               map.getCurrentRoom().getObjects().removeIf(obj -> obj.getName().equals(par.getObject().getName()));
+                                map.getCurrentRoom().getObjects()
+                                        .removeIf(obj -> obj.getName().equals(par.getObject().getName()));
                             } else {
                                 vm.writeOnScreen("Non puoi raccogliere questo oggetto");
                             }
@@ -226,7 +253,7 @@ public class Story {
             if (par.getCommand().getName().equals("silenzio")) {
                 map.getCurrentRoom().riddle();
             }
-            
+
             // Inserimento "adesso " per risoluzione di riddle2
             if (par.getCommand().getName().equals("adesso")) {
                 map.getCurrentRoom().riddle2();
@@ -285,7 +312,7 @@ public class Story {
                         end = true;
                     }
                 }
-                if(!usedRing){
+                if (!usedRing) {
                     vm.writeOnScreen("Non hai nulla da indossare.");
                 }
             }
@@ -455,7 +482,7 @@ public class Story {
                     vm.writeOnScreen(map.getCurrentRoom().getMsg());
                     if (p.getCurrentHp() <= 0) { // In caso di trappole che diminuiscono la vita, se la vita diventa <=
                                                  // 0, ciò viene notificato su interfaccia
-                        vm.writeOnScreen(map.getCurrentRoom().getMsg() + " ma sei morto per la caduta...");
+                        vm.writeOnScreen(map.getCurrentRoom().getMsg() + " ma sei morto per la ferita...");
                         vm.defeatScreen();
                     }
                     map.getCurrentRoom().setMsg("");
@@ -476,7 +503,7 @@ public class Story {
 
     public void start(VisibilityManager vm) {
         vm.writeOnScreen(
-                "In questo gioco impersonerai un avventuriero in un ambiente fantasy.\nIl tuo obbiettivo è semplice, tanto assurdo: trovare l'anello mistico che ti renderà immortale.\n\n"
+                "In questo gioco impersonerai un avventuriero in un ambiente fantasy.\nIl tuo obbiettivo è semplice quanto assurdo: trovare l'anello mistico che ti renderà immortale.\n\n"
                         +
                         "Nel caso avessi dubbi sul come proseguire, 'osservare' ciò che ti circonda può aiutare.\nPuoi 'usare' solo gli oggetti che possiedi nel tuo inventario.\n"
                         +
