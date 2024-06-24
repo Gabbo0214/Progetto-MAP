@@ -172,6 +172,7 @@ public class Story {
                                 p.addToInventory(map.getCurrentRoom().getObjects().get(i));
                                 vm.writeOnScreen(map.getCurrentRoom().getObjects().get(i).getName()
                                         + " aggiunto al tuo inventario");
+                               map.getCurrentRoom().getObjects().removeIf(obj -> obj.getName().equals(par.getObject().getName()));
                             } else {
                                 vm.writeOnScreen("Non puoi raccogliere questo oggetto");
                             }

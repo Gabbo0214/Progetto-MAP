@@ -18,22 +18,24 @@ public class DarkCrypt extends Room {
         weepingStatue.setName("Statua piangente");
         weepingStatue.setAlias(new String[] { "Statua", "Figura", "Scultura" });
         weepingStatue.setDescription("La statua di una donna piangente.\nUna larga fessura è presente nel mezzo del petto.");
+        weepingStatue.setPickupable(false);
         this.addObject(weepingStatue);
 
         plaque.setName("Strana roccia");
         plaque.setAlias(new String[] { "Masso", "Sasso", "Roccia" });
         plaque.setDescription("Ispezionando più da vicino la roccia, è possibile scorgere una scritta incavata sulla superficie.\nRecita: Il malvagio si maschera con le pelli dei giusti e degli innocenti.\nTrafiggerai il suo cuore?");
+        plaque.setPickupable(false);
         this.addObject(plaque);
 
         demonStatue.setName("Statua inquietante");
         demonStatue.setAlias(new String[] { "Statua", "Figura", "Scultura", "Demone" });
         demonStatue.setDescription("La figura irrequieta trafitta dalla spada fa accaponare la pelle.\nTi passa immediatamente la voglia di fissarla.");
+        demonStatue.setPickupable(false);
 
         pulsatingHeart.setName("Cuore pulsante");
         pulsatingHeart.setAlias(new String[] { "Cuore" });
         pulsatingHeart.setDescription("Ciò che sembra essere un cuore pulsante fatto di pietra.\nLa bocca della statua lo ha lasciato cadere una volta che è stata trafitta.");
         pulsatingHeart.setPickupable(false);
-        this.addObject(pulsatingHeart);
     }
 
     /**

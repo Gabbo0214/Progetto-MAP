@@ -8,6 +8,7 @@ import java.io.Serializable;
 import base.Room;
 import base.Stobj;
 import objectSet.Door;
+import objectSet.Potion;
 import roomSet.AlchemicalLaboratory;
 import roomSet.ArmourRoom;
 import roomSet.CastleEntrance;
@@ -84,7 +85,7 @@ public class Map implements Serializable {
 
         // Camera dei segreti
         rSecrets.setName("Camera dei segreti");
-        rSecrets.setDescription("Entrato nella camera dei segrti senti l'aria e l'atmosfera del castello cambiare. Ormai sei andato troppo oltre, devi portare a termine la tua sfida contro gli enigmi che troverai davanti.");
+        rSecrets.setDescription("Entrato nella camera dei segreti senti l'aria e l'atmosfera del castello cambiare. Ormai sei andato troppo oltre, devi portare a termine la tua sfida contro gli enigmi che troverai davanti.");
         rSecrets.setNorth(armourRoom);
 
         // Sala delle armature
@@ -166,6 +167,12 @@ public class Map implements Serializable {
         oblivionRoom.setDescription("Sai che proseguendo in questa direzione raggiungerai la sala dei misteri! Chissà quale evento le ha fatto meritare un tale nome.");
         oblivionRoom.setEast(armourRoom);
         oblivionRoom.setWest(misteryRoom);
+        Stobj potion = new Potion();
+        potion.setName("Pozione");
+        potion.setDescription("Una pozione creata da una delle alchimiste del villaggio in tempi antichi.\nRipristina un po' di salute.");
+        potion.setUsable(true);
+        potion.setPickupable(true);
+        oblivionRoom.addObject(potion);
 
         // Sala dei misteri
         misteryRoom.setName("Sala dei misteri");

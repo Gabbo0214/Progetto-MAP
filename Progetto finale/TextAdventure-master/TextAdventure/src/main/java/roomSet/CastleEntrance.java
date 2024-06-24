@@ -20,7 +20,6 @@ public class CastleEntrance extends RoomWDoor{
         sword.setName("Spada");
         sword.setAlias(new String[]{"arma"});
         sword.setDescription("Una spada lunga e affilata, con una lama lucente e un'elsa intarsiata di gemme scintillanti, ma non particolarmente potente.");
-        sword.setDamage(3);
         sword.setPickupable(true);
         this.addObject(sword);
 
