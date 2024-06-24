@@ -275,6 +275,21 @@ public class Story {
                 }
             }
 
+            if (par.getCommand().getName().equals("infila")) {
+                int k = -1;
+                boolean usedRing = false;
+                for (int i = 0; i < p.getInventory().size() && k == -1; i++) {
+                    if (p.getInventory().get(i).getName().equals("Anello dell'eternità")) {
+                        k = i;
+                        usedRing = true;
+                        end = true;
+                    }
+                }
+                if(!usedRing){
+                    vm.writeOnScreen("Non hai nulla da indossare.");
+                }
+            }
+
             // Inserimento "usa" o sinonimi (vale solo per le pozioni e per il consiglio)
             if (par.getCommand().getName().equals("usa")) {
                 if (par.getObject() != null) {

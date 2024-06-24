@@ -73,7 +73,7 @@ public class CommandList {
         this.commands.add(use);
 
         Command useRing = new Command("infila");
-        use.setAlias(new String[]{"indossa"});
+        useRing.setAlias(new String[]{"indossa"});
         this.commands.add(useRing);
 
         Command silenzio = new Command("silenzio");
