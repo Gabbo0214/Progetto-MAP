@@ -35,6 +35,8 @@ public class DarkCrypt extends Room {
         demonStatue.setDescription("La figura irrequieta trafitta dalla spada fa accaponare la pelle.\n" + //
                         "Ti passa immediatamente la voglia di fissarla.");
         demonStatue.setPickupable(false);
+        demonStatue.setVisible(false);
+        this.addObject(demonStatue);
 
        
         demonStatue.setName("cuore pulsante");
@@ -42,6 +44,8 @@ public class DarkCrypt extends Room {
         pulsatingHeart.setDescription("Ciò che sembra essere un cuore pulsante fatto di pietra.\n" + //
                         "La bocca della statua lo ha lasciato cadere una volta che è stata trafitta.");
         pulsatingHeart.setPickupable(false);
+        pulsatingHeart.setVisible(false);
+        this.addObject(pulsatingHeart);
     }
 
     /**
@@ -68,7 +72,7 @@ public class DarkCrypt extends Room {
 
             for (Stobj obj : this.getObjects()) {
                 if (obj.getName().equals("statua inquietante")) {
-                    this.addObject(obj);
+                    obj.setVisible(true);
                     break;
                 }
             }
@@ -76,7 +80,7 @@ public class DarkCrypt extends Room {
             for (Stobj obj : this.getObjects()) {
                 if (obj.getName().equals("cuore pulsante")) {
                     obj.setPickupable(true);
-                    this.addObject(obj);
+                    obj.setVisible(true);
                     break;
                 }
             }
