@@ -9,7 +9,6 @@ import java.util.List;
 
 import gameCore.Player;
 
-
 public class Room implements Serializable {
 
     private String name;
@@ -18,16 +17,16 @@ public class Room implements Serializable {
     private Room north = null;
     private Room east = null;
     private Room west = null;
-    private int money = 0;
     private List<Stobj> objects = new ArrayList<>();
     private Room nextNorth = null;
-    private Room nextEast = null; 
+    private Room nextEast = null;
     private Room nextWest = null;
     private Room nextSouth = null;
     private String msg = "";
-           
-    public Room() {}
-    
+
+    public Room() {
+    }
+
     public Room(String name, String description) {
         this.name = name;
         this.description = description;
@@ -91,47 +90,44 @@ public class Room implements Serializable {
     public List<Stobj> getObjects() {
         return objects;
     }
-    
-    public void setObject(List<Stobj> objects){
+
+    public void setObject(List<Stobj> objects) {
         this.objects = objects;
     }
-    
-    public void addObject(Stobj object){
-            this.objects.add(object);
+
+    public void addObject(Stobj object) {
+        this.objects.add(object);
     }
 
     /**
-     * Aggiunta di un oggetto alla lista degli oggetti della stanza. l'Oggetto otterrà Name = name e Description = description
+     * Aggiunta di un oggetto alla lista degli oggetti della stanza. l'Oggetto
+     * otterrà Name = name e Description = description
+     * 
      * @param name
-     * @param description 
+     * @param description
      */
-    public void addObject(String name, String description){
+    public void addObject(String name, String description) {
         Stobj obj = new Stobj(name, description);
         this.objects.add(obj);
     }
 
     /**
-     * Aggiunta di un oggetto alla lista degli oggetti della stanza. l'Oggetto otterrà Name = name, Description = description e Alias = sinonimi
+     * Aggiunta di un oggetto alla lista degli oggetti della stanza. l'Oggetto
+     * otterrà Name = name, Description = description e Alias = sinonimi
+     * 
      * @param name
      * @param description
-     * @param sinonimi 
+     * @param sinonimi
      */
-    public void addObject(String name, String description, String[] sinonimi){
+    public void addObject(String name, String description, String[] sinonimi) {
         Stobj obj = new Stobj(name, description);
         obj.setAlias(sinonimi);
         this.objects.add(obj);
     }
-    
-    public void setMoney(int money){
-        this.money=money;
-    }
-    
-    public int getMoney(){
-        return money;
-    }
 
     /**
      * Confronto tra due oggetti Room
+     * 
      * @param obj
      * @return true se gli oggetti sono uguali, false altrimenti
      */
@@ -145,42 +141,43 @@ public class Room implements Serializable {
         return getClass() == obj.getClass();
     }
 
-    public void setNextNorth(Room nextNorth){
+    public void setNextNorth(Room nextNorth) {
         this.nextNorth = nextNorth;
     }
-    
-    public Room getNextNorth(){
+
+    public Room getNextNorth() {
         return this.nextNorth;
     }
-    
-    public void setNextWest(Room nextWest){
+
+    public void setNextWest(Room nextWest) {
         this.nextWest = nextWest;
     }
-    
-    public Room getNextWest(){
+
+    public Room getNextWest() {
         return this.nextWest;
     }
-    
-    public void setNextEast(Room nextEast){
+
+    public void setNextEast(Room nextEast) {
         this.nextEast = nextEast;
     }
-    
-    public Room getNextEast(){
+
+    public Room getNextEast() {
         return this.nextEast;
     }
 
-    public void setNextSouth(Room nextSouth){
+    public void setNextSouth(Room nextSouth) {
         this.nextSouth = nextSouth;
     }
 
-    public Room getNextSouth(){
+    public Room getNextSouth() {
         return this.nextSouth;
     }
-    
+
     /**
      * Interazione d'acquisto di base.
+     * 
      * @param p
-     * @param buy 
+     * @param buy
      */
     public void buy(Player p, Stobj buy) {
         this.setMsg("Non c'è nulla da comprare");
@@ -188,43 +185,49 @@ public class Room implements Serializable {
 
     /**
      * Interazione di base dell'apertura delle porte.
-     * @param idir 
+     * 
+     * @param idir
      */
-    public void openDoor(String idir, Player p){};
+    public void openDoor(String idir, Player p) {
+    };
 
     /**
      * Interazione di base per la chiusura delle porte
-     * @param idir 
+     * 
+     * @param idir
      */
-    public void closeDoor(String idir){};
+    public void closeDoor(String idir) {
+    };
 
     /**
      * Interazione di base per la risoluzione dell'enigma
      */
-    public void riddle(){}
+    public void riddle() {
+    }
 
-
-
-    /* 
- * interazione secondo enigma
-*/
-public void riddle2(){}
+    /*
+     * interazione secondo enigma
+     */
+    public void riddle2() {
+    }
 
     /**
      * Interazione di base per i dialoghi
+     * 
      * @param p
-     * @param person 
+     * @param person
      */
-    public void talkTo(Player p, Stobj person){
+    public void talkTo(Player p, Stobj person) {
         this.setMsg("Non c'è nessuno con cui parlare");
     }
 
     /**
      * Interazione di base per l'attivazione di oggetti (leve)
+     * 
      * @param lever
-     * @param p 
+     * @param p
      */
-    public void activate(String lever, Player p){
+    public void activate(String lever, Player p) {
         this.setMsg("Qui non c'è nulla da attivare");
     }
 
@@ -238,22 +241,25 @@ public void riddle2(){}
 
     /**
      * Interazione di base per l'inserimento di oggetti
-     * @param player 
+     * 
+     * @param player
      */
-    public void insert(Player player){
-        this.setMsg("Non hai nulla da inserire ne nulla in cui inserire :(");
+    public void insert(Player player) {
+        this.setMsg("Non hai nulla da inserire da nessuna parte.");
     }
 
     /**
-     * Interazione di base per l'ottenimento della pozione finale
-     */
-    public void getPotion(){}
-    
-    /**
-     * Interazione di base per la cessione di oggetti Stobj obj
+     * Utilizzo dell'anello dell'eternità.
+     * 
      * @param p
-     * @param obj 
+     * @return ""
      */
-    public void give(Player p, Stobj obj){this.setMsg("Non puoi dare niente a nessuno");}
-    
+    public String useRing(Player p) {
+        for (int i = 0; i < p.getInventory().size(); i++) {
+            if (p.getInventory().get(i).getName().equals("Anello dell'eternità")) {
+                this.setMsg("FINE");
+            }
+        }
+        return "";
+    }
 }

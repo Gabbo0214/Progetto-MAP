@@ -3,15 +3,20 @@
  */
 package gameCore;
 
-import base.Room;
 import base.Stobj;
 import gameInterface.VisibilityManager;
 import objectSet.Door;
+import roomSet.DarkCrypt;
 import parser.ParserOutput;
 
 public class Story {
 
+    private Thread timerThread;
+    private DarkCrypt.Timer timer;
+
     public Story() {
+        timerThread = null;
+        timer = null;
     }
 
     /**
@@ -69,6 +74,26 @@ public class Story {
                     move = true;
                 } else {
                     noroom = true;
+                }
+            }
+
+            // Verifica se il giocatore è entrato nella stanza DarkCrypt e fa partire il timer
+            // Controllo se siamo nella DarkCrypt e gestisco il timer
+            if (map.getCurrentRoom() == map.getDarkCrypt()) {
+                // Avvia il timer solo se non è già attivo
+                if (timerThread == null || !timerThread.isAlive()) {
+                    DarkCrypt darkCrypt = (DarkCrypt) map.getCurrentRoom();
+                    timer = darkCrypt.new Timer(p);
+                    timerThread = new Thread(timer);
+                    timerThread.start();
+                }
+            } else {
+                // Se usciamo dalla DarkCrypt, fermiamo il timer
+                if (timerThread != null && timerThread.isAlive()) {
+                    timer.stop();
+                    timerThread.interrupt();
+                    timerThread = null;
+                    timer = null;
                 }
             }
 
@@ -138,12 +163,6 @@ public class Story {
                             }
                         }
                     }
-                    if (map.getCurrentRoom().getMoney() > 0) {
-                        uitxt = (uitxt + "\nCi sono " + map.getCurrentRoom().getMoney()
-                                + " monete. Le raccogli di colpo!");
-                        p.setMoney(p.getMoney() + map.getCurrentRoom().getMoney());
-                        map.getCurrentRoom().setMoney(0);
-                    }
                 } else if (par.getObject() != null && par.getObject().isVisible()) {
                     int k = -1;
                     for (int i = 0; i < map.getCurrentRoom().getObjects().size() && k == -1; i++) {
@@ -179,11 +198,8 @@ public class Story {
                                 p.addToInventory(map.getCurrentRoom().getObjects().get(i));
                                 vm.writeOnScreen(map.getCurrentRoom().getObjects().get(i).getName()
                                         + " aggiunto al tuo inventario");
-                                if (map.getCurrentRoom().getObjects().get(i).getAlias() != null
-                                        && map.getCurrentRoom().getObjects().get(i).getAlias().contains("pozione"))
-                                    map.getCurrentRoom().getPotion();
-                                map.getCurrentRoom().getObjects().remove(i);
-                                break;
+                                map.getCurrentRoom().getObjects()
+                                        .removeIf(obj -> obj.getName().equals(par.getObject().getName()));
                             } else {
                                 vm.writeOnScreen("Non puoi raccogliere questo oggetto");
                             }
@@ -237,7 +253,7 @@ public class Story {
             if (par.getCommand().getName().equals("silenzio")) {
                 map.getCurrentRoom().riddle();
             }
-            
+
             // Inserimento "adesso " per risoluzione di riddle2
             if (par.getCommand().getName().equals("adesso")) {
                 map.getCurrentRoom().riddle2();
@@ -283,6 +299,21 @@ public class Story {
                     map.getCurrentRoom().talkTo(p, par.getObject());
                 } else {
                     vm.writeOnScreen("Con chi vorresti parlare?");
+                }
+            }
+
+            if (par.getCommand().getName().equals("infila")) {
+                int k = -1;
+                boolean usedRing = false;
+                for (int i = 0; i < p.getInventory().size() && k == -1; i++) {
+                    if (p.getInventory().get(i).getName().equals("Anello dell'eternità")) {
+                        k = i;
+                        usedRing = true;
+                        end = true;
+                    }
+                }
+                if (!usedRing) {
+                    vm.writeOnScreen("Non hai nulla da indossare.");
                 }
             }
 
@@ -443,14 +474,6 @@ public class Story {
                 map.getCurrentRoom().insert(p);
             }
 
-            // Inserimento "dai". Attiva l'interazione di cessione di un oggetto specificato
-            if (par.getCommand().getName().equals("dai")) {
-                if (par.getObject() != null)
-                    map.getCurrentRoom().give(p, par.getObject());
-                else
-                    vm.writeOnScreen("Specifica cosa vuoi cedere. Può darsi che l'oggetto non sia nel tuo inventario.");
-            }
-
             if (!map.getCurrentRoom().getMsg().equals("")) { // Fa visualizzare il messaggio accumulato nelle
                                                              // interazioni delle diverse stanze sulla interfaccia
                 if (map.getCurrentRoom().getMsg().equals("FINE"))
@@ -459,7 +482,7 @@ public class Story {
                     vm.writeOnScreen(map.getCurrentRoom().getMsg());
                     if (p.getCurrentHp() <= 0) { // In caso di trappole che diminuiscono la vita, se la vita diventa <=
                                                  // 0, ciò viene notificato su interfaccia
-                        vm.writeOnScreen(map.getCurrentRoom().getMsg() + " ma sei morto per la caduta...");
+                        vm.writeOnScreen(map.getCurrentRoom().getMsg() + " ma sei morto per la ferita...");
                         vm.defeatScreen();
                     }
                     map.getCurrentRoom().setMsg("");
@@ -480,33 +503,17 @@ public class Story {
 
     public void start(VisibilityManager vm) {
         vm.writeOnScreen(
-                "In questo gioco impersonerai un giovanissimo avventuriero in un ambiente fantasy.\nTi ritrovi a dover affrontare la malattia di tua madre, contro la quale\n"
+                "In questo gioco impersonerai un avventuriero in un ambiente fantasy.\nIl tuo obbiettivo è semplice quanto assurdo: trovare l'anello mistico che ti renderà immortale.\n\n"
                         +
-                        "neanche i chierici del villaggio hanno potuto far nulla.\nL'unica speranza per salvarla è cercare il vecchio sciamano rifugiatosi,\nda ormai molto tempo, sulla montagna oltre la foresta a NORD del villaggio...\n\n"
+                        "Nel caso avessi dubbi sul come proseguire, 'osservare' ciò che ti circonda può aiutare.\nPuoi 'usare' solo gli oggetti che possiedi nel tuo inventario.\n"
                         +
-                        "Nel caso avessi dubbi sul come proseguire, OSSERVARE ciò che ti circonda può aiutare.\nPuoi USARE solo gli oggetti che possiedi nel tuo inventario.\nSe incontrerai nemici sarai costretto ad ATTACCARLI e COMBATTERLI per avanzare\nPer interagire con i vari elementi, basterà un minimo di buon senso...\n"
-                        +
-                        "Per spostarti PROSEGUI in direzione dei punti cardinali NORD, SUD, EST e OVEST.\n(L'avventuriero seguirà i tuoi comandi coniugati all'imperativo seconda persona singolare)\n\nBuona Fortuna!");
+                        "Per spostarti 'prosegui'' in direzione dei punti cardinali NORD, SUD, EST e OVEST.\n(L'avventuriero seguirà i tuoi comandi coniugati all'imperativo seconda persona singolare)\n\nBuona Fortuna!");
     }
 
-    public void ending(Player p, Room house, VisibilityManager vm) {
+    public void ending(Player p, VisibilityManager vm) {
         String uitxt;
-        boolean c = false;
-        uitxt = "Dai la pozione dello sciamano a tua madre, gliela fai bere tutta d'un fiato e allo stremo\ndelle forze si accascia sul letto in un sonno profondo.\n";
-        for (int i = 0; i < p.getInventory().size(); i++)
-            if (p.getInventory().get(i).getName().equals("Ciondolo")) { // Finale segreto se si è ancora in possesso
-                                                                        // dello Stobj con nome "Ciondolo"
-                uitxt = uitxt
-                        + "Aspettando il suo risveglio e ricontrollando il tuo zaino,\nti ritrovi con il ciondolo fra le mani. Per la prima scopri di poterlo aprire...\nNon credi ai tuoi occhi:\nNel ciondolo sono ritratte in miniatura tre figure, te, tua madre e un uomo,\nle cui vesti sembrano essere proprio quelle della figura incappucciata trovata\nnella stanza dello sciamano sulla montagna...\n";
-                c = true;
-            }
-        if (!c) {
-            for (int i = 0; i < house.getObjects().size(); i++)
-                if (house.getObjects().get(i).getName().equals("Ciondolo"))
-                    uitxt = uitxt
-                            + "Aspettando il suo risveglio ti ritrovi con il ciondolo fra le mani.\nPer la prima scopri di poterlo aprire... Non credi ai tuoi occhi:\nNel ciondolo sono ritratte in miniatura tre figure, te, tua madre e un uomo,\nle cui vesti sembrano essere proprio quelle della figura incappucciata trovata\nnella stanza dello sciamano sulla montagna...\n";
-        }
+        uitxt = "Finalmente, l'anello dell'eternità è ora tra le tue mani. Una volta messo al dito la tua visione sparisce... cadi in un sonno profondo.\n";
         vm.writeOnExitScreen(uitxt
-                + "\nPassano parecchie ore prima che si risvegli, ma la mattina del giorno dopo apre gli\nocchi ed è contenta di poterti riabbracciare.\nCe l'hai fatta, l'hai salvata.\nFine.");
+                + "\nQuanto tempo è passato? Al tuo risveglio, l'anello è ancora al tuo dito, ma non hai idea di dove ti trovi.\nUn vasto, piano prato di erba verde si estende per kilometri, niente oltre che l'erba è visibile fino all'orizzonte.\nIl cielo è illuminato da una grande luna piena. Cosa succederà ora?");
     }
 }

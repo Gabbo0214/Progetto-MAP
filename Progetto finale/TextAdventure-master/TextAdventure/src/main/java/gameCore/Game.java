@@ -27,7 +27,6 @@ public class Game {
     Parser parser = new Parser();
     CommandList cl = new CommandList();
     String inventoryStatus = "";
-    boolean combat = false;
 
     public static void main(String[] args){
         new Game();
@@ -78,7 +77,6 @@ public class Game {
                       vm.hideSaved();
                       vm.titleToGame();
                       defaultSetup();
-                      vm.setMoneyCount(player.getMoney());
                       break;
 
                   case "submit": //Click su "Submit " o pressione del tasto Invio (Enter)
@@ -92,12 +90,11 @@ public class Game {
                       boolean end = story.nextMove(par, player, map, vm); //true se si è raggiunti l'ultima interazione, false altrimenti
                       vm.setHpLabel(player.getCurrentHp(),player.getTotHp());
                       vm.campoFocus();
-                      vm.setMoneyCount(player.getMoney());
                       
                       //Se end == true viene visualizzata l'ultima interazione prima della schermata finale
                       if (end){
                           vm.backToMenu();
-                          story.ending(player, map.getCurrentRoom(), vm);
+                          story.ending(player, vm);
                           }
                       break;
 
@@ -106,16 +103,6 @@ public class Game {
                       vm.showSaved(fw.saveMapDataToFile(mapfile, map), fw.savePlayerDataToFile(playerfile, player));
                       vm.campoFocus();
                       break;
-
-                   case "scappa": //Click su "scappa" in fase di combattimento, scappa dal combattimento e torna alla stanza precendente specificandone il nome
-                           vm.hideSaved();
-                           vm.setNormalFont(18);
-                           map.back();
-                           vm.hideFightButtons();
-                           vm.setMainTextPanelSize(50,100,650,300);
-                           vm.writeOnScreen("Sei scappato dalla battaglia. Sei tornato qui: " + map.getCurrentRoom().getName());
-                           combat = false;
-                       break;
 
                    case "exitMenu": //Click su "Esci". Porta alla schermata di conferma dell'uscita
                        vm.hideSaved();
@@ -129,14 +116,11 @@ public class Game {
                        map = new Map();
                        player = new Player();
                        vm.hideExitConfirm();
-                       combat = false;
                        break;
 
                    case "no": //Click su "No" nella schermata di conferma dell'uscita. Torna al gioco
                        vm.hideExitConfirm();
                        vm.showMainGameScreen();
-                       if (combat)
-                           vm.showFightButtons();
                        break;
 
                    case "exit": //Click su "Esci" nel menù principale. Chiude la finestra del gioco
@@ -178,7 +162,6 @@ public class Game {
             player = new Player();
             
             vm.setHpLabel(player.getCurrentHp(),player.getTotHp());
-            vm.setMoneyCount(0);
             inventoryStatus="close";
             vm.writeOnScreen(map.getCurrentRoom().getName() + "\n================================================\n" + map.getCurrentRoom().getDescription());
             vm.campoFocus();
@@ -189,7 +172,6 @@ public class Game {
         public void loadSetup(){
         String uitxt = "";
             vm.setHpLabel(player.getCurrentHp(),player.getTotHp());
-            vm.setMoneyCount(player.getMoney());
             inventoryStatus="close";
             uitxt = (map.getCurrentRoom().getName() + "\n================================================\n" + map.getCurrentRoom().getDescription());
             vm.writeOnScreen(uitxt);

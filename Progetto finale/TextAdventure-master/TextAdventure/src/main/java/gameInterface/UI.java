@@ -23,8 +23,8 @@ import gameCore.Game.ChoiceHandler;
 
 public class UI{
     private JPanel titleNamePanel, startButtonPanel, mainTextPanel, choiceButtonPanel, playerPanel, inventoryPanel, fightPanel, savePanel, ynPanel;
-    private JLabel hpNumberLable;
-    private JLabel moneyCountLabel;
+    private JLabel hpNumberLabel;
+    private JLabel timerCountLabel;
     private JLabel saveConfirm;
     private JButton startButton;
     private JButton submit;
@@ -294,7 +294,7 @@ public class UI{
         campo.setFont(normalFont);
         campo.addActionListener(cHandler);
         campo.setActionCommand("submit");
-        campo.setText("                            Cosa devo fare?");
+        campo.setText("                            Cosa devo fare?"); 
 
         //Al click del mouse su campo, la scritta "Cosa devo fare?" scompare
         campo.addMouseListener(new MouseAdapter(){
@@ -378,16 +378,6 @@ public class UI{
         attackButton.setActionCommand("attacca");
         fightPanel.add(attackButton);
         
-        //Pulsante Usa pozione in combattimento
-        JButton useButton = new JButton("Usa pozione");
-        useButton.setBackground(Color.black);        
-        useButton.setForeground(Color.white);
-        useButton.setFont(new Font("Times New Roman", Font.PLAIN, 13));
-        useButton.setFocusPainted(false);
-        useButton.addActionListener(cHandler);
-        useButton.setActionCommand("usa");
-        fightPanel.add(useButton);
-        
         //Pulsante Scappa in combattimento
         JButton runButton = new JButton("Scappa");
         runButton.setBackground(Color.black);        
@@ -415,22 +405,22 @@ public class UI{
         playerPanel.add(hpLabel);
         
         //Label per il numero effettivo degli HP del giocatore (Correnti/Totali)
-        hpNumberLable= new JLabel();
-        hpNumberLable.setForeground(Color.white);
-        hpNumberLable.setFont(normalFont);
-        playerPanel.add(hpNumberLable);
+        hpNumberLabel= new JLabel();
+        hpNumberLabel.setForeground(Color.white);
+        hpNumberLabel.setFont(normalFont);
+        playerPanel.add(hpNumberLabel);
         
-        //Label per le Monete del giocatore
-        JLabel moneyLabel = new JLabel("MONETE:");
-        moneyLabel.setForeground(Color.white);
-        moneyLabel.setFont(normalFont);
-        playerPanel.add(moneyLabel);
+        //Label per il tempo del timer
+        JLabel timer = new JLabel("TEMPO:");
+        timer.setForeground(Color.white);
+        timer.setFont(normalFont);
+        playerPanel.add(timer);
         
         //Label per il numero effettivo di monete del giocatore 
-        moneyCountLabel= new JLabel();
-        moneyCountLabel.setForeground(Color.white);
-        moneyCountLabel.setFont(normalFont);
-        playerPanel.add(moneyCountLabel); 
+        timerCountLabel= new JLabel();
+        timerCountLabel.setForeground(Color.white);
+        timerCountLabel.setFont(normalFont);
+        playerPanel.add(timerCountLabel); 
 
         //Pulsante Zaino per l'apertura e chiusura dell'inventario
         JButton inventoryButton = new JButton("Zaino");
@@ -511,10 +501,6 @@ public class UI{
         return inventoryPanel;
     }
 
-    public JPanel getFightPanel() {
-        return fightPanel;
-    }
-
     public JPanel getSavePanel() {
         return savePanel;
     }
@@ -524,11 +510,11 @@ public class UI{
     }
 
     public JLabel getHpNumberLable() {
-        return hpNumberLable;
+        return hpNumberLabel;
     }
 
-    public JLabel getMoneyCountLabel() {
-        return moneyCountLabel;
+    public JLabel getTimerCountLabel() {
+        return timerCountLabel;
     }
 
     public JLabel getSaveConfirm() {
@@ -565,6 +551,10 @@ public class UI{
 
     public void setPressed(boolean pressed) {
         this.pressed = pressed;
+    }
+   
+    public void updateTimer(int secondsRemaining) {
+        timerCountLabel.setText(""+secondsRemaining); // Aggiorna il testo del timerCountLabel
     }
     
     

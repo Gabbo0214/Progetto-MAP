@@ -5,40 +5,27 @@ package roomSet;
 
 import base.Room;
 import base.Stobj;
-import gameCore.Player;
-import objectSet.Weapon;
 
 public class MisteryRoom extends Room {
     
    public MisteryRoom(){
-       Stobj Vigilante = new Stobj("Vigilante", "Il vigilante, avvolto in un mantello scuro, sorveglia la Camera dei Segreti. Con occhi verdi brillanti e una lancia minacciosa, è il guardiano silenzioso e implacabile dei misteri antichi.");
-       this.addObject(Vigilante);
+    Stobj hintOne = new Stobj();
+    hintOne.setName("libro giallo");
+    hintOne.setDescription("Il libro rosso dice la verità. Se il tempo ti da dubbi, tira la leva destra e poi la sinistra.");
+    hintOne.setPickupable(false);
+    this.addObject(hintOne);
+
+    Stobj hintTwo = new Stobj();
+    hintTwo.setName("libro Verde");
+    hintTwo.setDescription("Il libro Giallo mente ed il rosso anche. Se il tempo ti da dubbi, tira la leva dal centro e poi la destra.");
+    hintTwo.setPickupable(false);
+    this.addObject(hintTwo);
+
+    Stobj hintThree = new Stobj();
+    hintThree.setName("libro rosso");
+    hintThree.setDescription("Il libro Verde mente ed il Giallo anche. Se il tempo ti da dubbi, tira la leva dal destra e poi quella al centro.");
+    hintThree.setPickupable(false);
+    this.addObject(hintThree);
    }
 
-   /**
-    * Interazione di dialogo con la ninfa del lago. Interazione basata sul nome di Stobj person. Nell'interazione con la ninfa, all'arma contenuta nella lista Inventory del Player p viene incrementato il Dmg di 5. Inoltre viene aggiunto uno Stobj con nome "Consiglio" all'inventario. Al termine dell'interazione la ninfa viene rimossa dalla  lista degli interagibili della stanza
-    * @param p
-    * @param person 
-    */
-   @Override
-   public void talkTo(Player p, Stobj person){
-       if (person != null) {
-               int k = -1;
-               Stobj adv = new Stobj("Consiglio", "Un pezzo di carta sul quale hai appuntato il consiglio della ninfa del lago.\nDice di tirare la leva destra.");
-               adv.setVisible(true);
-               adv.setAlias(new String[]{"appunto"});
-               for (int i = 0; i < p.getInventory().size() && k < 0; i++)
-                   if (p.getInventory().get(i).getName().equals("Spada") || p.getInventory().get(i).getName().equals("Ascia"))
-                       k = i;
-               ((Weapon) p.getInventory().get(k)).setDamage(((Weapon) p.getInventory().get(k)).getDamage() + 2);
-               p.getInventory().get(k).setDescription(p.getInventory().get(k).getDescription() + "\nL'arma è stata incantata dalla ninfa, rendendola più affilata e\nmagicamente più potente. Il fabbro ne sarebbe fiero...");
-               this.setMsg("La Ninfa ti ringrazia per averla liberata dal Ciclope e, recitando una strana formula\nmagica, incanta la tua arma aumentandone l'efficacia (danno +2)." +
-                       "\nPurtroppo non può far molto altro per aiutarti nella tua avventura, ma ti racconta\nche una volta ha visto lo sciamano entrare nella montagna tirando la leva alla sua destra"
-                       + "\n\nAppunti il consiglio della ninfa su un foglietto che riponi nel tuo zaino.\n\nLa ninfa ti ringrazia un'ultima volta prima di sparire davanti ai tuoi occhi.");
-               p.addToInventory(adv);
-               this.getObjects().remove(0);
-       } else {
-           this.setMsg("La ninfa non è più qui e non vedi tracce per capire dove sia andata o seguirla...");
-       }
-   }
 }
