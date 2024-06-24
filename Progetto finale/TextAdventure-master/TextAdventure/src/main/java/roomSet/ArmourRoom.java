@@ -16,8 +16,8 @@ public class ArmourRoom extends RoomWDoor {
         this.addObject(obj);
 
         Stobj stand = new Stobj();
-        stand.setName("Armatura");
-        stand.setAlias(new String[]{"corazza", "armatura"});
+        stand.setName("armatura");
+        stand.setAlias(new String[]{"corazza"});
         stand.setDescription("Una delle tante armature. Il suo scintillio ti suggerisce appartenesse a qualcuno di molto importante, forse un valoroso eroe.\nCome fa ad essere ancora in condizioni perfette?");
         stand.setPickupable(false);
         this.addObject(stand);

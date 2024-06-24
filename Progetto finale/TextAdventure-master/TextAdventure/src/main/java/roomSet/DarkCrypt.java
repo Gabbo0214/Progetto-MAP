@@ -1,6 +1,3 @@
-/**
- * Definizione di cripta oscura
- */
 package roomSet;
 
 import base.Room;
@@ -16,30 +13,28 @@ public class DarkCrypt extends Room {
         Stobj pulsatingHeart = new Stobj();
 
         weepingStatue.setName("statua piangente");
-        weepingStatue.setAlias(new String[]{"statua", "figura","scultura"});
+        weepingStatue.setAlias(new String[]{"statua", "figura", "scultura"});
         weepingStatue.setDescription("La statua di una donna piangente.\nUna larga fessura è presente nel mezzo del petto.");
         weepingStatue.setPickupable(false);
         this.addObject(weepingStatue);
 
         plaque.setName("strana roccia");
-        plaque.setAlias(new String[]{"masso", "sasso","roccia"});
+        plaque.setAlias(new String[]{"masso", "sasso", "roccia"});
         plaque.setDescription("Ispezionando più da vicino la roccia, è possibile scorgere una scritta incavata sulla superficie.\n" + //
                         "Recita: Il malvagio si maschera con le pelli dei giusti e degli innocenti.\n" + //
                         "Trafiggerai il suo cuore?");
         plaque.setPickupable(false);
         this.addObject(plaque);
 
-
         demonStatue.setName("statua inquietante");
-        demonStatue.setAlias(new String[]{"statua", "demone","scultura"});
+        demonStatue.setAlias(new String[]{"statua", "demone", "scultura"});
         demonStatue.setDescription("La figura irrequieta trafitta dalla spada fa accaponare la pelle.\n" + //
                         "Ti passa immediatamente la voglia di fissarla.");
         demonStatue.setPickupable(false);
         demonStatue.setVisible(false);
         this.addObject(demonStatue);
 
-       
-        demonStatue.setName("cuore pulsante");
+        pulsatingHeart.setName("cuore pulsante");
         pulsatingHeart.setAlias(new String[]{"cuore"});
         pulsatingHeart.setDescription("Ciò che sembra essere un cuore pulsante fatto di pietra.\n" + //
                         "La bocca della statua lo ha lasciato cadere una volta che è stata trafitta.");
@@ -48,28 +43,21 @@ public class DarkCrypt extends Room {
         this.addObject(pulsatingHeart);
     }
 
-    /**
-     * Interazione per l'inserimento della spada. Al momento dell'inserimento,
-     * viene ottenuto un oggetto.
-     * 
-     * @param p
-     */
     @Override
     public void insert(Player p) {
-
         boolean g = false;
-        int k=-1;
+        int k = -1;
         for (int i = 0; i < p.getInventory().size(); i++) {
             if (p.getInventory().get(i).getName().equals("Spada")) {
                 g = true;
                 k = i;
-            } 
+                break;
+            }
         }
         if (g) {
             this.setMsg("Hai trafitto la statua con la tua spada.\nImprovvisamente, la faccia della donna sembra trasformarsi\nnel ghigno di quello che pare essere un demone.\nDalla bocca della statua cade qualcosa.");
             p.removeFromInventory(k);
             this.getObjects().removeIf(obj -> obj.getName().equals("statua piangente"));
-
             for (Stobj obj : this.getObjects()) {
                 if (obj.getName().equals("statua inquietante")) {
                     obj.setVisible(true);
@@ -84,7 +72,7 @@ public class DarkCrypt extends Room {
                     break;
                 }
             }
-        }else {
+        } else {
             this.setMsg("Non hai nulla da inserire");
         }
     }
