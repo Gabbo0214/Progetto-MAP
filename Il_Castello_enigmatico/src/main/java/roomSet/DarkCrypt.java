@@ -4,6 +4,7 @@ import gameInterface.UI;
 import base.Room;
 import base.Stobj;
 import gameCore.Player;
+import gameCore.Map;
 
 public class DarkCrypt extends Room {
 
@@ -44,6 +45,14 @@ public class DarkCrypt extends Room {
         pulsatingHeart.setPickupable(false);
         pulsatingHeart.setVisible(false);
         this.addObject(pulsatingHeart);
+    }
+
+    public void handleTimeout(Player player, Map map) {
+        player.setCurrentHp(player.getCurrentHp() - 10);
+        this.getEast().setMsg(
+                "Le presenze sono diventate irrequiete! Sei rimasto nella stanza per troppo a lungo e ti hanno cacciato!\n\n"
+                        + "Sei tornato a: " + this.getEast().getName());
+        map.back();
     }
 
     @Override
@@ -87,10 +96,12 @@ public class DarkCrypt extends Room {
         private volatile boolean running = true;
         private Player player;
         private UI ui;
+        private Map map;
 
-        public Timer(Player player, UI ui) {
+        public Timer(Player player, UI ui, Map map) {
             this.player = player;
             this.ui = ui;
+            this.map = map;
         }
 
         @Override
@@ -100,8 +111,8 @@ public class DarkCrypt extends Room {
                 System.out.println("Timer: " + count);
                 ui.updateTimer(count); // Aggiorna l'interfaccia utente ogni secondo
                 count--;
-                if (count == 0) { // Verifica se il timer non è stato fermato
-                    handleTimeout();
+                if (count == 0) {
+                    handleTimeout(player, map);
                 }
                 try {
                     Thread.sleep(1000); // Pausa di un secondo
@@ -114,13 +125,6 @@ public class DarkCrypt extends Room {
 
         public void stop() {
             running = false;
-        }
-
-        private void handleTimeout() {
-            player.setCurrentHp(player.getCurrentHp() - 10);
-            DarkCrypt.this.getEast().setMsg(
-                    "Le presenze sono diventate irrequiete! Sei rimasto nella stanza per troppo a lungo e ti hanno cacciato!\n\n"
-                            + "Sei tornato a: " + DarkCrypt.this.getEast().getName());
         }
     }
 }

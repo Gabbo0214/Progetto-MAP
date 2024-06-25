@@ -85,7 +85,7 @@ public class Story {
                     // Avvia il timer solo se non è già attivo
                     if (timerThread == null || !timerThread.isAlive()) {
                         DarkCrypt darkCrypt = (DarkCrypt) map.getCurrentRoom();
-                        timer = darkCrypt.new Timer(p, ui);
+                        timer = darkCrypt.new Timer(p, ui, map);
                         timerThread = new Thread(timer);
                         timerThread.start();
                     }
