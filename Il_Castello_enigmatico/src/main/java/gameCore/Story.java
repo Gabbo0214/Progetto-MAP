@@ -15,13 +15,39 @@ import java.util.stream.Collectors;
 public class Story {
 
     private Thread timerThread;
+    private Thread speedrunTimerThread;
     private DarkCrypt.Timer timer;
     private UI ui;
+    private SpeedRunTimer speedrunTimer;
+    private boolean speedrunActive;
 
     public Story(UI ui) {
         this.timerThread = null;
+        this.speedrunTimerThread = null;
         this.timer = null;
         this.ui = ui; // Initialize ui
+        this.speedrunTimer = new SpeedRunTimer();
+        this.speedrunActive = false;
+    }
+
+
+    // New method to stop the speedrun timer
+    private void stopSpeedrunTimer() {
+        if (speedrunActive) {
+            speedrunTimer.stop();
+            try {
+                speedrunTimerThread.join();
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
+            speedrunActive = false;
+        }
+    }
+
+    // New method to reset the speedrun timer
+    private void resetSpeedrunTimer() {
+        stopSpeedrunTimer();
+        speedrunTimer = new SpeedRunTimer();
     }
 
     /**
@@ -259,19 +285,7 @@ public class Story {
             if (par.getCommand().getName().equals("adesso")) {
                 map.getCurrentRoom().riddle2();
             }
-            // Inserimento "inventario". Consente di visualizzare l'elenco di ciò che è
-            // contenuto nell'inventario
-            if (par.getCommand().getName().equals("inventario")) {
-                if (!p.getInventory().isEmpty()) {
-                    uitxt = ("Oggetti attualmente nel tuo inventario:");
-                    for (Stobj inv : p.getInventory()) {
-                        uitxt = (uitxt + "\n- " + inv.getName());
-                    }
-                } else
-                    uitxt = ("Non hai niente nello zaino");
-                vm.writeOnScreen(uitxt);
-            }
-
+            
             // Inserimento "indietro" o sinonimi. Porta alla stanza precedente
             if (par.getCommand().getName().equals("indietro")) {
                 if (map.getPreviousRoom() != null) {
@@ -279,17 +293,6 @@ public class Story {
                     move = true;
                 } else {
                     vm.writeOnScreen("Non puoi tornare indietro.");
-                }
-            }
-
-            // Inserimento "compra" o sinonimi (vale solo in blksmith o alchemshop). Attiva
-            // l'interazione per l'acquisto dell'oggetto specificato
-            if (par.getCommand().getName().equals("compra")) {
-                if (par.getObject() != null) {
-                    map.getCurrentRoom().buy(p, par.getObject());
-                } else {
-                    vm.writeOnScreen(
-                            "Devi specificare cosa vuoi comprare, nessuno può capire i tuoi bisogni meglio di te.\nPuò darsi che tu abbia già comprato quell'articolo o che non sia disponibile.");
                 }
             }
 
@@ -360,116 +363,6 @@ public class Story {
                 }
             }
 
-            // Inserimento "bevi" (vale solo per le pozioni)
-            if (par.getCommand().getName().equals("bevi")) {
-                if (par.getObject() != null) {
-                    if (par.getObject().getName().equals("Pozione")) {
-                        if (p.getCurrentHp() < p.getTotHp()) {
-                            int k = -1;
-                            for (int i = 0; i < p.getInventory().size() && k == -1; i++) {
-                                if (p.getInventory().get(i).getName().equals("Pozione")) {
-                                    k = i;
-                                }
-                            }
-                            if (k > -1) {
-                                String heal = p.getInventory().get(k).use(p);
-                                vm.writeOnScreen(
-                                        "Hai bevuto una pozione. La tua salute è stata ripristinata di " + heal + "HP");
-                                p.removeFromInventory(k);
-                            } else {
-                                vm.writeOnScreen("Non hai pozioni.");
-                            }
-                        } else {
-                            vm.writeOnScreen("La tua salute è già al massimo, non hai bisogno di bere pozioni.");
-                        }
-                    } else {
-                        vm.writeOnScreen("Non puoi berlo.");
-                    }
-                } else {
-                    int pot = 0;
-                    for (Stobj inv : p.getInventory()) {
-                        if (inv.getName().equals("Pozione")) {
-                            pot++;
-                        }
-                    }
-                    if (pot > 0) {
-                        vm.writeOnScreen("Hai ancora " + pot + "x Pozione che puoi bere.\n");
-                    } else {
-                        vm.writeOnScreen("Non hai nulla da bere.");
-                    }
-                }
-            }
-
-            // Inserimento "leggi" (vale solo per il consiglio della ninfa)
-            if (par.getCommand().getName().equals("leggi")) {
-                if (par.getObject() != null) {
-                    if (par.getObject().getName().equals("Consiglio")) {
-                        for (Stobj inv : p.getInventory()) {
-                            if (inv.getName().equals("Consiglio")) {
-                                vm.writeOnScreen(inv.getDescription());
-                                break;
-                            }
-                        }
-                    } else {
-                        vm.writeOnScreen("Non puoi leggerlo.");
-                    }
-                } else {
-                    boolean adv = false;
-                    for (Stobj inv : p.getInventory()) {
-                        if (inv.getName().equals("Consiglio")) {
-                            adv = true;
-                            break;
-                        }
-                    }
-                    if (adv) {
-                        vm.writeOnScreen("L'unica cosa che hai da leggere è il consiglio che ti ha dato la ninfa.");
-                    } else {
-                        vm.writeOnScreen("Non c'è nulla dal leggere");
-                    }
-                }
-            }
-
-            // Inserimento "mangia" (vale solo per il frutto)
-            if (par.getCommand().getName().equals("mangia")) {
-                if (par.getObject() != null) {
-                    if (par.getObject().getName().equals("Frutto")) {
-                        if (p.getCurrentHp() < p.getTotHp()) {
-                            for (Stobj inv : p.getInventory()) {
-                                if (inv.getName().equals("Frutto")) {
-                                    int x = p.getCurrentHp() + 20 - p.getTotHp();
-                                    if (x >= 0) {
-                                        p.setCurrentHp(p.getTotHp());
-                                        vm.writeOnScreen("Hai mangiato il frutto che ti ha saziato completamente!");
-                                    } else {
-                                        p.setCurrentHp(p.getCurrentHp() + 20);
-                                        vm.writeOnScreen("Hai mangiato il frutto e hai recuperato 20 HP");
-                                    }
-                                    p.getInventory().remove(inv);
-                                    break;
-                                }
-                            }
-                        } else {
-                            vm.writeOnScreen("La tua salute è già al massimo, non hai particolarmente fame.");
-                        }
-                    } else {
-                        vm.writeOnScreen("Non puoi mangiarlo");
-                    }
-                } else {
-                    boolean f = false;
-                    for (Stobj inv : p.getInventory()) {
-                        if (inv.getName().equals("Frutto")) {
-                            f = true;
-                            break;
-                        }
-                    }
-                    if (f) {
-                        vm.writeOnScreen("L'unica cosa che hai da mangiare è il frutto che hai raccolto.");
-                    } else {
-                        vm.writeOnScreen("Non hai nulla da mangiare");
-                    }
-                }
-            }
-
             // Inserimento "inserisci". Attiva l'interazione per l'inserimento degli oggetti
             if (par.getCommand().getName().equals("inserisci")) {
                 map.getCurrentRoom().insert(p);
@@ -509,6 +402,14 @@ public class Story {
                         "Nel caso avessi dubbi sul come proseguire, 'osservare' ciò che ti circonda può aiutare.\nPuoi 'usare' solo gli oggetti che possiedi nel tuo inventario.\n"
                         +
                         "Per spostarti 'prosegui'' in direzione dei punti cardinali NORD, SUD, EST e OVEST.\n(L'avventuriero seguirà i tuoi comandi coniugati all'imperativo seconda persona singolare)\n\nBuona Fortuna!");
+
+        // Avvia la speedrun
+        if (!speedrunActive) {
+            resetSpeedrunTimer();
+            speedrunActive = true;
+            speedrunTimerThread = new Thread(speedrunTimer);
+            speedrunTimerThread.start();
+        }
     }
 
     public void ending(Player p, VisibilityManager vm) {
@@ -516,5 +417,8 @@ public class Story {
         uitxt = "Finalmente, l'anello dell'eternità è ora tra le tue mani. Una volta messo al dito la tua visione sparisce... cadi in un sonno profondo.\n";
         vm.writeOnExitScreen(uitxt
                 + "\nQuanto tempo è passato? Al tuo risveglio, l'anello è ancora al tuo dito, ma non hai idea di dove ti trovi.\nUn vasto, piano prato di erba verde si estende per kilometri, niente oltre che l'erba è visibile fino all'orizzonte.\nIl cielo è illuminato da una grande luna piena. Cosa succederà ora?");
+    
+        // Ferma la speedrun
+        stopSpeedrunTimer();
     }
 }

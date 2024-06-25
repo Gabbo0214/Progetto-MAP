@@ -78,20 +78,11 @@ public class CommandList {
 
         Command silenzio = new Command("silenzio");
         this.commands.add(silenzio);
-        
-        Command inventory = new Command("inventario");
-        inventory.setAlias(new String[]{"zaino"});
-        this.commands.add(inventory);
 
         Command insert = new Command("inserisci");
         insert.setAlias(new String[]{"appoggia", "incastra", "avvicina", "metti"});
         this.commands.add(insert);
         
-        Command give = new Command("dai");
-        give.setAlias(new String[]{"porgi", "offri", "scambia", "vendi"});
-        this.commands.add(give);
-
-
         Command adesso = new Command("adesso");
         this.commands.add(adesso);
     }
