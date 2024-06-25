@@ -163,12 +163,10 @@ public class VisibilityManager {
       */
      public void showNameInputScreen() {
         ui.getMainTextArea().setVisible(false);
-        ui.getChoiceButtonPanel().setVisible(false);
         ui.getPlayerPanel().setVisible(false);
         ui.getInventoryPanel().setVisible(false);
         ui.getYnPanel().setVisible(false);
         ui.getReturnToMenu().setVisible(false);
-        ui.getMainTextAreaExit().setVisible(false);
 
         ui.getNameInputPanel().setVisible(true);
     }

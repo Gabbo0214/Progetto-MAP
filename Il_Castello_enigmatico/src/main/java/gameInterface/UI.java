@@ -407,6 +407,12 @@ public class UI {
         timer.setFont(normalFont);
         playerPanel.add(timer);
 
+        // Inizializza timerCountLabel
+        timerCountLabel = new JLabel("");
+        timerCountLabel.setForeground(Color.white);
+        timerCountLabel.setFont(normalFont);
+        playerPanel.add(timerCountLabel);
+
         // Pulsante Zaino per l'apertura e chiusura dell'inventario
         JButton inventoryButton = new JButton("Zaino");
         inventoryButton.setBackground(Color.black);
