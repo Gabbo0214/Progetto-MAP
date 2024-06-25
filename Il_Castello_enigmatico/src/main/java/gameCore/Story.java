@@ -32,7 +32,7 @@ public class Story {
 
 
     // New method to stop the speedrun timer
-    private void stopSpeedrunTimer() {
+    public void stopSpeedrunTimer() {
         if (speedrunActive) {
             speedrunTimer.stop();
             try {
@@ -45,7 +45,7 @@ public class Story {
     }
 
     // New method to reset the speedrun timer
-    private void resetSpeedrunTimer() {
+    public void resetSpeedrunTimer() {
         stopSpeedrunTimer();
         speedrunTimer = new SpeedRunTimer();
     }
@@ -285,7 +285,7 @@ public class Story {
             if (par.getCommand().getName().equals("adesso")) {
                 map.getCurrentRoom().riddle2();
             }
-            
+
             // Inserimento "indietro" o sinonimi. Porta alla stanza precedente
             if (par.getCommand().getName().equals("indietro")) {
                 if (map.getPreviousRoom() != null) {
@@ -404,12 +404,10 @@ public class Story {
                         "Per spostarti 'prosegui'' in direzione dei punti cardinali NORD, SUD, EST e OVEST.\n(L'avventuriero seguirà i tuoi comandi coniugati all'imperativo seconda persona singolare)\n\nBuona Fortuna!");
 
         // Avvia la speedrun
-        if (!speedrunActive) {
             resetSpeedrunTimer();
             speedrunActive = true;
             speedrunTimerThread = new Thread(speedrunTimer);
             speedrunTimerThread.start();
-        }
     }
 
     public void ending(Player p, VisibilityManager vm) {

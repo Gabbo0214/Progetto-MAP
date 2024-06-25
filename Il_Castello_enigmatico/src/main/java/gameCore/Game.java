@@ -125,6 +125,7 @@ public class Game {
                     map = new Map();
                     player = new Player();
                     vm.hideExitConfirm();
+                    story.stopSpeedrunTimer();
                     break;
 
                 case "no": // Click su "No" nella schermata di conferma dell'uscita. Torna al gioco
@@ -138,6 +139,7 @@ public class Game {
 
                 case "BackToMenu": // Click su "Torna al menù principale" dalla schermata del caricamento fallito
                     vm.showTitleScreen();
+                    story.stopSpeedrunTimer();
                     break;
 
                     case "inventoryButton": //Click su "Zaino". Mostra il contenuto della lista Inventory del Player in un set di JLabel a scomparsa
