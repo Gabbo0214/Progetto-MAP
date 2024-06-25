@@ -192,15 +192,6 @@ public class VisibilityManager {
         Font f= new Font("Times New Roman", Font.PLAIN, size);
         ui.getMainTextArea().setFont(f);
      }
-
-     /**
-      * imposta il font per la fase di combattimento ricevendo in input la grandezza desiderata
-      * @param size 
-      */
-     public void setFightFont(int size){
-        Font f= new Font("Consolas", Font.PLAIN, size);
-        ui.getMainTextArea().setFont(f);
-     }
    
      /**
      * Visualizza sull'interfaccia, nell'area di testo principale, il testo text
@@ -255,7 +246,7 @@ public class VisibilityManager {
      }
 
      /**
-     * Restituisce il componente i-esimo dei lable facenti parte dell'inventare
+     * Restituisce il componente i-esimo dei label facenti parte dell'inventare
      * @param i
      * @return
      */

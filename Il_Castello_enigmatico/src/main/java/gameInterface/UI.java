@@ -22,8 +22,7 @@ import javax.swing.JTextField;
 import gameCore.Game.ChoiceHandler;
 
 public class UI {
-    private JPanel titleNamePanel, startButtonPanel, mainTextPanel, choiceButtonPanel, playerPanel, inventoryPanel,
-            fightPanel, savePanel, ynPanel;
+    private JPanel titleNamePanel, startButtonPanel, mainTextPanel, choiceButtonPanel, playerPanel, inventoryPanel, savePanel, ynPanel;
     private JLabel hpNumberLabel;
     private JLabel timer;
     private JLabel timerCountLabel;
@@ -32,7 +31,6 @@ public class UI {
     private JButton submit;
     private JButton startButton1;
     private JButton continueButton;
-    private JButton attackButton;
     private JButton exitButton1;
     private JButton exitButton2;
     private JButton yesButton;
@@ -147,7 +145,7 @@ public class UI {
         noButton.setBorder(null);
         ynPanel.add(noButton);
 
-        // Pulsante Torna al menù principale in caso di caricamento fallito o morte
+        // Pulsante Torna al menù principale in caso di caricamento fallimento o morte
         returnToMenu = new JButton("Torna al menu principale");
         returnToMenu.setBackground(Color.black);
         returnToMenu.setForeground(Color.white);
@@ -366,44 +364,6 @@ public class UI {
         window.add(savePanel);
         savePanel.setVisible(false);
 
-        // Pannello per la gestione della fase di combattimento
-        fightPanel = new JPanel();
-        fightPanel.setBounds(230, 530, 400, 50);
-        fightPanel.setBackground(Color.black);
-        fightPanel.setLayout(new GridLayout(1, 4));
-        window.add(fightPanel);
-        fightPanel.setVisible(false);
-
-        // Pulsante Attacca in combattimento
-        attackButton = new JButton("Attacca");
-        attackButton.setBackground(Color.black);
-        attackButton.setForeground(Color.white);
-        attackButton.setFont(normalFont);
-        attackButton.setFocusPainted(false);
-        attackButton.addActionListener(cHandler);
-        attackButton.setActionCommand("attacca");
-        fightPanel.add(attackButton);
-
-        // Pulsante Scappa in combattimento
-        JButton runButton = new JButton("Scappa");
-        runButton.setBackground(Color.black);
-        runButton.setForeground(Color.white);
-        runButton.setFont(normalFont);
-        runButton.setFocusPainted(false);
-        runButton.addActionListener(cHandler);
-        runButton.setActionCommand("scappa");
-        fightPanel.add(runButton);
-
-        // Pulsante Osserva in combattimento
-        JButton lookButton = new JButton("Osserva");
-        lookButton.setBackground(Color.black);
-        lookButton.setForeground(Color.white);
-        lookButton.setFont(normalFont);
-        lookButton.setFocusPainted(false);
-        lookButton.addActionListener(cHandler);
-        lookButton.setActionCommand("osserva");
-        fightPanel.add(lookButton);
-
         // Label per gli HP del giocatore
         JLabel hpLabel = new JLabel("HP:");
         hpLabel.setFont(normalFont);
@@ -421,12 +381,6 @@ public class UI {
         timer.setForeground(Color.white);
         timer.setFont(normalFont);
         playerPanel.add(timer);
-
-        // Label per il numero effettivo di monete del giocatore
-        timerCountLabel = new JLabel();
-        timerCountLabel.setForeground(Color.white);
-        timerCountLabel.setFont(normalFont);
-        playerPanel.add(timerCountLabel);
 
         // Pulsante Zaino per l'apertura e chiusura dell'inventario
         JButton inventoryButton = new JButton("Zaino");

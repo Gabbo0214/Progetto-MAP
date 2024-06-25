@@ -174,16 +174,6 @@ public class Room implements Serializable {
     }
 
     /**
-     * Interazione d'acquisto di base.
-     * 
-     * @param p
-     * @param buy
-     */
-    public void buy(Player p, Stobj buy) {
-        this.setMsg("Non c'è nulla da comprare");
-    }
-
-    /**
      * Interazione di base dell'apertura delle porte.
      * 
      * @param idir
