@@ -96,6 +96,7 @@ public class Story {
                         timerThread.interrupt();
                         timerThread = null;
                         timer = null;
+                        ui.updateTimer(-1);
                     }
                 }
             }

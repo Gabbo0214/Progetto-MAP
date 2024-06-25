@@ -21,9 +21,11 @@ import javax.swing.JTextField;
 
 import gameCore.Game.ChoiceHandler;
 
-public class UI{
-    private JPanel titleNamePanel, startButtonPanel, mainTextPanel, choiceButtonPanel, playerPanel, inventoryPanel, fightPanel, savePanel, ynPanel;
+public class UI {
+    private JPanel titleNamePanel, startButtonPanel, mainTextPanel, choiceButtonPanel, playerPanel, inventoryPanel,
+            fightPanel, savePanel, ynPanel;
     private JLabel hpNumberLabel;
+    private JLabel timer;
     private JLabel timerCountLabel;
     private JLabel saveConfirm;
     private JButton startButton;
@@ -38,40 +40,41 @@ public class UI{
     private JButton returnToMenu;
     private JTextField campo;
     private JTextArea mainTextArea, mainTextAreaExit;
-    private final Font normalFont= new Font("Times New Roman", Font.PLAIN, 18);
-    private final Font invFont=new Font("Times New Roman", Font.PLAIN, 14);
+    private final Font normalFont = new Font("Times New Roman", Font.PLAIN, 18);
+    private final Font invFont = new Font("Times New Roman", Font.PLAIN, 14);
     private String campotxt = "";
     private boolean pressed = false;
 
     /**
      * Creazione dell'interfaccia.
-     * @param cHandler 
+     * 
+     * @param cHandler
      */
-    public void createUI(ChoiceHandler cHandler){//}, InventoryHandler invHandler){
-        
-        //window. Finestra dell'interfaccia
+    public void createUI(ChoiceHandler cHandler) {// }, InventoryHandler invHandler){
+
+        // window. Finestra dell'interfaccia
         JFrame window = new JFrame();
-        window.setSize(840,650);
+        window.setSize(840, 650);
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.getContentPane().setBackground(Color.black);
         window.setLayout(null);
-        
-        //title screen. Schermata del titolo 
+
+        // title screen. Schermata del titolo
         titleNamePanel = new JPanel();
-        titleNamePanel.setBounds(100,100,600,300);
+        titleNamePanel.setBounds(100, 100, 600, 300);
         titleNamePanel.setBackground(Color.black);
         JLabel titleNameLabel = new JLabel("IL CASTELLO ENIGMATICO");
         titleNameLabel.setForeground(Color.white);
         titleNameLabel.setFont(new Font("Times New Roman", Font.PLAIN, 45));
         titleNamePanel.add(titleNameLabel);
-        
-        //Pannello del menù principale
-        startButtonPanel= new JPanel();
-        startButtonPanel.setBounds(310,400,200,100);
+
+        // Pannello del menù principale
+        startButtonPanel = new JPanel();
+        startButtonPanel.setBounds(310, 400, 200, 100);
         startButtonPanel.setBackground(Color.black);
-        startButtonPanel.setLayout(new GridLayout(4,1));
-        
-        //Pulsante del nuovo gioco
+        startButtonPanel.setLayout(new GridLayout(4, 1));
+
+        // Pulsante del nuovo gioco
         startButton = new JButton("NUOVO GIOCO");
         startButton.setBackground(Color.black);
         startButton.setForeground(Color.white);
@@ -81,8 +84,8 @@ public class UI{
         startButton.setActionCommand("start");
         startButton.setBorder(null);
         startButtonPanel.add(startButton);
-        
-        //Pulsante del caricamento da file
+
+        // Pulsante del caricamento da file
         continueButton = new JButton("CARICA");
         continueButton.setVisible(true);
         continueButton.setBackground(Color.black);
@@ -93,8 +96,8 @@ public class UI{
         continueButton.setActionCommand("continua");
         continueButton.setBorder(null);
         startButtonPanel.add(continueButton);
-        
-        //Pulsante esci per chiudere il gioco dal menù principale
+
+        // Pulsante esci per chiudere il gioco dal menù principale
         exitButton1 = new JButton("ESCI");
         exitButton1.setBackground(Color.black);
         exitButton1.setForeground(Color.white);
@@ -105,7 +108,7 @@ public class UI{
         exitButton1.setBorder(null);
         startButtonPanel.add(exitButton1);
 
-        //Pulsante avanti a seguito del nuovo gioco
+        // Pulsante avanti a seguito del nuovo gioco
         startButton1 = new JButton("Avanti");
         startButton1.setBackground(Color.black);
         startButton1.setForeground(Color.white);
@@ -114,15 +117,15 @@ public class UI{
         startButton1.addActionListener(cHandler);
         startButton1.setActionCommand("start1");
         startButtonPanel.add(startButton1);
-        
-        //Pannello di conferma dell'uscita
-        ynPanel= new JPanel();
-        ynPanel.setBounds(310,400,200,100);
+
+        // Pannello di conferma dell'uscita
+        ynPanel = new JPanel();
+        ynPanel.setBounds(310, 400, 200, 100);
         ynPanel.setBackground(Color.black);
-        ynPanel.setLayout(new GridLayout(4,1));
+        ynPanel.setLayout(new GridLayout(4, 1));
         ynPanel.setVisible(false);
-        
-        //Pulsante Sì per la conferma del ritorno al menù principale
+
+        // Pulsante Sì per la conferma del ritorno al menù principale
         yesButton = new JButton("Sì");
         yesButton.setBackground(Color.black);
         yesButton.setForeground(Color.white);
@@ -132,8 +135,8 @@ public class UI{
         yesButton.setActionCommand("yes");
         yesButton.setBorder(null);
         ynPanel.add(yesButton);
-        
-        //Pulsante No per tornare al gioco dopo aver premuto il pulsante Esci (in game)
+
+        // Pulsante No per tornare al gioco dopo aver premuto il pulsante Esci (in game)
         noButton = new JButton("No");
         noButton.setBackground(Color.black);
         noButton.setForeground(Color.white);
@@ -143,8 +146,8 @@ public class UI{
         noButton.setActionCommand("no");
         noButton.setBorder(null);
         ynPanel.add(noButton);
-        
-        //Pulsante Torna al menù principale in caso di caricamento fallito o morte
+
+        // Pulsante Torna al menù principale in caso di caricamento fallito o morte
         returnToMenu = new JButton("Torna al menu principale");
         returnToMenu.setBackground(Color.black);
         returnToMenu.setForeground(Color.white);
@@ -154,37 +157,37 @@ public class UI{
         returnToMenu.setActionCommand("BackToMenu");
         returnToMenu.setBorder(null);
         ynPanel.add(returnToMenu);
-        
+
         window.add(titleNamePanel);
         window.add(startButtonPanel);
         window.add(ynPanel);
-        
-        //Pannello a scomparsa per la visualizzazione dell'inventario
-        inventoryPanel=new JPanel();
+
+        // Pannello a scomparsa per la visualizzazione dell'inventario
+        inventoryPanel = new JPanel();
         inventoryPanel.setBounds(547, 65, 130, 230);
         inventoryPanel.setBackground(Color.black);
-        inventoryPanel.setLayout(new GridLayout(12,1));
+        inventoryPanel.setLayout(new GridLayout(12, 1));
         window.add(inventoryPanel);
 
-        //Pannello per l'area di testo principale
+        // Pannello per l'area di testo principale
         mainTextPanel = new JPanel();
-        mainTextPanel.setBounds(50,100,650,315);
+        mainTextPanel.setBounds(50, 100, 650, 315);
         mainTextPanel.setBackground(Color.black);
         window.add(mainTextPanel);
 
-        //Area di testo principale
-        mainTextArea= new JTextArea("");
-        mainTextArea.setBounds(50,50,650,600);
+        // Area di testo principale
+        mainTextArea = new JTextArea("");
+        mainTextArea.setBounds(50, 50, 650, 600);
         mainTextArea.setBackground(Color.black);
         mainTextArea.setForeground(Color.white);
         mainTextArea.setFont(normalFont);
         mainTextArea.setLineWrap(true);
         mainTextArea.setEditable(false);
         mainTextPanel.add(mainTextArea);
-        
-        //Area di testo per l'uscita dal gioco
-        mainTextAreaExit= new JTextArea("");
-        mainTextAreaExit.setBounds(50,50,650,400);
+
+        // Area di testo per l'uscita dal gioco
+        mainTextAreaExit = new JTextArea("");
+        mainTextAreaExit.setBounds(50, 50, 650, 400);
         mainTextAreaExit.setBackground(Color.black);
         mainTextAreaExit.setForeground(Color.white);
         mainTextAreaExit.setFont(normalFont);
@@ -192,15 +195,16 @@ public class UI{
         mainTextAreaExit.setEditable(false);
         mainTextAreaExit.setVisible(false);
         mainTextPanel.add(mainTextAreaExit);
-        
-        //Pannello per contenere il campo per l'inserimento dei comandi e il tasto Submit
+
+        // Pannello per contenere il campo per l'inserimento dei comandi e il tasto
+        // Submit
         choiceButtonPanel = new JPanel();
-        choiceButtonPanel.setBounds(230,430,400,100);
+        choiceButtonPanel.setBounds(230, 430, 400, 100);
         choiceButtonPanel.setBackground(Color.black);
-        choiceButtonPanel.setLayout(new GridLayout(2,1));
+        choiceButtonPanel.setLayout(new GridLayout(2, 1));
         window.add(choiceButtonPanel);
-        
-        //Set di Label per l'inventario
+
+        // Set di Label per l'inventario
         javax.swing.border.Border border = BorderFactory.createLineBorder(Color.white);
         JLabel inv1 = new JLabel();
         inv1.setBackground(Color.black);
@@ -273,7 +277,7 @@ public class UI{
         inv12.setForeground(Color.white);
         inv12.setFont(invFont);
         inv12.setBorder(border);
-        
+
         inventoryPanel.add(inv1);
         inventoryPanel.add(inv2);
         inventoryPanel.add(inv3);
@@ -286,28 +290,28 @@ public class UI{
         inventoryPanel.add(inv10);
         inventoryPanel.add(inv11);
         inventoryPanel.add(inv12);
-        
-        //Campo per l'inserimento dei comandi
-        campo= new JTextField ("");           
-        campo.setBackground(Color.black);         
+
+        // Campo per l'inserimento dei comandi
+        campo = new JTextField("");
+        campo.setBackground(Color.black);
         campo.setForeground(Color.DARK_GRAY);
         campo.setFont(normalFont);
         campo.addActionListener(cHandler);
         campo.setActionCommand("submit");
-        campo.setText("                            Cosa devo fare?"); 
+        campo.setText("                            Cosa devo fare?");
 
-        //Al click del mouse su campo, la scritta "Cosa devo fare?" scompare
-        campo.addMouseListener(new MouseAdapter(){
+        // Al click del mouse su campo, la scritta "Cosa devo fare?" scompare
+        campo.addMouseListener(new MouseAdapter() {
             @Override
-            public void mouseClicked(MouseEvent e){
+            public void mouseClicked(MouseEvent e) {
                 campo.setText("");
                 campo.setForeground(Color.white);
             }
         });
 
-        //Alla pressione di un qualsiasi tasto, la scritta "Cosa devo fare?" scompare
+        // Alla pressione di un qualsiasi tasto, la scritta "Cosa devo fare?" scompare
         campo.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed (java.awt.event.KeyEvent evt){
+            public void keyPressed(java.awt.event.KeyEvent evt) {
                 if (!pressed) {
                     campo.setForeground(Color.white);
                     campo.setText("");
@@ -316,113 +320,115 @@ public class UI{
             }
         });
 
-        //Alla pressione dell tasto invio, ricompare la scritta "Cosa devo fare?" e il testo digitato viene salvato in campotxt
+        // Alla pressione dell tasto invio, ricompare la scritta "Cosa devo fare?" e il
+        // testo digitato viene salvato in campotxt
         campo.addActionListener((ActionEvent e) -> {
-                 campotxt = campo.getText();
-                 campo.setForeground(Color.DARK_GRAY);
-                 campo.setText("                           Cosa devo fare?");
-                 pressed = false;
-         });
+            campotxt = campo.getText();
+            campo.setForeground(Color.DARK_GRAY);
+            campo.setText("                           Cosa devo fare?");
+            pressed = false;
+        });
         choiceButtonPanel.add(campo);
 
-        //Pulsante per l'ottenimento dei comandi dal campo
-        submit= new JButton ("Submit");
-        submit.setBackground(Color.black);        
+        // Pulsante per l'ottenimento dei comandi dal campo
+        submit = new JButton("Submit");
+        submit.setBackground(Color.black);
         submit.setForeground(Color.white);
         submit.setFont(normalFont);
         submit.setFocusPainted(false);
         submit.addActionListener(cHandler);
         choiceButtonPanel.add(submit);
 
-        //Alla pressione del JButton "Submit", ricompare la scritta "Cosa devo fare?" e il testo digitato viene salvato in campotxt
-        submit.addMouseListener(new MouseAdapter(){
+        // Alla pressione del JButton "Submit", ricompare la scritta "Cosa devo fare?" e
+        // il testo digitato viene salvato in campotxt
+        submit.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent evt) {
-                    campotxt = campo.getText();
-                    submit.setActionCommand("submit");
-                    campo.setForeground(Color.DARK_GRAY);
-                    campo.setText("                           Cosa devo fare?");
-                    pressed = false;
+                campotxt = campo.getText();
+                submit.setActionCommand("submit");
+                campo.setForeground(Color.DARK_GRAY);
+                campo.setText("                           Cosa devo fare?");
+                pressed = false;
             }
         });
-     
-        //Pannello per le statistiche base del giocatore e tasti Salva, Zaino ed Esci
-        playerPanel = new JPanel();                     
-        playerPanel.setBounds(120,15,600,50);
+
+        // Pannello per le statistiche base del giocatore e tasti Salva, Zaino ed Esci
+        playerPanel = new JPanel();
+        playerPanel.setBounds(120, 15, 600, 50);
         playerPanel.setBackground(Color.black);
-        playerPanel.setLayout( new GridLayout(1,4));
+        playerPanel.setLayout(new GridLayout(1, 4));
         window.add(playerPanel);
-        
-        //Pannello per il messaggio di salvataggio avvenuto
-        savePanel= new JPanel();
-        savePanel.setBounds(720,20,60,50);
+
+        // Pannello per il messaggio di salvataggio avvenuto
+        savePanel = new JPanel();
+        savePanel.setBounds(720, 20, 60, 50);
         savePanel.setBackground(Color.black);
         window.add(savePanel);
         savePanel.setVisible(false);
-        
-        //Pannello per la gestione della fase di combattimento
+
+        // Pannello per la gestione della fase di combattimento
         fightPanel = new JPanel();
-        fightPanel.setBounds(230,530,400,50);
+        fightPanel.setBounds(230, 530, 400, 50);
         fightPanel.setBackground(Color.black);
-        fightPanel.setLayout( new GridLayout(1,4));
+        fightPanel.setLayout(new GridLayout(1, 4));
         window.add(fightPanel);
         fightPanel.setVisible(false);
-        
-        //Pulsante Attacca in combattimento
-        attackButton= new JButton ("Attacca");
-        attackButton.setBackground(Color.black);        
+
+        // Pulsante Attacca in combattimento
+        attackButton = new JButton("Attacca");
+        attackButton.setBackground(Color.black);
         attackButton.setForeground(Color.white);
         attackButton.setFont(normalFont);
         attackButton.setFocusPainted(false);
         attackButton.addActionListener(cHandler);
         attackButton.setActionCommand("attacca");
         fightPanel.add(attackButton);
-        
-        //Pulsante Scappa in combattimento
+
+        // Pulsante Scappa in combattimento
         JButton runButton = new JButton("Scappa");
-        runButton.setBackground(Color.black);        
+        runButton.setBackground(Color.black);
         runButton.setForeground(Color.white);
         runButton.setFont(normalFont);
         runButton.setFocusPainted(false);
         runButton.addActionListener(cHandler);
         runButton.setActionCommand("scappa");
         fightPanel.add(runButton);
-        
-        //Pulsante Osserva in combattimento
+
+        // Pulsante Osserva in combattimento
         JButton lookButton = new JButton("Osserva");
-        lookButton.setBackground(Color.black);        
+        lookButton.setBackground(Color.black);
         lookButton.setForeground(Color.white);
         lookButton.setFont(normalFont);
         lookButton.setFocusPainted(false);
         lookButton.addActionListener(cHandler);
         lookButton.setActionCommand("osserva");
         fightPanel.add(lookButton);
-        
-        //Label per gli HP del giocatore 
+
+        // Label per gli HP del giocatore
         JLabel hpLabel = new JLabel("HP:");
         hpLabel.setFont(normalFont);
         hpLabel.setForeground(Color.white);
         playerPanel.add(hpLabel);
-        
-        //Label per il numero effettivo degli HP del giocatore (Correnti/Totali)
-        hpNumberLabel= new JLabel();
+
+        // Label per il numero effettivo degli HP del giocatore (Correnti/Totali)
+        hpNumberLabel = new JLabel();
         hpNumberLabel.setForeground(Color.white);
         hpNumberLabel.setFont(normalFont);
         playerPanel.add(hpNumberLabel);
-        
-        //Label per il tempo del timer
-        JLabel timer = new JLabel("TEMPO:");
+
+        // Label per il tempo del timer
+        timer = new JLabel("");
         timer.setForeground(Color.white);
         timer.setFont(normalFont);
         playerPanel.add(timer);
-        
-        //Label per il numero effettivo di monete del giocatore 
-        timerCountLabel= new JLabel();
+
+        // Label per il numero effettivo di monete del giocatore
+        timerCountLabel = new JLabel();
         timerCountLabel.setForeground(Color.white);
         timerCountLabel.setFont(normalFont);
-        playerPanel.add(timerCountLabel); 
+        playerPanel.add(timerCountLabel);
 
-        //Pulsante Zaino per l'apertura e chiusura dell'inventario
+        // Pulsante Zaino per l'apertura e chiusura dell'inventario
         JButton inventoryButton = new JButton("Zaino");
         inventoryButton.setBackground(Color.black);
         inventoryButton.setForeground(Color.white);
@@ -431,8 +437,8 @@ public class UI{
         inventoryButton.addActionListener(cHandler);
         inventoryButton.setActionCommand("inventoryButton");
         playerPanel.add(inventoryButton);
-        
-        //Pulsante Salva
+
+        // Pulsante Salva
         JButton saveButton = new JButton("Salva");
         saveButton.setBackground(Color.black);
         saveButton.setForeground(Color.white);
@@ -441,8 +447,8 @@ public class UI{
         saveButton.addActionListener(cHandler);
         saveButton.setActionCommand("salva");
         playerPanel.add(saveButton);
-        
-        //Pulsante Esci sulla schermata di gioco (in game)
+
+        // Pulsante Esci sulla schermata di gioco (in game)
         exitButton2 = new JButton("Esci");
         exitButton2.setBackground(Color.black);
         exitButton2.setForeground(Color.white);
@@ -452,15 +458,15 @@ public class UI{
         exitButton2.setActionCommand("exitMenu");
         playerPanel.add(exitButton2);
 
-        //Label per la conferma del salvataggio avvenuto
-        saveConfirm= new JLabel("");
+        // Label per la conferma del salvataggio avvenuto
+        saveConfirm = new JLabel("");
         saveConfirm.setForeground(Color.white);
         saveConfirm.setFont(normalFont);
         savePanel.add(saveConfirm);
-        
+
         window.setVisible(true);
     }
-      
+
     public String getCampotxt() {
         return campotxt;
     }
@@ -552,11 +558,17 @@ public class UI{
     public void setPressed(boolean pressed) {
         this.pressed = pressed;
     }
-   
-    public void updateTimer(int secondsRemaining) {
-        timerCountLabel.setText(""+secondsRemaining); // Aggiorna il testo del timerCountLabel
-    }
-    
-    
-}
 
+    public void updateTimer(int secondsRemaining) {
+        if (secondsRemaining >= 0){
+            timer.setText("TEMPO:");
+            timerCountLabel.setText("" + secondsRemaining); // Aggiorna il testo del timerCountLabel
+        }
+        else{
+            timer.setText("");
+            timerCountLabel.setText(""); // Se sRemaining è minore di 0 il conteggio non è visibile
+        }
+
+    }
+
+}

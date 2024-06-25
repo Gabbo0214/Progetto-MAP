@@ -108,7 +108,6 @@ public class DarkCrypt extends Room {
         public void run() {
             int count = 30;
             while (count >= 0 && running) {
-                System.out.println("Timer: " + count);
                 ui.updateTimer(count); // Aggiorna l'interfaccia utente ogni secondo
                 count--;
                 if (count == 0) {
