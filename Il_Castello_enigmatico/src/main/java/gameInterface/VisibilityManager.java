@@ -157,6 +157,26 @@ public class VisibilityManager {
          ui.getReturnToMenu().setVisible(false);
          ui.getMainTextAreaExit().setVisible(false);
      }
+
+     /**
+      * Mostra la schermata per l'inserimento del nome
+      */
+     public void showNameInputScreen() {
+        ui.getMainTextArea().setVisible(false);
+        ui.getPlayerPanel().setVisible(false);
+        ui.getInventoryPanel().setVisible(false);
+        ui.getYnPanel().setVisible(false);
+        ui.getReturnToMenu().setVisible(false);
+
+        ui.getNameInputPanel().setVisible(true);
+    }
+
+    /**
+     * Nasconde la schermata di input del nome.
+     */
+    public void hideNameInputScreen() {
+        ui.getNameInputPanel().setVisible(false);
+    }
      
      /**
       * Mostra la schermata di notifica di caricamento fallito con il singolo tasto "Torna al menù principale"
@@ -190,15 +210,6 @@ public class VisibilityManager {
       */
      public void setNormalFont(int size){
         Font f= new Font("Times New Roman", Font.PLAIN, size);
-        ui.getMainTextArea().setFont(f);
-     }
-
-     /**
-      * imposta il font per la fase di combattimento ricevendo in input la grandezza desiderata
-      * @param size 
-      */
-     public void setFightFont(int size){
-        Font f= new Font("Consolas", Font.PLAIN, size);
         ui.getMainTextArea().setFont(f);
      }
    
@@ -255,7 +266,7 @@ public class VisibilityManager {
      }
 
      /**
-     * Restituisce il componente i-esimo dei lable facenti parte dell'inventare
+     * Restituisce il componente i-esimo dei label facenti parte dell'inventare
      * @param i
      * @return
      */
