@@ -33,12 +33,9 @@ public class DestinyRoom extends RoomWDoor {
      */
     public void riddle2() {
         this.setMsg("Non riesci a crederci, sembra un sogno! L'anello è ora davanti a te. Raccoglilo ed indossalo per per raggiungere il tuo scopo!");
-        for (int i = 0; i < this.getObjects().size(); i++) {
-            if (this.getObjects().get(i).getName().equals("pergamena")) {
-                this.getObjects().remove(i);
-                break;
-            }
-        }
+
+        // Utilizzo di stream e lambda per rimuovere l'oggetto "pergamena"
+        this.getObjects().removeIf(obj -> obj.getName().equals("pergamena"));
 
         this.enigmaResolved = true;
         this.anello.setPickupable(true);

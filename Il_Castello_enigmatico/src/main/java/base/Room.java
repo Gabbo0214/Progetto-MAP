@@ -255,11 +255,13 @@ public class Room implements Serializable {
      * @return ""
      */
     public String useRing(Player p) {
-        for (int i = 0; i < p.getInventory().size(); i++) {
-            if (p.getInventory().get(i).getName().equals("Anello dell'eternità")) {
-                this.setMsg("FINE");
+        // Utilizziamo forEach con lambda expression per scorrere gli oggetti nell'inventario
+        p.getInventory().forEach(item -> {
+            // Verifichiamo se il nome dell'oggetto corrente è "Anello dell'eternità"
+            if (item.getName().equals("Anello dell'eternità")) {
+                this.setMsg("FINE");  // Impostiamo il messaggio a "FINE"
             }
-        }
+        });
         return "";
     }
 }

@@ -259,7 +259,7 @@ public class VisibilityManager {
      * @param i
      * @return
      */
-     public JLabel getInvLableComponent(int i){
+     public JLabel getInvLabelComponent(int i){
         return ((JLabel)ui.getInventoryPanel().getComponent(i));
      }
 

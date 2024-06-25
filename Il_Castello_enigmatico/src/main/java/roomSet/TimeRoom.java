@@ -41,9 +41,8 @@ public class TimeRoom extends RoomWDoor {
     }
 
     /**
-     * Interazione per l'apertura della porta. Non è possibile aprire la 
-     * porta se non viene risolto prima l'enigma nella stanza delle
-     * profezie.
+     * Interazione per l'apertura della porta. Non è possibile aprire la porta se non
+     * viene risolto prima l'enigma nella stanza delle profezie.
      * 
      * @param idir
      * @param player
@@ -51,27 +50,21 @@ public class TimeRoom extends RoomWDoor {
     @Override
     public void openDoor(String idir, Player player) {
 
-        boolean hasMemoryOfThePast = false;
+        boolean hasMemoryOfThePast = player.getInventory().stream()
+                .anyMatch(item -> item.getName().equals("Memoria del passato"));
 
-        for (int i = 0; i < player.getInventory().size(); i++) {
-            if (player.getInventory().get(i).getName().equals("Memoria del passato")) {
-                hasMemoryOfThePast = true;
-            }
-        }
-
-        for (int i = 0; i < player.getInventory().size(); i++) {
-            if (player.getInventory().get(i).getName().equals("Ascia") && hasMemoryOfThePast) {
-                player.removeFromInventory(i);
-                this.setMsg("Come se fossero passati anni in un istante, il manico della vecchia Ascia cade in rovina e si distrugge.\n Ora è inutilizzabile.");
-                break;
-            }
-        }
-
-        if (!hasMemoryOfThePast) {
+        if (hasMemoryOfThePast) {
+            player.getInventory().forEach(item -> {
+                if (item.getName().equals("Ascia")) {
+                    player.removeFromInventory(item);
+                    this.setMsg(
+                            "Come se fossero passati anni in un istante, il manico della vecchia Ascia cade in rovina e si distrugge.\n Ora è inutilizzabile.");
+                }
+            });
+        } else {
             this.setMsg("Un meccanismo sembra bloccare la porta.");
             return;
         }
-
 
         super.openDoor(idir, player); // chiama la superclasse per aprire la porta
     }
