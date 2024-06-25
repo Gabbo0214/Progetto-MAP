@@ -16,7 +16,7 @@ public class MisteryRoom extends Room {
     this.addObject(hintOne);
 
     Stobj hintTwo = new Stobj();
-    hintTwo.setName("libro Verde");
+    hintTwo.setName("libro verde");
     hintTwo.setDescription("Il libro Giallo mente ed il rosso anche. Se il tempo ti da dubbi, tira la leva dal centro e poi la destra.");
     hintTwo.setPickupable(false);
     this.addObject(hintTwo);

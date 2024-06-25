@@ -10,6 +10,8 @@ import roomSet.DarkCrypt;
 import parser.ParserOutput;
 import gameInterface.UI;
 
+import java.util.stream.Collectors;
+
 public class Story {
 
     private Thread timerThread;
@@ -21,6 +23,7 @@ public class Story {
         this.timer = null;
         this.ui = ui; // Initialize ui
     }
+
     /**
      * Traduzione dei comandi ottenuti in ingresso già processati dal Parser e
      * contenuti in par. I comandi attivano determinate interazioni di gioco a
@@ -79,7 +82,8 @@ public class Story {
                 }
             }
 
-            // Verifica se il giocatore è entrato nella stanza DarkCrypt e fa partire il timer
+            // Verifica se il giocatore è entrato nella stanza DarkCrypt e fa partire il
+            // timer
             synchronized (this) {
                 if (map.getCurrentRoom() == map.getDarkCrypt()) {
                     // Avvia il timer solo se non è già attivo
@@ -115,7 +119,7 @@ public class Story {
 
             // Inserimento "osserva" o sinonimi. Consente di osservare la stanza corrente,
             // elencandone gli oggetti presenti, o un oggetto specifico (della stanza o
-            // nell'inventario). Inoltre raccoglie le monete
+            // nell'inventario).
             if (par.getCommand().getName().equals("osserva")) {
                 if (par.getObject() == null) {
                     boolean forward = false;
@@ -141,51 +145,44 @@ public class Story {
                                 + "\n\nNon puoi proseguire in nessuna direzione: può darsi che il passaggio sia bloccato.");
                     if (map.getCurrentRoom().getObjects().size() > 0) {
                         uitxt = (uitxt + "\n\nCio' con cui puoi interagire in questo luogo: ");
-                        for (Stobj robj : map.getCurrentRoom().getObjects()) {
-                            if (robj.isVisible()) {
-                                uitxt = (uitxt + "\n- " + robj.getName());
-                                if (robj.getName().equals("Porta")) {
-                                    switch (((Door) robj).getDirection()) {
-                                        case "n":
-                                            uitxt = (uitxt + " (verso nord");
-                                            break;
-                                        case "s":
-                                            uitxt = (uitxt + " (verso sud");
-                                            break;
-                                        case "w":
-                                            uitxt = (uitxt + " (verso ovest");
-                                            break;
-                                        case "e":
-                                            uitxt = (uitxt + " (verso est");
-                                            break;
+                        uitxt += map.getCurrentRoom().getObjects().stream()
+                                .filter(Stobj::isVisible)
+                                .map(robj -> {
+                                    StringBuilder sb = new StringBuilder("\n- " + robj.getName());
+                                    if (robj.getName().equals("Porta")) {
+                                        switch (((Door) robj).getDirection()) {
+                                            case "n":
+                                                sb.append(" (verso nord");
+                                                break;
+                                            case "s":
+                                                sb.append(" (verso sud");
+                                                break;
+                                            case "w":
+                                                sb.append(" (verso ovest");
+                                                break;
+                                            case "e":
+                                                sb.append(" (verso est");
+                                                break;
+                                        }
+                                        if (((Door) robj).isOpen())
+                                            sb.append(", è aperta)");
+                                        else
+                                            sb.append(", è chiusa)");
                                     }
-                                    if (((Door) robj).isOpen())
-                                        uitxt = (uitxt + ", è aperta)");
-                                    else
-                                        uitxt = (uitxt + ", è chiusa)");
-                                }
-                            }
-                        }
+                                    return sb.toString();
+                                })
+                                .collect(Collectors.joining());
                     }
                 } else if (par.getObject() != null && par.getObject().isVisible()) {
-                    int k = -1;
-                    for (int i = 0; i < map.getCurrentRoom().getObjects().size() && k == -1; i++) {
-                        if (map.getCurrentRoom().getObjects().get(i).getName().equals(par.getObject().getName())) {
-                            k = i;
-                        }
-                    }
-                    if (k > -1) {
-                        uitxt = (map.getCurrentRoom().getObjects().get(k).getDescription());
-                    } else {
-                        if (p.getInventory() != null) {
-                            for (int i = 0; i < p.getInventory().size() && k == -1; i++) {
-                                if (p.getInventory().get(i).getName().equals(par.getObject().getName())) {
-                                    k = i;
-                                }
-                            }
-                            uitxt = (p.getInventory().get(k).getDescription());
-                        }
-                    }
+                    uitxt = map.getCurrentRoom().getObjects().stream()
+                            .filter(obj -> obj.getName().equals(par.getObject().getName()))
+                            .findFirst()
+                            .map(Stobj::getDescription)
+                            .orElseGet(() -> p.getInventory().stream()
+                                    .filter(obj -> obj.getName().equals(par.getObject().getName()))
+                                    .findFirst()
+                                    .map(Stobj::getDescription)
+                                    .orElse("Oggetto non trovato"));
                 }
                 vm.writeOnScreen(uitxt);
             }

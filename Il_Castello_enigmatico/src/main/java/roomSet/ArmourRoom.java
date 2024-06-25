@@ -2,7 +2,6 @@ package roomSet;
 
 import base.Stobj;
 
-
 public class ArmourRoom extends RoomWDoor {
 
     public ArmourRoom() {
@@ -26,13 +25,10 @@ public class ArmourRoom extends RoomWDoor {
     /**
      * Interazione per la risoluzione dell'enigma
      */
-    public void riddle(){
+    public void riddle() {
         this.setMsg("Nel momento in cui pronunci la risposta, il libro si chiude svanendo! Il castello sta iniziando a metterti paura.\nPurtroppo, dopo la risoluzione del rompicapo, questo strano libro non sembra averti dato nulla in cambio!!");
-        for (int i = 0; i < this.getObjects().size(); i++) {
-            if (this.getObjects().get(i).getName().equals("Libro con enigma")) {
-                this.getObjects().remove(i);
-                break;
-            }
-        }
+
+        // Utilizzo di stream e lambda per rimuovere l'oggetto "Libro con enigma"
+        this.getObjects().removeIf(obj -> obj.getName().equals("Libro con enigma"));
     }
 }
