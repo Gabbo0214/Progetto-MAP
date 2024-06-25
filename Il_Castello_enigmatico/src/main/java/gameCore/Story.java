@@ -30,7 +30,6 @@ public class Story {
         this.speedrunActive = false;
     }
 
-
     // New method to stop the speedrun timer
     public void stopSpeedrunTimer() {
         if (speedrunActive) {
@@ -404,19 +403,33 @@ public class Story {
                         "Per spostarti 'prosegui'' in direzione dei punti cardinali NORD, SUD, EST e OVEST.\n(L'avventuriero seguirà i tuoi comandi coniugati all'imperativo seconda persona singolare)\n\nBuona Fortuna!");
 
         // Avvia la speedrun
-            resetSpeedrunTimer();
-            speedrunActive = true;
-            speedrunTimerThread = new Thread(speedrunTimer);
-            speedrunTimerThread.start();
+        resetSpeedrunTimer();
+        speedrunActive = true;
+        speedrunTimerThread = new Thread(speedrunTimer);
+        speedrunTimerThread.start();
     }
 
     public void ending(Player p, VisibilityManager vm) {
+
         String uitxt;
         uitxt = "Finalmente, l'anello dell'eternità è ora tra le tue mani. Una volta messo al dito la tua visione sparisce... cadi in un sonno profondo.\n";
-        vm.writeOnExitScreen(uitxt
-                + "\nQuanto tempo è passato? Al tuo risveglio, l'anello è ancora al tuo dito, ma non hai idea di dove ti trovi.\nUn vasto, piano prato di erba verde si estende per kilometri, niente oltre che l'erba è visibile fino all'orizzonte.\nIl cielo è illuminato da una grande luna piena. Cosa succederà ora?");
     
         // Ferma la speedrun
         stopSpeedrunTimer();
+
+                // Mostra la schermata di input del nome alla fine del gioco
+        vm.showNameInputScreen();
+
+        // Aggiungi un'azione al bottone di submit per ottenere il nome del giocatore
+        ui.getSubmitNameButton().addActionListener(e -> {
+            String playerName = ui.getNameInputField().getText();
+            System.out.println("Player Name: " + playerName);
+
+            // Nascondi la schermata di input del nome
+            vm.hideNameInputScreen();
+        });
+
+        vm.writeOnExitScreen(uitxt
+        + "\nQuanto tempo è passato? Al tuo risveglio, l'anello è ancora al tuo dito, ma non hai idea di dove ti trovi.\nUn vasto, piano prato di erba verde si estende per kilometri, niente oltre che l'erba è visibile fino all'orizzonte.\nIl cielo è illuminato da una grande luna piena. Cosa succederà ora?");
     }
 }

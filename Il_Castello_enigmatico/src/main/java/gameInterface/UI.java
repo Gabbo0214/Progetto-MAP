@@ -22,7 +22,8 @@ import javax.swing.JTextField;
 import gameCore.Game.ChoiceHandler;
 
 public class UI {
-    private JPanel titleNamePanel, startButtonPanel, mainTextPanel, choiceButtonPanel, playerPanel, inventoryPanel, savePanel, ynPanel;
+    private JPanel titleNamePanel, startButtonPanel, mainTextPanel, choiceButtonPanel, playerPanel, inventoryPanel,
+            savePanel, ynPanel, nameInputPanel;
     private JLabel hpNumberLabel;
     private JLabel timer;
     private JLabel timerCountLabel;
@@ -36,7 +37,9 @@ public class UI {
     private JButton yesButton;
     private JButton noButton;
     private JButton returnToMenu;
+    private JButton submitNameButton;
     private JTextField campo;
+    private JTextField nameInputField;
     private JTextArea mainTextArea, mainTextAreaExit;
     private final Font normalFont = new Font("Times New Roman", Font.PLAIN, 18);
     private final Font invFont = new Font("Times New Roman", Font.PLAIN, 14);
@@ -201,6 +204,28 @@ public class UI {
         choiceButtonPanel.setBackground(Color.black);
         choiceButtonPanel.setLayout(new GridLayout(2, 1));
         window.add(choiceButtonPanel);
+
+        // Pannello per l'inserimento del nome
+        nameInputPanel = new JPanel();
+        nameInputPanel.setBounds(100, 100, 600, 150);
+        nameInputPanel.setBackground(Color.black);
+        nameInputPanel.setLayout(new GridLayout(2, 1));
+
+        // Campo di testo per l'inserimento del nome
+        nameInputField = new JTextField();
+        nameInputField.setFont(new Font("Times New Roman", Font.PLAIN, 28));
+        nameInputPanel.add(nameInputField);
+
+        // Bottone per confermare l'inserimento del nome
+        submitNameButton = new JButton("Submit");
+        submitNameButton.setFont(new Font("Times New Roman", Font.PLAIN, 28));
+        nameInputPanel.add(submitNameButton);
+
+        // Aggiunta del pannello alla finestra principale
+        window.add(nameInputPanel);
+
+        // Inizialmente nascosto
+        nameInputPanel.setVisible(false);
 
         // Set di Label per l'inventario
         javax.swing.border.Border border = BorderFactory.createLineBorder(Color.white);
@@ -513,12 +538,24 @@ public class UI {
         this.pressed = pressed;
     }
 
+    // Metodi getter per i nuovi componenti
+    public JPanel getNameInputPanel() {
+        return nameInputPanel;
+    }
+
+    public JTextField getNameInputField() {
+        return nameInputField;
+    }
+
+    public JButton getSubmitNameButton() {
+        return submitNameButton;
+    }
+
     public void updateTimer(int secondsRemaining) {
-        if (secondsRemaining >= 0){
+        if (secondsRemaining >= 0) {
             timer.setText("TEMPO:");
             timerCountLabel.setText("" + secondsRemaining); // Aggiorna il testo del timerCountLabel
-        }
-        else{
+        } else {
             timer.setText("");
             timerCountLabel.setText(""); // Se sRemaining è minore di 0 il conteggio non è visibile
         }

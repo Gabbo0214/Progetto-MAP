@@ -157,6 +157,28 @@ public class VisibilityManager {
          ui.getReturnToMenu().setVisible(false);
          ui.getMainTextAreaExit().setVisible(false);
      }
+
+     /**
+      * Mostra la schermata per l'inserimento del nome
+      */
+     public void showNameInputScreen() {
+        ui.getMainTextArea().setVisible(false);
+        ui.getChoiceButtonPanel().setVisible(false);
+        ui.getPlayerPanel().setVisible(false);
+        ui.getInventoryPanel().setVisible(false);
+        ui.getYnPanel().setVisible(false);
+        ui.getReturnToMenu().setVisible(false);
+        ui.getMainTextAreaExit().setVisible(false);
+
+        ui.getNameInputPanel().setVisible(true);
+    }
+
+    /**
+     * Nasconde la schermata di input del nome.
+     */
+    public void hideNameInputScreen() {
+        ui.getNameInputPanel().setVisible(false);
+    }
      
      /**
       * Mostra la schermata di notifica di caricamento fallito con il singolo tasto "Torna al menù principale"
