@@ -111,20 +111,20 @@ public class UI {
         leaderboardButton.setBorder(null);
         startButtonPanel.add(leaderboardButton);
 
-        JLabel leaderboardLabel = new JLabel("I MIGLIORI 10 TEMPI");
+        JLabel leaderboardLabel = new JLabel("I MIGLIORI 10 TEMPI OTTENUTI");
         leaderboardLabel.setForeground(Color.white);
         leaderboardLabel.setFont(normalFont);
 
         // Pannello del menù di classifica
         leaderboardPanel = new JPanel();
-        leaderboardPanel.setBounds(350, 150, 130, 230);
+        leaderboardPanel.setBounds(250, 100, 300, 400);
         leaderboardPanel.setBackground(Color.black);
         leaderboardPanel.setLayout(new GridLayout(12, 1));
         leaderboardPanel.add(leaderboardLabel);
         window.add(leaderboardPanel);
 
         // Esempio di aggiunta di etichette di classifica
-        for (int i = 1; i <= 12; i++) {
+        for (int i = 1; i <= 10; i++) {
             JLabel rankLabel = new JLabel("Classifica " + i);
             rankLabel.setForeground(Color.white);
             rankLabel.setFont(normalFont);
