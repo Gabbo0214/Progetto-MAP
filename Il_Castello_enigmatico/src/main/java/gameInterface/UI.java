@@ -23,7 +23,7 @@ import gameCore.Game.ChoiceHandler;
 
 public class UI {
     private JPanel titleNamePanel, startButtonPanel, mainTextPanel, choiceButtonPanel, playerPanel, inventoryPanel,
-            savePanel, ynPanel, nameInputPanel;
+            savePanel, ynPanel, leaderboardPanel;
     private JLabel hpNumberLabel;
     private JLabel timer;
     private JLabel timerCountLabel;
@@ -32,19 +32,20 @@ public class UI {
     private JButton submit;
     private JButton startButton1;
     private JButton continueButton;
+    private JButton leaderboardButton;
+    private JButton backToMenuButton;
     private JButton exitButton1;
     private JButton exitButton2;
     private JButton yesButton;
     private JButton noButton;
     private JButton returnToMenu;
-    private JButton submitNameButton;
     private JTextField campo;
-    private JTextField nameInputField;
     private JTextArea mainTextArea, mainTextAreaExit;
     private final Font normalFont = new Font("Times New Roman", Font.PLAIN, 18);
     private final Font invFont = new Font("Times New Roman", Font.PLAIN, 14);
     private String campotxt = "";
     private boolean pressed = false;
+    public String campoText = "                            Cosa devo fare?";
 
     /**
      * Creazione dell'interfaccia.
@@ -71,9 +72,9 @@ public class UI {
 
         // Pannello del menù principale
         startButtonPanel = new JPanel();
-        startButtonPanel.setBounds(310, 400, 200, 100);
+        startButtonPanel.setBounds(310, 380, 200, 120);
         startButtonPanel.setBackground(Color.black);
-        startButtonPanel.setLayout(new GridLayout(4, 1));
+        startButtonPanel.setLayout(new GridLayout(5, 1));
 
         // Pulsante del nuovo gioco
         startButton = new JButton("NUOVO GIOCO");
@@ -97,6 +98,50 @@ public class UI {
         continueButton.setActionCommand("continua");
         continueButton.setBorder(null);
         startButtonPanel.add(continueButton);
+
+        // Pulsante della classifica di speedrun
+        leaderboardButton = new JButton("CLASSIFICA");
+        leaderboardButton.setVisible(true);
+        leaderboardButton.setBackground(Color.black);
+        leaderboardButton.setForeground(Color.white);
+        leaderboardButton.setFont(normalFont);
+        leaderboardButton.setFocusPainted(false);
+        leaderboardButton.addActionListener(cHandler);
+        leaderboardButton.setActionCommand("classifica");
+        leaderboardButton.setBorder(null);
+        startButtonPanel.add(leaderboardButton);
+
+        JLabel leaderboardLabel = new JLabel("I MIGLIORI 10 TEMPI OTTENUTI");
+        leaderboardLabel.setForeground(Color.white);
+        leaderboardLabel.setFont(normalFont);
+
+        // Pannello del menù di classifica
+        leaderboardPanel = new JPanel();
+        leaderboardPanel.setBounds(250, 100, 300, 400);
+        leaderboardPanel.setBackground(Color.black);
+        leaderboardPanel.setLayout(new GridLayout(12, 1));
+        leaderboardPanel.add(leaderboardLabel);
+        window.add(leaderboardPanel);
+
+        // Esempio di aggiunta di etichette di classifica
+        for (int i = 1; i <= 10; i++) {
+            JLabel rankLabel = new JLabel("Posizione " + i);
+            rankLabel.setForeground(Color.white);
+            rankLabel.setFont(normalFont);
+            leaderboardPanel.add(rankLabel);
+        }
+
+        // Pulsante della classifica di speedrun
+        backToMenuButton = new JButton("INDIETRO");
+        backToMenuButton.setVisible(true);
+        backToMenuButton.setBackground(Color.black);
+        backToMenuButton.setForeground(Color.white);
+        backToMenuButton.setFont(normalFont);
+        backToMenuButton.setFocusPainted(false);
+        backToMenuButton.addActionListener(cHandler);
+        backToMenuButton.setActionCommand("yes");
+        backToMenuButton.setBorder(null);
+        leaderboardPanel.add(backToMenuButton);
 
         // Pulsante esci per chiudere il gioco dal menù principale
         exitButton1 = new JButton("ESCI");
@@ -205,28 +250,6 @@ public class UI {
         choiceButtonPanel.setLayout(new GridLayout(2, 1));
         window.add(choiceButtonPanel);
 
-        // Pannello per l'inserimento del nome
-        nameInputPanel = new JPanel();
-        nameInputPanel.setBounds(100, 100, 600, 150);
-        nameInputPanel.setBackground(Color.black);
-        nameInputPanel.setLayout(new GridLayout(2, 1));
-
-        // Campo di testo per l'inserimento del nome
-        nameInputField = new JTextField();
-        nameInputField.setFont(new Font("Times New Roman", Font.PLAIN, 28));
-        nameInputPanel.add(nameInputField);
-
-        // Bottone per confermare l'inserimento del nome
-        submitNameButton = new JButton("Submit");
-        submitNameButton.setFont(new Font("Times New Roman", Font.PLAIN, 28));
-        nameInputPanel.add(submitNameButton);
-
-        // Aggiunta del pannello alla finestra principale
-        window.add(nameInputPanel);
-
-        // Inizialmente nascosto
-        nameInputPanel.setVisible(false);
-
         // Set di Label per l'inventario
         javax.swing.border.Border border = BorderFactory.createLineBorder(Color.white);
         JLabel inv1 = new JLabel();
@@ -321,7 +344,7 @@ public class UI {
         campo.setFont(normalFont);
         campo.addActionListener(cHandler);
         campo.setActionCommand("submit");
-        campo.setText("                            Cosa devo fare?");
+        campo.setText(campoText);
 
         // Al click del mouse su campo, la scritta "Cosa devo fare?" scompare
         campo.addMouseListener(new MouseAdapter() {
@@ -343,13 +366,18 @@ public class UI {
             }
         });
 
+        choiceButtonPanel.add(campo);
+
         // Alla pressione dell tasto invio, ricompare la scritta "Cosa devo fare?" e il
         // testo digitato viene salvato in campotxt
         campo.addActionListener((ActionEvent e) -> {
             campotxt = campo.getText();
             campo.setForeground(Color.DARK_GRAY);
-            campo.setText("                           Cosa devo fare?");
+            campo.setText(campoText);
             pressed = false;
+            if (campoText == "                            Come ti chiami?") {
+                showTitleScreenEndGame();
+            }
         });
         choiceButtonPanel.add(campo);
 
@@ -370,8 +398,11 @@ public class UI {
                 campotxt = campo.getText();
                 submit.setActionCommand("submit");
                 campo.setForeground(Color.DARK_GRAY);
-                campo.setText("                           Cosa devo fare?");
+                campo.setText(campoText);
                 pressed = false;
+                if (campoText == "                            Come ti chiami?") {
+                    showTitleScreenEndGame();
+                }
             }
         });
 
@@ -456,12 +487,20 @@ public class UI {
         return campotxt;
     }
 
+    public String getCampoTextName() {
+        return campotxt;
+    }
+
     public JTextArea getMainTextArea() {
         return mainTextArea;
     }
 
     public JTextArea getMainTextAreaExit() {
         return mainTextAreaExit;
+    }
+
+    public JTextArea getNameTextArea() {
+        return mainTextArea;
     }
 
     public JTextField getCampo() {
@@ -500,6 +539,10 @@ public class UI {
         return ynPanel;
     }
 
+    public JPanel getLeaderboardPanel() {
+        return leaderboardPanel;
+    }
+
     public JLabel getHpNumberLable() {
         return hpNumberLabel;
     }
@@ -524,6 +567,14 @@ public class UI {
         return continueButton;
     }
 
+    public JButton getLeaderboardButton() {
+        return leaderboardButton;
+    }
+
+    public JButton getBackToMenuButton() {
+        return backToMenuButton;
+    }
+
     public JButton getExitButton1() {
         return exitButton1;
     }
@@ -544,17 +595,8 @@ public class UI {
         this.pressed = pressed;
     }
 
-    // Metodi getter per i nuovi componenti
-    public JPanel getNameInputPanel() {
-        return nameInputPanel;
-    }
-
-    public JTextField getNameInputField() {
-        return nameInputField;
-    }
-
-    public JButton getSubmitNameButton() {
-        return submitNameButton;
+    public void campoTextName() {
+        this.campoText = "                            Come ti chiami?";
     }
 
     public void updateTimer(int secondsRemaining) {
@@ -566,6 +608,24 @@ public class UI {
             timerCountLabel.setText(""); // Se sRemaining è minore di 0 il conteggio non è visibile
         }
 
+    }
+
+    private void showTitleScreenEndGame() {
+
+        getTitleNamePanel().setVisible(true);
+        getStartButtonPanel().setVisible(true);
+        getStartButton().setVisible(true);
+        getContinueButton().setVisible(true);
+        getExitButton1().setVisible(true);
+
+        getMainTextArea().setVisible(false);
+        getChoiceButtonPanel().setVisible(false);
+        getPlayerPanel().setVisible(false);
+        getInventoryPanel().setVisible(false);
+        getStartButton1().setVisible(false);
+        getYnPanel().setVisible(false);
+        getReturnToMenu().setVisible(false);
+        getMainTextAreaExit().setVisible(false);
     }
 
 }

@@ -71,8 +71,24 @@ public class Game {
                     } catch (NullPointerException | ClassNotFoundException | IOException e) {
                         vm.backToMenu();
                         vm.writeOnExitScreen(
-                                "                                 Caricamento fallito. Dati inesistenti o danneggiati :(");
+                                "                                 Caricamento fallito. Dati inesistenti o danneggiati.");
                     }
+                    break;
+
+                case "classifica": // Click su "classifica"
+                    vm.setMainTextPanelSize(50, 100, 650, 300);
+                    vm.hideExitConfirm();
+                    vm.showLeaderboardScreen();
+                    vm.setNormalFont(18);
+                    /*try {
+                        map.setMap(fw.loadMapDataFromFile(mapfile));
+                        player.setPlayer(fw.loadPlayerDataFromFile(playerfile));
+                        loadSetup();
+                    } catch (NullPointerException | ClassNotFoundException | IOException e) {
+                        vm.backToMenu();
+                        vm.writeOnExitScreen(
+                                "                                 Apertura leaderboard fallita. Database danneggiato o inaccessibile.");
+                    }*/
                     break;
 
                 case "start1": // Click su "Avanti"
@@ -142,15 +158,17 @@ public class Game {
                     story.stopSpeedrunTimer();
                     break;
 
-                    case "inventoryButton": //Click su "Zaino". Mostra il contenuto della lista Inventory del Player in un set di JLabel a scomparsa
+                case "inventoryButton": // Click su "Zaino". Mostra il contenuto della lista Inventory del Player in un
+                                        // set di JLabel a scomparsa
                     vm.hideSaved();
                     if (inventoryStatus.equals("close")) {
                         vm.openInventory();
                         vm.campoFocus();
                         if (!player.getInventory().isEmpty()) {
                             IntStream.range(0, player.getInventory().size())
-                                .filter(i -> player.getInventory().get(i) != null)
-                                .forEach(i -> vm.getInvLabelComponent(i).setText(player.getInventory().get(i).getName()));
+                                    .filter(i -> player.getInventory().get(i) != null)
+                                    .forEach(i -> vm.getInvLabelComponent(i)
+                                            .setText(player.getInventory().get(i).getName()));
                         }
                         vm.getInvLabelComponent(player.getInventory().size()).setText("");
                         inventoryStatus = "open";

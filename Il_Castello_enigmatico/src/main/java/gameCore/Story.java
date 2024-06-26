@@ -413,23 +413,19 @@ public class Story {
 
         String uitxt;
         uitxt = "Finalmente, l'anello dell'eternità è ora tra le tue mani. Una volta messo al dito la tua visione sparisce... cadi in un sonno profondo.\n";
-    
         // Ferma la speedrun
         stopSpeedrunTimer();
+        if(speedrunTimer.getSeconds() == 0){
+            vm.writeOnExitScreen(uitxt
+            + "\nQuanto tempo è passato? Al tuo risveglio, l'anello è ancora al tuo dito, ma non hai idea di dove ti trovi.\nUn vasto, piano prato di erba verde si estende per kilometri, niente oltre che l'erba è visibile fino all'orizzonte.\nIl cielo è illuminato da una grande luna piena. Cosa succederà ora?");
+        }else{
+            vm.writeOnNameScreen(uitxt
+            + "\nQuanto tempo è passato? Al tuo risveglio, l'anello è ancora al tuo dito, ma non hai idea di dove ti trovi.\nUn vasto, piano prato di erba verde si estende per kilometri, niente oltre che l'erba è visibile fino all'orizzonte.\nIl cielo è illuminato da una grande luna piena. Cosa succederà ora?\n\n(Hai completato una run senza mai uscire!\nPer salvare il tuo tempo inserisci il tuo nome.)"); 
+            vm.showNameInputScreen();           
+        }
 
-                // Mostra la schermata di input del nome alla fine del gioco
-        vm.showNameInputScreen();
+        //System.out.println("Player Name: " + playerName);
 
-        // Aggiungi un'azione al bottone di submit per ottenere il nome del giocatore
-        ui.getSubmitNameButton().addActionListener(e -> {
-            String playerName = ui.getNameInputField().getText();
-            System.out.println("Player Name: " + playerName);
 
-            // Nascondi la schermata di input del nome
-            vm.hideNameInputScreen();
-        });
-
-        vm.writeOnExitScreen(uitxt
-        + "\nQuanto tempo è passato? Al tuo risveglio, l'anello è ancora al tuo dito, ma non hai idea di dove ti trovi.\nUn vasto, piano prato di erba verde si estende per kilometri, niente oltre che l'erba è visibile fino all'orizzonte.\nIl cielo è illuminato da una grande luna piena. Cosa succederà ora?");
     }
 }
