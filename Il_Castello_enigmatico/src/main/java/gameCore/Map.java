@@ -37,8 +37,6 @@ public class Map implements Serializable {
     private Room illusionRoom = new Room();
     private Room oblivionRoom = new Room();
     private Room misteryRoom = new MisteryRoom();
-    private Room wyvernLair = new Room();
-    private Room storage = new RoomWDoor();
     private Room memoryRoom = new RoomWDoor();
     private Room eternityRoom = new EternityRoom();
     private Room end = new DestinyRoom();
@@ -232,8 +230,6 @@ public class Map implements Serializable {
         this.setIllusionRoom(m.getIllusionRoom());
         this.setOblivionRoom(m.getOblivionRoom());
         this.setMisteryR(m.getMisteryR());
-        this.setWlair(m.getWlair());
-        this.setStorage(m.getStorage());
         this.setEternityroom(m.getEternityroom());
         this.setCurrentRoom(m.getCurrentRoom());
         this.setPreviousRoom(m.getPreviousRoom());
@@ -367,21 +363,7 @@ public class Map implements Serializable {
         this.end = end;
     }
 
-    public Room getWlair() {
-        return wyvernLair;
-    }
 
-    public void setWlair(Room wlair) {
-        this.wyvernLair = wlair;
-    }
-
-    public Room getStorage() {
-        return storage;
-    }
-
-    public void setStorage(Room storage) {
-        this.storage = storage;
-    }
 
     /**
      * Spostamento alla stanza precedente
@@ -393,3 +375,4 @@ public class Map implements Serializable {
     }
 
 }
+
