@@ -55,7 +55,7 @@ public class DatabaseConnection {
             }
 
             if (emptyClassifica) {
-                String fill = "RUNSCRIPT FROM 'src/main/resources/database/db_info.sql'";
+                fill = "RUNSCRIPT FROM 'src/main/resources/database/db_info.sql'";
                 try (PreparedStatement stmt = conn.prepareStatement(fill)) {
                     stmt.execute();
                 }
@@ -96,7 +96,7 @@ public class DatabaseConnection {
                 Time tempo = rs.getTime("TEMPO");
                 classifica.append("ID: ").append(id).append(", Username: ").append(username).append(", Tempo: ").append(tempo).append("\n");
             }
-            printdb.displayText(classifica.toString());
+            //printdb.displayText(classifica.toString());
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
