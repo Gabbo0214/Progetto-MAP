@@ -125,7 +125,7 @@ public class UI {
 
         // Esempio di aggiunta di etichette di classifica
         for (int i = 1; i <= 10; i++) {
-            JLabel rankLabel = new JLabel("Classifica " + i);
+            JLabel rankLabel = new JLabel("Posizione " + i);
             rankLabel.setForeground(Color.white);
             rankLabel.setFont(normalFont);
             leaderboardPanel.add(rankLabel);
