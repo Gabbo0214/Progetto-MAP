@@ -35,6 +35,31 @@ public class VisibilityManager {
         ui.getMainTextAreaExit().setVisible(false);
     }
 
+    /**
+    * Mostra la schermata per l'inserimento del nome a fine partita
+    */
+    public void showNameInputScreen(){
+
+        ui.getTitleNamePanel().setVisible(false);
+        ui.getStartButtonPanel().setVisible(false);
+        ui.getStartButton().setVisible(false);
+        ui.getContinueButton().setVisible(false);
+        ui.getExitButton1().setVisible(false);
+        ui.getPlayerPanel().setVisible(false);
+        ui.getInventoryPanel().setVisible(false);
+        ui.getStartButton1().setVisible(false);
+        ui.getYnPanel().setVisible(false);
+        ui.getReturnToMenu().setVisible(false);
+        ui.getMainTextAreaExit().setVisible(false);
+
+        ui.campoTextName();
+        ui.getChoiceButtonPanel().setVisible(true);
+        ui.getMainTextPanel().setVisible(true);
+        ui.getMainTextArea().setVisible(true);
+        ui.getCampo().setVisible(true);
+        ui.getCampo().setText(ui.getCampoTextName());
+    }
+
      /**
      * Apre l'inventario quando si preme il tasto "Zaino" mostrando il pannello con vari lables
      */

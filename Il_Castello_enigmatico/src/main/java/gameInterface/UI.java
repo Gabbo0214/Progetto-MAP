@@ -43,7 +43,7 @@ public class UI {
     private final Font invFont = new Font("Times New Roman", Font.PLAIN, 14);
     private String campotxt = "";
     private boolean pressed = false;
-    private String campoText = "                            Cosa devo fare?";
+    public String campoText = "                            Cosa devo fare?";
 
     /**
      * Creazione dell'interfaccia.
@@ -327,8 +327,11 @@ public class UI {
         campo.addActionListener((ActionEvent e) -> {
             campotxt = campo.getText();
             campo.setForeground(Color.DARK_GRAY);
-            campo.setText("                           Cosa devo fare?");
+            campo.setText(campoText);
             pressed = false;
+            if(campoText == "                            Come ti chiami?"){
+                showTitleScreenEndGame();
+            }
         });
         choiceButtonPanel.add(campo);
 
@@ -349,8 +352,11 @@ public class UI {
                 campotxt = campo.getText();
                 submit.setActionCommand("submit");
                 campo.setForeground(Color.DARK_GRAY);
-                campo.setText("                           Cosa devo fare?");
+                campo.setText(campoText);
                 pressed = false;
+                if(campoText == "                            Come ti chiami?"){
+                    showTitleScreenEndGame();
+                }
             }
         });
 
@@ -435,6 +441,10 @@ public class UI {
         return campotxt;
     }
 
+    public String getCampoTextName() {
+        return campotxt;
+    }
+
     public JTextArea getMainTextArea() {
         return mainTextArea;
     }
@@ -444,7 +454,7 @@ public class UI {
     }
 
     public JTextArea getNameTextArea() {
-        return mainTextAreaExit;
+        return mainTextArea;
     }
 
     public JTextField getCampo() {
@@ -527,6 +537,10 @@ public class UI {
         this.pressed = pressed;
     }
 
+    public void campoTextName(){
+        this.campoText = "                            Come ti chiami?";
+    }
+
     public void updateTimer(int secondsRemaining) {
         if (secondsRemaining >= 0) {
             timer.setText("TEMPO:");
@@ -536,6 +550,24 @@ public class UI {
             timerCountLabel.setText(""); // Se sRemaining è minore di 0 il conteggio non è visibile
         }
 
+    }
+
+    private void showTitleScreenEndGame(){
+
+        getTitleNamePanel().setVisible(true);
+        getStartButtonPanel().setVisible(true);
+        getStartButton().setVisible(true);
+        getContinueButton().setVisible(true);
+        getExitButton1().setVisible(true);
+         
+        getMainTextArea().setVisible(false);
+        getChoiceButtonPanel().setVisible(false);
+        getPlayerPanel().setVisible(false);
+        getInventoryPanel().setVisible(false);
+        getStartButton1().setVisible(false);
+        getYnPanel().setVisible(false);
+        getReturnToMenu().setVisible(false);
+        getMainTextAreaExit().setVisible(false);
     }
 
 }
