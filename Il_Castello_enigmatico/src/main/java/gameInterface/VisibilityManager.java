@@ -18,6 +18,7 @@ public class VisibilityManager {
      * Mostra la schermata del titolo con i tasti "Nuovo gioco", "Carica" ed "Esci"
      */
      public void showTitleScreen(){
+
         ui.getTitleNamePanel().setVisible(true);
         ui.getStartButtonPanel().setVisible(true);
         ui.getStartButton().setVisible(true);
@@ -150,7 +151,7 @@ public class VisibilityManager {
     }
      
      /**
-      * Nasconde la schemrata per la conferma di uscita dal gioco e i relativi tasti "Sì" e "No"
+      * Nasconde la schermata per la conferma di uscita dal gioco e i relativi tasti "Sì" e "No"
       */
      public void hideExitConfirm(){
          ui.getYnPanel().setVisible(false);
@@ -158,26 +159,6 @@ public class VisibilityManager {
          ui.getMainTextAreaExit().setVisible(false);
      }
 
-     /**
-      * Mostra la schermata per l'inserimento del nome
-      */
-     public void showNameInputScreen() {
-        ui.getMainTextArea().setVisible(false);
-        ui.getPlayerPanel().setVisible(false);
-        ui.getInventoryPanel().setVisible(false);
-        ui.getYnPanel().setVisible(false);
-        ui.getReturnToMenu().setVisible(false);
-
-        ui.getNameInputPanel().setVisible(true);
-    }
-
-    /**
-     * Nasconde la schermata di input del nome.
-     */
-    public void hideNameInputScreen() {
-        ui.getNameInputPanel().setVisible(false);
-    }
-     
      /**
       * Mostra la schermata di notifica di caricamento fallito con il singolo tasto "Torna al menù principale"
       */
@@ -227,6 +208,14 @@ public class VisibilityManager {
       */
      public void writeOnExitScreen(String text){
         ui.getMainTextAreaExit().setText(text);
+    }
+
+    /**
+     * Visualizza sull'interfaccia, nell'area di testo dedicata a quando si clicca il tasto "Esci" oppure si viene sconfitti, il testo text
+     * @param text 
+     */
+      public void writeOnNameScreen(String text){
+        ui.getNameTextArea().setText(text);
     }
 
      /**
