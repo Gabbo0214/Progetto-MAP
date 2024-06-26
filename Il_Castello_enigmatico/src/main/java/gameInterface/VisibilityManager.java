@@ -23,6 +23,7 @@ public class VisibilityManager {
         ui.getStartButtonPanel().setVisible(true);
         ui.getStartButton().setVisible(true);
         ui.getContinueButton().setVisible(true);
+        ui.getLeaderboardButton().setVisible(true);
         ui.getExitButton1().setVisible(true);
          
         ui.getMainTextArea().setVisible(false);
@@ -33,6 +34,24 @@ public class VisibilityManager {
         ui.getYnPanel().setVisible(false);
         ui.getReturnToMenu().setVisible(false);
         ui.getMainTextAreaExit().setVisible(false);
+        ui.getLeaderboardPanel().setVisible(false);
+        ui.getBackToMenuButton().setVisible(false);
+    }
+
+    /**
+    * Mostra la schermata del titolo con i tasti "Nuovo gioco", "Carica" ed "Esci"
+    */
+    public void showLeaderboardScreen(){
+
+        ui.getTitleNamePanel().setVisible(false);
+        ui.getStartButtonPanel().setVisible(false);
+        ui.getStartButton().setVisible(false);
+        ui.getContinueButton().setVisible(false);
+        ui.getLeaderboardButton().setVisible(false);
+        ui.getExitButton1().setVisible(false);
+
+        ui.getLeaderboardPanel().setVisible(true);
+        ui.getBackToMenuButton().setVisible(true);
     }
 
     /**
