@@ -43,6 +43,7 @@ public class UI {
     private final Font invFont = new Font("Times New Roman", Font.PLAIN, 14);
     private String campotxt = "";
     private boolean pressed = false;
+    private String campoText = "                            Cosa devo fare?";
 
     /**
      * Creazione dell'interfaccia.
@@ -297,7 +298,7 @@ public class UI {
         campo.setFont(normalFont);
         campo.addActionListener(cHandler);
         campo.setActionCommand("submit");
-        campo.setText("                            Cosa devo fare?");
+        campo.setText(campoText);
 
         // Al click del mouse su campo, la scritta "Cosa devo fare?" scompare
         campo.addMouseListener(new MouseAdapter() {
