@@ -9,11 +9,11 @@ import java.io.File;
 import java.io.IOException;
 import java.util.stream.IntStream;
 
-import fileManager.FileHandler;
-import gameInterface.UI;
-import gameInterface.VisibilityManager;
+import gui.UI;
+import gui.VisibilityManager;
 import parser.Parser;
 import parser.ParserOutput;
+import savegame.FileHandler;
 
 public class Game {
     ChoiceHandler cHandler = new ChoiceHandler();

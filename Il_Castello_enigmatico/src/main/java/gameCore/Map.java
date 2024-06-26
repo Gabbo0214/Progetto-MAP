@@ -7,21 +7,21 @@ import java.io.Serializable;
 
 import base.Room;
 import base.Stobj;
-import objectSet.Door;
-import objectSet.Potion;
-import roomSet.AlchemicalLaboratory;
-import roomSet.ArmourRoom;
-import roomSet.CastleEntrance;
-import roomSet.DarkCrypt;
-import roomSet.DestinyRoom;
-import roomSet.EternityRoom;
-import roomSet.MisteryRoom;
-import roomSet.ProphecyChamber;
-import roomSet.RoomSecrets;
-import roomSet.RoomWDoor;
-import roomSet.TimeRoom;
-import roomSet.TreasureRoom;
-import roomSet.WeaponRoom;
+import objectgame.Door;
+import objectgame.Potion;
+import room.AlchemicalLaboratory;
+import room.ArmourRoom;
+import room.CastleEntrance;
+import room.DarkCrypt;
+import room.DestinyRoom;
+import room.EternityRoom;
+import room.MisteryRoom;
+import room.ProphecyChamber;
+import room.RoomSecrets;
+import room.RoomWDoor;
+import room.TimeRoom;
+import room.TreasureRoom;
+import room.WeaponRoom;
 
 public class Map implements Serializable {
     private Room castle = new CastleEntrance();
@@ -375,4 +375,3 @@ public class Map implements Serializable {
     }
 
 }
-

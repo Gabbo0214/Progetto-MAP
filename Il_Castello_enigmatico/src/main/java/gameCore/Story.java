@@ -3,14 +3,14 @@
  */
 package gameCore;
 
-import base.Stobj;
-import gameInterface.VisibilityManager;
-import objectSet.Door;
-import roomSet.DarkCrypt;
-import parser.ParserOutput;
-import gameInterface.UI;
-
 import java.util.stream.Collectors;
+
+import base.Stobj;
+import gui.UI;
+import gui.VisibilityManager;
+import objectgame.Door;
+import parser.ParserOutput;
+import room.DarkCrypt;
 
 public class Story {
 
