@@ -19,7 +19,7 @@ public class DatabaseConnection {
     /**
      * L'URL del database.
      */
-    static final String DB_URL = "jdbc:h2:./src/main/resources/database/db_map";
+    static final String DB_URL = "jdbc:h2:.Il_Castello_enigmatico/src/main/java/db/db_map";
 
     /**
      * L'utente del database.
