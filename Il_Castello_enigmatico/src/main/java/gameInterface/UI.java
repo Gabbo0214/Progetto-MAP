@@ -151,13 +151,16 @@ leaderboardButton.addActionListener(new ActionListener() {
 
         // Ottieni la classifica dal database e popola la GUI
         List<String> classifica = DatabaseConnection.printClassificaFromDB();
-        for (int i = 0; i < classifica.size(); i++) {
+        int size = Math.min(classifica.size(), 10); // Limita il numero massimo di punteggi da mostrare a 10
+
+        for (int i = 0; i < size; i++) {
             JLabel rankLabel = new JLabel((i + 1) + ". " + classifica.get(i));
             rankLabel.setForeground(Color.white);
             rankLabel.setFont(normalFont);
             leaderboardPanel.add(rankLabel);
         }
-            // Aggiungi il pulsante "INDIETRO" in fondo al pannello
+
+        // Aggiungi il pulsante "INDIETRO" in fondo al pannello
         leaderboardPanel.add(backToMenuButton);
 
         // Aggiorna il pannello per riflettere le modifiche
