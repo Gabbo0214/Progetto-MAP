@@ -7,6 +7,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Time;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * La classe DatabaseConnection gestisce la connessione al database.
@@ -109,34 +111,32 @@ public class DatabaseConnection {
         }
     }
 
-    /**
-     * Stampa la classifica dal database.
+ /**
+     * Ottiene la classifica dal database.
      */
-    public static void printClassificaFromDB() {
-        String sql_query = "SELECT * FROM CLASSIFICA ORDER BY TEMPO";
+    public static List<String> printClassificaFromDB() {
+        String sql_query = "SELECT USERNAME, TEMPO FROM CLASSIFICA ORDER BY TEMPO LIMIT 10";
+        List<String> classifica = new ArrayList<>();
         try (Connection conn = DatabaseConnection.connect();
              PreparedStatement stmt = conn.prepareStatement(sql_query);
              ResultSet rs = stmt.executeQuery()) {
     
-            StringBuilder classifica = new StringBuilder();
             while (rs.next()) {
-                int id = rs.getInt("ID");
                 String username = rs.getString("USERNAME");
                 Time tempo = rs.getTime("TEMPO");
-                classifica.append("ID: ").append(id).append(", Username: ").append(username).append(", Tempo: ").append(tempo).append("\n");
+                classifica.add(username + " - " + tempo);
             }
-            System.out.println("Classifica letta correttamente:");
-            System.out.println(classifica.toString()); // Stampa la classifica letta
         } catch (SQLException e) {
-            throw new RuntimeException("Errore durante la stampa della classifica dal database", e);
+            throw new RuntimeException("Errore durante la lettura della classifica dal database", e);
         }
+        return classifica;
     }
 
-    
     public static void main(String[] args) {
-        // Test per verificare la connessione e la creazione del database
-        Connection conn = connect();
-        printClassificaFromDB();
-        close(conn);
+        // Test per verificare la connessione e la lettura del database
+        List<String> classifica = printClassificaFromDB();
+        for (String record : classifica) {
+            System.out.println(record);
+        }
     }
 }

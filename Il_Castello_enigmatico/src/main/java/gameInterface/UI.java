@@ -8,8 +8,10 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -19,6 +21,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+import db.DatabaseConnection;
 import gameCore.Game.ChoiceHandler;
 
 public class UI {
@@ -101,36 +104,72 @@ public class UI {
         startButtonPanel.add(continueButton);
 
         // Pulsante della classifica di speedrun
-        leaderboardButton = new JButton("CLASSIFICA");
-        leaderboardButton.setVisible(true);
-        leaderboardButton.setBackground(Color.black);
-        leaderboardButton.setForeground(Color.white);
-        leaderboardButton.setFont(normalFont);
-        leaderboardButton.setFocusPainted(false);
-        leaderboardButton.addActionListener(cHandler);
-        leaderboardButton.setActionCommand("classifica");
-        leaderboardButton.setBorder(null);
-        startButtonPanel.add(leaderboardButton);
+leaderboardButton = new JButton("CLASSIFICA");
+leaderboardButton.setVisible(true);
+leaderboardButton.setBackground(Color.black);
+leaderboardButton.setForeground(Color.white);
+leaderboardButton.setFont(normalFont);
+leaderboardButton.setFocusPainted(false);
+leaderboardButton.addActionListener(cHandler);
+leaderboardButton.setActionCommand("classifica");
+leaderboardButton.setBorder(null);
+startButtonPanel.add(leaderboardButton);
 
-        JLabel leaderboardLabel = new JLabel("I MIGLIORI 10 TEMPI OTTENUTI");
-        leaderboardLabel.setForeground(Color.white);
-        leaderboardLabel.setFont(normalFont);
+// Label per il titolo della classifica
+JLabel leaderboardLabel = new JLabel("I MIGLIORI 10 TEMPI OTTENUTI");
+leaderboardLabel.setForeground(Color.white);
+leaderboardLabel.setFont(normalFont);
 
-        // Pannello del menù di classifica
-        leaderboardPanel = new JPanel();
-        leaderboardPanel.setBounds(250, 100, 300, 400);
-        leaderboardPanel.setBackground(Color.black);
-        leaderboardPanel.setLayout(new GridLayout(12, 1));
+// Pannello del menù di classifica
+leaderboardPanel = new JPanel();
+leaderboardPanel.setBounds(250, 100, 300, 400);
+leaderboardPanel.setBackground(Color.black);
+leaderboardPanel.setLayout(new GridLayout(12, 1));
+leaderboardPanel.add(leaderboardLabel);
+window.add(leaderboardPanel);
+
+// Pulsante per tornare al menù dalla classifica
+backToMenuButton = new JButton("INDIETRO");
+backToMenuButton.setVisible(true);
+backToMenuButton.setBackground(Color.black);
+backToMenuButton.setForeground(Color.white);
+backToMenuButton.setFont(normalFont);
+backToMenuButton.setFocusPainted(false);
+backToMenuButton.addActionListener(cHandler);
+backToMenuButton.setActionCommand("yes");
+backToMenuButton.setBorder(null);
+leaderboardPanel.add(backToMenuButton);
+
+// ActionListener per il pulsante "CLASSIFICA"
+leaderboardButton.addActionListener(new ActionListener() {
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        // Rimuovi tutti i componenti precedenti tranne il titolo e il pulsante "INDIETRO"
+        leaderboardPanel.removeAll();
         leaderboardPanel.add(leaderboardLabel);
-        window.add(leaderboardPanel);
+        leaderboardPanel.add(backToMenuButton);
 
-        // Esempio di aggiunta di etichette di classifica
-        for (int i = 1; i <= 10; i++) {
-            JLabel rankLabel = new JLabel("Posizione " + i);
+        // Ottieni la classifica dal database e popola la GUI
+        List<String> classifica = DatabaseConnection.printClassificaFromDB();
+        for (int i = 0; i < classifica.size(); i++) {
+            JLabel rankLabel = new JLabel((i + 1) + ". " + classifica.get(i));
             rankLabel.setForeground(Color.white);
             rankLabel.setFont(normalFont);
             leaderboardPanel.add(rankLabel);
         }
+            // Aggiungi il pulsante "INDIETRO" in fondo al pannello
+        leaderboardPanel.add(backToMenuButton);
+
+        // Aggiorna il pannello per riflettere le modifiche
+        leaderboardPanel.revalidate();
+        leaderboardPanel.repaint();
+    }
+});
+
+window.setVisible(true);
+
+
+        
 
         // Pulsante per tornare al menù dalla classifica
         backToMenuButton = new JButton("INDIETRO");
