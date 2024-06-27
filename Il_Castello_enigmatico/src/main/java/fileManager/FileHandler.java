@@ -34,10 +34,8 @@ public class FileHandler {
             objectStream.close();   
             fileStream.close();   
 
-            System.out.println("Save map state successfully.");
             savemap = true;
          } catch (IOException e) {
-            System.out.println("Failed to save");
             e.printStackTrace();
          }
          return savemap;
@@ -62,12 +60,10 @@ public class FileHandler {
             objectStream.close();   
             fileStream.close();   
 
-            System.out.println("Save player state successfully.");
             savepl = true;
 
 
          } catch (IOException e) {
-            System.out.println("Failed to save"); 
             e.printStackTrace();
          }
          return savepl;
@@ -92,8 +88,6 @@ public class FileHandler {
         filemap.setMap((Map)objectStream.readObject());
 
         objectStream.close();
-        
-        System.out.println("Map loaded successefully");
 
         return filemap; 
      }
@@ -117,8 +111,6 @@ public class FileHandler {
          fileplayer.setPlayer((Player)objectStream.readObject());
 
         objectStream.close();
-
-         System.out.println("Player loaded successefully");
 
          return fileplayer;
     }

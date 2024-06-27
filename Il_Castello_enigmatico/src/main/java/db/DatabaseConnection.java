@@ -131,12 +131,4 @@ public class DatabaseConnection {
         }
         return classifica;
     }
-
-    public static void main(String[] args) {
-        // Test per verificare la connessione e la lettura del database
-        List<String> classifica = printClassificaFromDB();
-        for (String record : classifica) {
-            System.out.println(record);
-        }
-    }
 }
