@@ -64,8 +64,8 @@ public class DatabaseConnection {
     private static void initializeDatabase(Connection conn) {
         // Costruisci i percorsi relativi per gli script SQL
         String projectDir = System.getProperty("user.dir");
-        String startScriptPath = Paths.get(projectDir, "src", "main", "resources", "database", "db_start.sql").toString();
-        String fillScriptPath = Paths.get(projectDir, "src", "main", "resources", "database", "db_info.sql").toString();
+        String startScriptPath = Paths.get(projectDir, "Il_Castello_enigmatico","src", "main", "resources", "database", "db_start.sql").toString();
+        String fillScriptPath = Paths.get(projectDir, "Il_Castello_enigmatico","src", "main", "resources", "database", "db_info.sql").toString();
 
         String start = "RUNSCRIPT FROM '" + startScriptPath + "'";
         String fill = "RUNSCRIPT FROM '" + fillScriptPath + "'";
