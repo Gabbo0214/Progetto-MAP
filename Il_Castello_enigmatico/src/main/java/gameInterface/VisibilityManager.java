@@ -71,12 +71,12 @@ public class VisibilityManager {
         ui.getReturnToMenu().setVisible(false);
         ui.getMainTextAreaExit().setVisible(false);
 
-        ui.campoTextName();
         ui.getChoiceButtonPanel().setVisible(true);
         ui.getMainTextPanel().setVisible(true);
         ui.getMainTextArea().setVisible(true);
-        ui.getCampo().setVisible(true);
+        ui.campoTextName();
         ui.getCampo().setText(ui.getCampoTextName());
+        ui.getCampo().setVisible(true);
     }
 
      /**
