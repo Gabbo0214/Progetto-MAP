@@ -39,8 +39,10 @@ public class Story {
         ui.setNameInputListener(new UI.NameInputListener() {
             @Override
             public void onNameInput(String name) {
+                String nome = name;
                 int time = speedrunTimer.getSeconds();
-                insertIntoDatabase(name, time);
+                
+                insertIntoDatabase(nome, time);
             }
         });
     }
@@ -437,11 +439,6 @@ public class Story {
             vm.writeOnNameScreen(uitxt
             + "\nQuanto tempo è passato? Al tuo risveglio, l'anello è ancora al tuo dito, ma non hai idea di dove ti trovi.\nUn vasto, piano prato di erba verde si estende per kilometri, niente oltre che l'erba è visibile fino all'orizzonte.\nIl cielo è illuminato da una grande luna piena. Cosa succederà ora?\n\n(Hai completato una run senza mai uscire!\nPer salvare il tuo tempo inserisci il tuo nome.)"); 
             vm.showNameInputScreen();  
-            
-            String nome = ui.campotxt;
-            int time = speedrunTimer.getSeconds();
-
-            insertIntoDatabase(nome, time);
         }
     }
 
