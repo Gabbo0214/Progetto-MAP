@@ -4,12 +4,16 @@
 package gameCore;
 
 import base.Stobj;
+import db.DatabaseConnection;
 import gameInterface.VisibilityManager;
 import objectSet.Door;
 import roomSet.DarkCrypt;
 import parser.ParserOutput;
 import gameInterface.UI;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.stream.Collectors;
 
 public class Story {
@@ -28,6 +32,17 @@ public class Story {
         this.ui = ui; // Initialize ui
         this.speedrunTimer = new SpeedRunTimer();
         this.speedrunActive = false;
+        setUpNameInputListener();// Imposta Story come listener
+    }
+
+    private void setUpNameInputListener() {
+        ui.setNameInputListener(new UI.NameInputListener() {
+            @Override
+            public void onNameInput(String name) {
+                int time = speedrunTimer.getSeconds();
+                insertIntoDatabase(name, time);
+            }
+        });
     }
 
     // New method to stop the speedrun timer
@@ -421,11 +436,34 @@ public class Story {
         }else{
             vm.writeOnNameScreen(uitxt
             + "\nQuanto tempo è passato? Al tuo risveglio, l'anello è ancora al tuo dito, ma non hai idea di dove ti trovi.\nUn vasto, piano prato di erba verde si estende per kilometri, niente oltre che l'erba è visibile fino all'orizzonte.\nIl cielo è illuminato da una grande luna piena. Cosa succederà ora?\n\n(Hai completato una run senza mai uscire!\nPer salvare il tuo tempo inserisci il tuo nome.)"); 
-            vm.showNameInputScreen();           
+            vm.showNameInputScreen();  
+            
+            String nome = ui.campotxt;
+            int time = speedrunTimer.getSeconds();
+
+            insertIntoDatabase(nome, time);
         }
-
-        //System.out.println("Player Name: " + playerName);
-
-
     }
+
+    
+    /**
+     * Inserisce un record nella tabella CLASSIFICA.
+     *
+     * @param nome il nome da inserire
+     * @param tempo il tempo da inserire
+     */
+    private void insertIntoDatabase(String nome, int tempo) {
+        String insertSQL = "INSERT INTO CLASSIFICA (USERNAME, TEMPO) VALUES (?, ?)";
+
+        try (Connection conn = DatabaseConnection.connect();
+             PreparedStatement pstmt = conn.prepareStatement(insertSQL)) {
+            pstmt.setString(1, nome);
+            pstmt.setInt(2, tempo);
+
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException("Errore durante l'inserimento nel database", e);
+        }
+    }
+
 }

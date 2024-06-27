@@ -43,7 +43,7 @@ public class UI {
     private JTextArea mainTextArea, mainTextAreaExit;
     private final Font normalFont = new Font("Times New Roman", Font.PLAIN, 18);
     private final Font invFont = new Font("Times New Roman", Font.PLAIN, 14);
-    private String campotxt = "";
+    public String campotxt = "";
     private boolean pressed = false;
     public String campoText = "                            Cosa devo fare?";
 
@@ -52,7 +52,7 @@ public class UI {
      * 
      * @param cHandler
      */
-    public void createUI(ChoiceHandler cHandler) {// }, InventoryHandler invHandler){
+    public void createUI(ChoiceHandler cHandler) {
 
         // window. Finestra dell'interfaccia
         JFrame window = new JFrame();
@@ -131,7 +131,7 @@ public class UI {
             leaderboardPanel.add(rankLabel);
         }
 
-        // Pulsante della classifica di speedrun
+        // Pulsante per tornare al menù dalla classifica
         backToMenuButton = new JButton("INDIETRO");
         backToMenuButton.setVisible(true);
         backToMenuButton.setBackground(Color.black);
@@ -402,6 +402,7 @@ public class UI {
                 pressed = false;
                 if (campoText == "                            Come ti chiami?") {
                     showTitleScreenEndGame();
+
                 }
             }
         });
@@ -481,6 +482,25 @@ public class UI {
         savePanel.add(saveConfirm);
 
         window.setVisible(true);
+    }
+
+    public interface NameInputListener {
+        void onNameInput(String name);
+    }
+
+    private NameInputListener nameInputListener;
+
+    // Metodo per impostare il listener
+    public void setNameInputListener(NameInputListener listener) {
+        this.nameInputListener = listener;
+    }
+
+    // Metodo chiamato quando il nome viene inserito
+    public void handleNameInput() {
+        String name = campotxt; // Ottieni il testo dal campo di input
+        if (nameInputListener != null) {
+            nameInputListener.onNameInput(name); // Notifica il listener
+        }
     }
 
     public String getCampotxt() {
@@ -616,6 +636,7 @@ public class UI {
         getStartButtonPanel().setVisible(true);
         getStartButton().setVisible(true);
         getContinueButton().setVisible(true);
+        getLeaderboardButton().setVisible(true);
         getExitButton1().setVisible(true);
 
         getMainTextArea().setVisible(false);
@@ -627,5 +648,4 @@ public class UI {
         getReturnToMenu().setVisible(false);
         getMainTextAreaExit().setVisible(false);
     }
-
 }

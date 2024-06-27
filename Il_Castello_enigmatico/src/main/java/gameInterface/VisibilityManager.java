@@ -224,7 +224,7 @@ public class VisibilityManager {
      }
 
      /**
-      * Mostra la schemrata principale del gioco
+      * Mostra la schermata principale del gioco
       */
      public void showMainGameScreen(){
          ui.getPlayerPanel().setVisible(true);

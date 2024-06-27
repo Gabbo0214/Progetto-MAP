@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Time;
+
 /**
  * La classe DatabaseConnection gestisce la connessione al database.
  */
@@ -19,8 +20,7 @@ public class DatabaseConnection {
      * L'URL del database.
      */
     static final String DB_URL = "jdbc:h2:./src/main/resources/database/db_map";
-    
-   
+
     /**
      * L'utente del database.
      */
@@ -36,33 +36,45 @@ public class DatabaseConnection {
      * @return la connessione al database
      */
     public static Connection connect() {
-        String start = "RUNSCRIPT FROM 'src/main/resources/database/db_start.sql'";
-        String fill = "RUNSCRIPT FROM 'src/main/resources/database/db_info.sql'";
-        boolean emptyClassifica = true;
-
         try {
             Class.forName(JDBC_DRIVER);
             Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
+            initializeDatabase(conn);
+            return conn;
+        } catch (ClassNotFoundException | SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * Inizializza il database eseguendo script SQL.
+     *
+     * @param conn la connessione al database
+     */
+    private static void initializeDatabase(Connection conn) {
+        String start = "RUNSCRIPT FROM 'src/main/resources/database/db_start.sql'";
+        String fill = "RUNSCRIPT FROM 'src/main/resources/database/db_info.sql'";
+
+        try {
             try (PreparedStatement stmt = conn.prepareStatement(start)) {
                 stmt.execute();
             }
 
-            String sql = "SELECT * FROM CLASSIFICA";
+            String sql = "SELECT COUNT(*) AS count FROM CLASSIFICA";
+            boolean isClassificaEmpty = true;
+
             try (PreparedStatement stmt = conn.prepareStatement(sql); ResultSet rs = stmt.executeQuery()) {
-                while (rs.next()) {
-                    emptyClassifica = false;
+                if (rs.next()) {
+                    isClassificaEmpty = rs.getInt("count") == 0;
                 }
             }
 
-            if (emptyClassifica) {
-                fill = "RUNSCRIPT FROM 'src/main/resources/database/db_info.sql'";
+            if (isClassificaEmpty) {
                 try (PreparedStatement stmt = conn.prepareStatement(fill)) {
                     stmt.execute();
                 }
             }
-
-            return conn;
-        } catch (ClassNotFoundException | SQLException e) {
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
@@ -86,9 +98,11 @@ public class DatabaseConnection {
      * Stampa la classifica dal database.
      */
     public static void printClassificaFromDB() {
-        Connection conn = DatabaseConnection.connect();
         String sql_query = "SELECT * FROM CLASSIFICA ORDER BY TEMPO";
-        try (PreparedStatement stmt = conn.prepareStatement(sql_query); ResultSet rs = stmt.executeQuery()) {
+        try (Connection conn = DatabaseConnection.connect();
+             PreparedStatement stmt = conn.prepareStatement(sql_query);
+             ResultSet rs = stmt.executeQuery()) {
+
             StringBuilder classifica = new StringBuilder();
             while (rs.next()) {
                 int id = rs.getInt("ID");
@@ -99,8 +113,6 @@ public class DatabaseConnection {
             //printdb.displayText(classifica.toString());
         } catch (SQLException e) {
             throw new RuntimeException(e);
-        } finally {
-            DatabaseConnection.close(conn);
         }
     }
 }
