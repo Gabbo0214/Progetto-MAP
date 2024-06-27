@@ -52,8 +52,8 @@ public class DatabaseConnection {
      * @param conn la connessione al database
      */
     private static void initializeDatabase(Connection conn) {
-        String start = "RUNSCRIPT FROM 'src/main/resources/database/db_start.sql'";
-        String fill = "RUNSCRIPT FROM 'src/main/resources/database/db_info.sql'";
+        String start = "RUNSCRIPT FROM 'Il_Castello_enigmatico/src/main/resources/database/db_start.sql'";
+        String fill = "RUNSCRIPT FROM 'Il_Castello_enigmatico/src/main/resources/database/db_info.sql'";
 
         try {
             try (PreparedStatement stmt = conn.prepareStatement(start)) {
