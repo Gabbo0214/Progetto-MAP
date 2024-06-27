@@ -64,8 +64,8 @@ public class DatabaseConnection {
     private static void initializeDatabase(Connection conn) {
         // Costruisci i percorsi relativi per gli script SQL
         String projectDir = System.getProperty("user.dir");
-        String startScriptPath = Paths.get(projectDir, "Il_Castello_enigmatico", "src", "main", "resources", "database", "db_start.sql").toString();
-        String fillScriptPath = Paths.get(projectDir, "Il_Castello_enigmatico", "src", "main", "resources", "database", "db_info.sql").toString();
+        String startScriptPath = Paths.get(projectDir, "src", "main", "resources", "database", "db_start.sql").toString();
+        String fillScriptPath = Paths.get(projectDir, "src", "main", "resources", "database", "db_info.sql").toString();
 
         String start = "RUNSCRIPT FROM '" + startScriptPath + "'";
         String fill = "RUNSCRIPT FROM '" + fillScriptPath + "'";
@@ -117,7 +117,7 @@ public class DatabaseConnection {
         try (Connection conn = DatabaseConnection.connect();
              PreparedStatement stmt = conn.prepareStatement(sql_query);
              ResultSet rs = stmt.executeQuery()) {
-
+    
             StringBuilder classifica = new StringBuilder();
             while (rs.next()) {
                 int id = rs.getInt("ID");
@@ -125,9 +125,18 @@ public class DatabaseConnection {
                 Time tempo = rs.getTime("TEMPO");
                 classifica.append("ID: ").append(id).append(", Username: ").append(username).append(", Tempo: ").append(tempo).append("\n");
             }
-            // printdb.displayText(classifica.toString());
+            System.out.println("Classifica letta correttamente:");
+            System.out.println(classifica.toString()); // Stampa la classifica letta
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("Errore durante la stampa della classifica dal database", e);
         }
+    }
+
+    
+    public static void main(String[] args) {
+        // Test per verificare la connessione e la creazione del database
+        Connection conn = connect();
+        printClassificaFromDB();
+        close(conn);
     }
 }

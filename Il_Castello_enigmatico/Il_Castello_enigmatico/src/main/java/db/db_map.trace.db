@@ -1,0 +1,41 @@
+2024-06-27 21:26:16 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLNonTransientConnectionException: Database is already closed (to disable automatic closing at VM shutdown, add ";DB_CLOSE_ON_EXIT=FALSE" to the db URL) [90121-200]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:622)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:429)
+	at org.h2.message.DbException.get(DbException.java:205)
+	at org.h2.message.DbException.get(DbException.java:181)
+	at org.h2.message.DbException.get(DbException.java:170)
+	at org.h2.jdbc.JdbcConnection.checkClosed(JdbcConnection.java:1514)
+	at org.h2.jdbc.JdbcConnection.checkClosed(JdbcConnection.java:1490)
+	at org.h2.jdbc.JdbcConnection.prepareStatement(JdbcConnection.java:350)
+	at db.DatabaseConnection.initializeDatabase(DatabaseConnection.java:81)
+	at db.DatabaseConnection.connect(DatabaseConnection.java:52)
+	at db.DatabaseConnection.main(DatabaseConnection.java:137)
+2024-06-27 21:33:47 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Cannot parse "TIME" constant "450"; SQL statement:
+
+INSERT INTO CLASSIFICA (USERNAME, TEMPO) VALUES ('user4', 450) [22007-200]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:457)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:429)
+	at org.h2.message.DbException.get(DbException.java:194)
+	at org.h2.value.ValueTime.parse(ValueTime.java:98)
+	at org.h2.value.Value.convertToTime(Value.java:1115)
+	at org.h2.value.Value.convertTo(Value.java:818)
+	at org.h2.value.Value.convertTo(Value.java:772)
+	at org.h2.value.TypeInfo.cast(TypeInfo.java:515)
+	at org.h2.table.Column.validateConvertUpdateSequence(Column.java:378)
+	at org.h2.table.Table.validateConvertUpdateSequence(Table.java:845)
+	at org.h2.command.dml.Insert.insertRows(Insert.java:187)
+	at org.h2.command.dml.Insert.update(Insert.java:151)
+	at org.h2.command.dml.RunScriptCommand.execute(RunScriptCommand.java:79)
+	at org.h2.command.dml.RunScriptCommand.update(RunScriptCommand.java:58)
+	at org.h2.command.CommandContainer.update(CommandContainer.java:198)
+	at org.h2.command.Command.executeUpdate(Command.java:251)
+	at org.h2.jdbc.JdbcPreparedStatement.execute(JdbcPreparedStatement.java:240)
+	at db.DatabaseConnection.initializeDatabase(DatabaseConnection.java:89)
+	at db.DatabaseConnection.connect(DatabaseConnection.java:52)
+	at db.DatabaseConnection.main(DatabaseConnection.java:137)
+Caused by: java.lang.IllegalArgumentException: 450
+	at org.h2.util.DateTimeUtils.parseTimeNanos(DateTimeUtils.java:217)
+	at org.h2.value.ValueTime.parse(ValueTime.java:96)
+	... 16 more

@@ -14,6 +14,7 @@ import gameInterface.UI;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Time;
 import java.util.stream.Collectors;
 
 public class Story {
@@ -40,7 +41,9 @@ public class Story {
             @Override
             public void onNameInput(String name) {
                 String nome = name;
-                int time = speedrunTimer.getSeconds();
+                int timeINT = speedrunTimer.getSeconds();
+
+                Time time = convertIntToTime(timeINT);
                 
                 insertIntoDatabase(nome, time);
             }
@@ -449,18 +452,29 @@ public class Story {
      * @param nome il nome da inserire
      * @param tempo il tempo da inserire
      */
-    private void insertIntoDatabase(String nome, int tempo) {
+    private void insertIntoDatabase(String nome, Time tempo) {
         String insertSQL = "INSERT INTO CLASSIFICA (USERNAME, TEMPO) VALUES (?, ?)";
 
         try (Connection conn = DatabaseConnection.connect();
-             PreparedStatement pstmt = conn.prepareStatement(insertSQL)) {
+            PreparedStatement pstmt = conn.prepareStatement(insertSQL)) {
             pstmt.setString(1, nome);
-            pstmt.setInt(2, tempo);
+            pstmt.setTime(2, tempo);
 
             pstmt.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException("Errore durante l'inserimento nel database", e);
         }
     }
+    
+    public static Time convertIntToTime(int intTime) {
+        // Estrai i minuti e i secondi dall'int
+        int minutes = intTime / 100; // Ottiene i minuti
+        int seconds = intTime % 100; // Ottiene i secondi
 
+        // Costruisci un oggetto Time utilizzando valueOf
+        String timeString = String.format("00:%02d:%02d", minutes, seconds);
+        Time time = Time.valueOf(timeString); // Time.valueOf(String timeString)
+
+        return time;
+    }
 }
