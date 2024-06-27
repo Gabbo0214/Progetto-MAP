@@ -461,6 +461,10 @@ public class Story {
             pstmt.setTime(2, tempo);
 
             pstmt.executeUpdate();
+            conn.commit();
+
+            DatabaseConnection.printClassificaFromDB();
+            
         } catch (SQLException e) {
             throw new RuntimeException("Errore durante l'inserimento nel database", e);
         }
