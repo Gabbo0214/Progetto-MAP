@@ -1,5 +1,6 @@
 package db;
 
+import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -16,19 +17,28 @@ public class DatabaseConnection {
      * Il driver JDBC.
      */
     static final String JDBC_DRIVER = "org.h2.Driver";
+    
     /**
      * L'URL del database.
      */
-    static final String DB_URL = "jdbc:h2:.Il_Castello_enigmatico/src/main/java/db/db_map";
-
+    static final String DB_URL;
+    
     /**
      * L'utente del database.
      */
     static final String USER = "sa";
+    
     /**
      * La password del database.
      */
     static final String PASS = "";
+
+    static {
+        // Costruisci il percorso relativo per il database
+        String projectDir = System.getProperty("user.dir");
+        String relativeDbPath = Paths.get(projectDir, "Il_Castello_enigmatico", "src", "main", "java", "db", "db_map").toString();
+        DB_URL = "jdbc:h2:" + relativeDbPath;
+    }
 
     /**
      * Connette al database.
@@ -52,8 +62,13 @@ public class DatabaseConnection {
      * @param conn la connessione al database
      */
     private static void initializeDatabase(Connection conn) {
-        String start = "RUNSCRIPT FROM 'Il_Castello_enigmatico/src/main/resources/database/db_start.sql'";
-        String fill = "RUNSCRIPT FROM 'Il_Castello_enigmatico/src/main/resources/database/db_info.sql'";
+        // Costruisci i percorsi relativi per gli script SQL
+        String projectDir = System.getProperty("user.dir");
+        String startScriptPath = Paths.get(projectDir, "Il_Castello_enigmatico", "src", "main", "resources", "database", "db_start.sql").toString();
+        String fillScriptPath = Paths.get(projectDir, "Il_Castello_enigmatico", "src", "main", "resources", "database", "db_info.sql").toString();
+
+        String start = "RUNSCRIPT FROM '" + startScriptPath + "'";
+        String fill = "RUNSCRIPT FROM '" + fillScriptPath + "'";
 
         try {
             try (PreparedStatement stmt = conn.prepareStatement(start)) {
@@ -110,7 +125,7 @@ public class DatabaseConnection {
                 Time tempo = rs.getTime("TEMPO");
                 classifica.append("ID: ").append(id).append(", Username: ").append(username).append(", Tempo: ").append(tempo).append("\n");
             }
-            //printdb.displayText(classifica.toString());
+            // printdb.displayText(classifica.toString());
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
