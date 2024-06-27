@@ -46,6 +46,7 @@ public class UI {
     public String campotxt = "";
     private boolean pressed = false;
     public String campoText = "                            Cosa devo fare?";
+    public boolean endGame = false;
 
     /**
      * Creazione dell'interfaccia.
@@ -371,13 +372,14 @@ public class UI {
         // Alla pressione dell tasto invio, ricompare la scritta "Cosa devo fare?" e il
         // testo digitato viene salvato in campotxt
         campo.addActionListener((ActionEvent e) -> {
+            if (campoText == "                            Come ti chiami?") {
+                showTitleScreenEndGame();
+                endGame = true;
+            }
             campotxt = campo.getText();
             campo.setForeground(Color.DARK_GRAY);
             campo.setText(campoText);
             pressed = false;
-            if (campoText == "                            Come ti chiami?") {
-                showTitleScreenEndGame();
-            }
         });
         choiceButtonPanel.add(campo);
 
@@ -395,15 +397,15 @@ public class UI {
         submit.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent evt) {
+                if (campoText == "                            Come ti chiami?") {
+                    showTitleScreenEndGame();
+                    endGame = true;
+                }
                 campotxt = campo.getText();
                 submit.setActionCommand("submit");
                 campo.setForeground(Color.DARK_GRAY);
                 campo.setText(campoText);
                 pressed = false;
-                if (campoText == "                            Come ti chiami?") {
-                    showTitleScreenEndGame();
-
-                }
             }
         });
 
@@ -482,25 +484,6 @@ public class UI {
         savePanel.add(saveConfirm);
 
         window.setVisible(true);
-    }
-
-    public interface NameInputListener {
-        void onNameInput(String name);
-    }
-
-    private NameInputListener nameInputListener;
-
-    // Metodo per impostare il listener
-    public void setNameInputListener(NameInputListener listener) {
-        this.nameInputListener = listener;
-    }
-
-    // Metodo chiamato quando il nome viene inserito
-    public void handleNameInput() {
-        String name = campotxt; // Ottieni il testo dal campo di input
-        if (nameInputListener != null) {
-            nameInputListener.onNameInput(name); // Notifica il listener
-        }
     }
 
     public String getCampotxt() {

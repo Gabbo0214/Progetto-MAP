@@ -33,21 +33,13 @@ public class Story {
         this.ui = ui; // Initialize ui
         this.speedrunTimer = new SpeedRunTimer();
         this.speedrunActive = false;
-        setUpNameInputListener();// Imposta Story come listener
     }
 
-    private void setUpNameInputListener() {
-        ui.setNameInputListener(new UI.NameInputListener() {
-            @Override
-            public void onNameInput(String name) {
-                String nome = name;
-                int timeINT = speedrunTimer.getSeconds();
-
-                Time time = convertIntToTime(timeINT);
-                
-                insertIntoDatabase(nome, time);
-            }
-        });
+    public void setUpNameInputListener() {
+            String nome = ui.campotxt;
+            int timeINT = speedrunTimer.getSeconds();
+            Time time = convertIntToTime(timeINT);
+            insertIntoDatabase(nome, time);
     }
 
     // New method to stop the speedrun timer
@@ -435,28 +427,27 @@ public class Story {
         uitxt = "Finalmente, l'anello dell'eternità è ora tra le tue mani. Una volta messo al dito la tua visione sparisce... cadi in un sonno profondo.\n";
         // Ferma la speedrun
         stopSpeedrunTimer();
-        if(speedrunTimer.getSeconds() == 0){
+        if (speedrunTimer.getSeconds() == 0) {
             vm.writeOnExitScreen(uitxt
-            + "\nQuanto tempo è passato? Al tuo risveglio, l'anello è ancora al tuo dito, ma non hai idea di dove ti trovi.\nUn vasto, piano prato di erba verde si estende per kilometri, niente oltre che l'erba è visibile fino all'orizzonte.\nIl cielo è illuminato da una grande luna piena. Cosa succederà ora?");
-        }else{
+                    + "\nQuanto tempo è passato? Al tuo risveglio, l'anello è ancora al tuo dito, ma non hai idea di dove ti trovi.\nUn vasto, piano prato di erba verde si estende per kilometri, niente oltre che l'erba è visibile fino all'orizzonte.\nIl cielo è illuminato da una grande luna piena. Cosa succederà ora?");
+        } else {
             vm.writeOnNameScreen(uitxt
-            + "\nQuanto tempo è passato? Al tuo risveglio, l'anello è ancora al tuo dito, ma non hai idea di dove ti trovi.\nUn vasto, piano prato di erba verde si estende per kilometri, niente oltre che l'erba è visibile fino all'orizzonte.\nIl cielo è illuminato da una grande luna piena. Cosa succederà ora?\n\n(Hai completato una run senza mai uscire!\nPer salvare il tuo tempo inserisci il tuo nome.)"); 
-            vm.showNameInputScreen();  
+                    + "\nQuanto tempo è passato? Al tuo risveglio, l'anello è ancora al tuo dito, ma non hai idea di dove ti trovi.\nUn vasto, piano prato di erba verde si estende per kilometri, niente oltre che l'erba è visibile fino all'orizzonte.\nIl cielo è illuminato da una grande luna piena. Cosa succederà ora?\n\n(Hai completato una run senza mai uscire!\nPer salvare il tuo tempo inserisci il tuo nome.)");
+            vm.showNameInputScreen();
         }
     }
 
-    
     /**
      * Inserisce un record nella tabella CLASSIFICA.
      *
-     * @param nome il nome da inserire
+     * @param nome  il nome da inserire
      * @param tempo il tempo da inserire
      */
     private void insertIntoDatabase(String nome, Time tempo) {
         String insertSQL = "INSERT INTO CLASSIFICA (USERNAME, TEMPO) VALUES (?, ?)";
 
         try (Connection conn = DatabaseConnection.connect();
-            PreparedStatement pstmt = conn.prepareStatement(insertSQL)) {
+                PreparedStatement pstmt = conn.prepareStatement(insertSQL)) {
             pstmt.setString(1, nome);
             pstmt.setTime(2, tempo);
 
@@ -464,12 +455,12 @@ public class Story {
             conn.commit();
 
             DatabaseConnection.printClassificaFromDB();
-            
+
         } catch (SQLException e) {
             throw new RuntimeException("Errore durante l'inserimento nel database", e);
         }
     }
-    
+
     public static Time convertIntToTime(int intTime) {
         // Estrai i minuti e i secondi dall'int
         int minutes = intTime / 100; // Ottiene i minuti

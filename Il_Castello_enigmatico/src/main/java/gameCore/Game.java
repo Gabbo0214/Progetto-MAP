@@ -55,10 +55,18 @@ public class Game {
                     vm.showMainGameScreen();
                     vm.setNormalFont(18);
                     vm.titleToInput();
+                    if (ui.endGame) {
+                        story.setUpNameInputListener();
+                        ui.endGame = false;
+                    }
                     story.start(vm);
                     break;
 
                 case "continua": // Click su "Carica"
+                    if (ui.endGame) {
+                        story.setUpNameInputListener();
+                        ui.endGame = false;
+                    }
                     vm.setMainTextPanelSize(50, 100, 650, 300);
                     vm.hideExitConfirm();
                     vm.showMainGameScreen();
@@ -80,15 +88,22 @@ public class Game {
                     vm.hideExitConfirm();
                     vm.showLeaderboardScreen();
                     vm.setNormalFont(18);
-                    /*try {
-                        map.setMap(fw.loadMapDataFromFile(mapfile));
-                        player.setPlayer(fw.loadPlayerDataFromFile(playerfile));
-                        loadSetup();
-                    } catch (NullPointerException | ClassNotFoundException | IOException e) {
-                        vm.backToMenu();
-                        vm.writeOnExitScreen(
-                                "                                 Apertura leaderboard fallita. Database danneggiato o inaccessibile.");
-                    }*/
+                    if (ui.endGame) {
+                        story.setUpNameInputListener();
+                        ui.endGame = false;
+                    }
+                    /*
+                     * try {
+                     * map.setMap(fw.loadMapDataFromFile(mapfile));
+                     * player.setPlayer(fw.loadPlayerDataFromFile(playerfile));
+                     * loadSetup();
+                     * } catch (NullPointerException | ClassNotFoundException | IOException e) {
+                     * vm.backToMenu();
+                     * vm.writeOnExitScreen(
+                     * "                                 Apertura leaderboard fallita. Database danneggiato o inaccessibile."
+                     * );
+                     * }
+                     */
                     break;
 
                 case "start1": // Click su "Avanti"
@@ -150,6 +165,10 @@ public class Game {
                     break;
 
                 case "exit": // Click su "Esci" nel menù principale. Chiude la finestra del gioco
+                    if (ui.endGame) {
+                        story.setUpNameInputListener();
+                        ui.endGame = false;
+                    }
                     System.exit(0);
                     break;
 
