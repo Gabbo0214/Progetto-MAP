@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
+
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
@@ -121,7 +122,7 @@ public class DatabaseConnection {
      * Ottiene la classifica dal database.
      */
     public static List<String> printClassificaFromDB() {
-        String sql_query = "SELECT USERNAME, TEMPO FROM CLASSIFICA ORDER BY TEMPO";
+        String sql_query = "SELECT USERNAME, TEMPO FROM CLASSIFICA ORDER BY TEMPO LIMIT 10";
         List<String> classifica = new ArrayList<>();
         try (Connection conn = DatabaseConnection.connect();
                 PreparedStatement stmt = conn.prepareStatement(sql_query);
@@ -136,33 +137,5 @@ public class DatabaseConnection {
             throw new RuntimeException("Errore durante la lettura della classifica dal database", e);
         }
         return classifica;
-    }
-
-    public static void main(String[] args) {
-
-        // Connetti al database e inizializza
-        try (Connection conn = DatabaseConnection.connect()) {
-            if (conn != null) {
-                RESTOperation restOperation = new RESTOperation();
-                restOperation.deleteAfterTop10();
-                // Database inizializzato con successo
-                System.out.println("Database inizializzato con successo.");
-
-                // Ottieni la classifica dal database
-                List<String> classifica = DatabaseConnection.printClassificaFromDB();
-
-                // Stampa la classifica
-                System.out.println("Classifica:");
-                for (String record : classifica) {
-                    System.out.println(record);
-                }
-            } else {
-                System.err.println("Connessione al database non riuscita.");
-            }
-        } catch (Exception e) {
-            // Stampa l'intero stack trace dell'eccezione per debugging
-            e.printStackTrace();
-            System.err.println("Errore durante l'inizializzazione del database: " + e.getMessage());
-        }
     }
 }

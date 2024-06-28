@@ -23,7 +23,6 @@ import javax.swing.JTextField;
 
 import db.DatabaseConnection;
 import gameCore.Game.ChoiceHandler;
-import db.RESTOperation;
 
 public class UI {
     private JPanel titleNamePanel, startButtonPanel, mainTextPanel, choiceButtonPanel, playerPanel, inventoryPanel,
@@ -51,7 +50,6 @@ public class UI {
     private boolean pressed = false;
     public String campoText = "                            Cosa devo fare?";
     public boolean endGame = false;
-    private RESTOperation restOperation;
 
     /**
      * Creazione dell'interfaccia.
@@ -170,8 +168,6 @@ public class UI {
                 leaderboardPanel.revalidate();
                 leaderboardPanel.repaint();
 
-                // Chiama deleteAfterTop10 per eliminare i record dopo il top 10
-                restOperation.deleteAfterTop10();
             }
         });
 
