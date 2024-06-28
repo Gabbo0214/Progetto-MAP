@@ -93,6 +93,7 @@ public class Stobj implements Serializable {
      * @param other
      * @return boolean e, true se sono uguali, false altrimenti
      */
+    @SuppressWarnings("null")
     public boolean equals(Object other) {
         boolean e=true;
         if (this == other) {
