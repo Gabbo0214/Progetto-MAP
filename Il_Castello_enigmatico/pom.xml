@@ -13,7 +13,20 @@
         <maven.compiler.target>19</maven.compiler.target>
         <exec.mainClass>gameCore.Game</exec.mainClass>
     </properties>
-        <dependencies>
+    <plugin>
+    <artifactId>maven-assembly-plugin</artifactId>
+        <configuration>
+            <descriptorRefs>
+                <descriptorRef>jar-with-dependencies</descriptorRef>
+            </descriptorRefs>
+            <archive>
+                <manifest>
+                    <mainClass>gameCore.Game</mainClass>
+                </manifest>
+            </archive>
+        </configuration>
+    </plugin>
+    <dependencies>
         <dependency>
                <groupId>org.springframework.boot</groupId>
                <artifactId>spring-boot-starter-web</artifactId>
@@ -29,6 +42,5 @@
             <artifactId>h2</artifactId>
             <version>1.4.200</version>
         </dependency>
-
     </dependencies>
 </project>
