@@ -20,7 +20,6 @@ public class SpeedRunTimer implements Runnable {
                 Thread.sleep(1000);
                 if (!paused) {
                     seconds++;
-                    System.out.println("Seconds passed:"+seconds);
                 }
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();

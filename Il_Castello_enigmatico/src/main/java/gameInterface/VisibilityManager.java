@@ -71,12 +71,12 @@ public class VisibilityManager {
         ui.getReturnToMenu().setVisible(false);
         ui.getMainTextAreaExit().setVisible(false);
 
-        ui.campoTextName();
         ui.getChoiceButtonPanel().setVisible(true);
         ui.getMainTextPanel().setVisible(true);
         ui.getMainTextArea().setVisible(true);
-        ui.getCampo().setVisible(true);
+        ui.campoTextName();
         ui.getCampo().setText(ui.getCampoTextName());
+        ui.getCampo().setVisible(true);
     }
 
      /**
@@ -112,6 +112,7 @@ public class VisibilityManager {
         ui.getYnPanel().setVisible(false);
         ui.getReturnToMenu().setVisible(false);
         ui.getMainTextAreaExit().setVisible(false);
+        ui.getLeaderboardButton().setVisible(false);
     }
 
      /**
@@ -146,6 +147,7 @@ public class VisibilityManager {
         ui.getYnPanel().setVisible(false);
         ui.getReturnToMenu().setVisible(false);
         ui.getMainTextAreaExit().setVisible(false);
+        ui.getLeaderboardButton().setVisible(false);
 
         ui.getMainTextArea().setVisible(true);
         ui.getMainTextPanel().setVisible(true);
@@ -186,6 +188,7 @@ public class VisibilityManager {
          ui.getInventoryPanel().setVisible(false);
          ui.getChoiceButtonPanel().setVisible(false);
          ui.getMainTextArea().setVisible(false);
+         ui.getLeaderboardButton().setVisible(false);
          
          ui.getMainTextAreaExit().setVisible(true);
          ui.getYnPanel().setVisible(true);
@@ -213,6 +216,7 @@ public class VisibilityManager {
          ui.getMainTextArea().setVisible(false);
          ui.getYesButton().setVisible(false);
          ui.getNoButton().setVisible(false);
+         ui.getLeaderboardButton().setVisible(false);
          
          ui.getMainTextAreaExit().setVisible(true);
          ui.getYnPanel().setVisible(true);
@@ -220,7 +224,7 @@ public class VisibilityManager {
      }
 
      /**
-      * Mostra la schemrata principale del gioco
+      * Mostra la schermata principale del gioco
       */
      public void showMainGameScreen(){
          ui.getPlayerPanel().setVisible(true);

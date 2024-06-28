@@ -25,8 +25,8 @@ public class EternityRoom extends RoomWDoor {
 
     @Override
     public void insert(Player p) {
-        int[] k = {-1}; // Utilizziamo un array per l'indice per poter modificarlo all'interno di forEach
-        int[] l = {-1}; // Utilizziamo un array per l'indice per poter modificarlo all'interno di forEach
+        int[] k = {-1};
+        int[] l = {-1};
 
         // Cerca il cuore pulsante nell'inventario
         if (g && !h) { // Solo se g è true e h è false, cerchiamo il cuore pulsante

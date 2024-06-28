@@ -4,12 +4,17 @@
 package gameCore;
 
 import base.Stobj;
+import db.DatabaseConnection;
 import gameInterface.VisibilityManager;
 import objectSet.Door;
 import roomSet.DarkCrypt;
 import parser.ParserOutput;
 import gameInterface.UI;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.Time;
 import java.util.stream.Collectors;
 
 public class Story {
@@ -28,6 +33,13 @@ public class Story {
         this.ui = ui; // Initialize ui
         this.speedrunTimer = new SpeedRunTimer();
         this.speedrunActive = false;
+    }
+
+    public void setUpNameInputListener() {
+            String nome = ui.campotxt;
+            int timeINT = speedrunTimer.getSeconds();
+            Time time = convertIntToTime(timeINT);
+            insertIntoDatabase(nome, time);
     }
 
     // New method to stop the speedrun timer
@@ -415,17 +427,49 @@ public class Story {
         uitxt = "Finalmente, l'anello dell'eternità è ora tra le tue mani. Una volta messo al dito la tua visione sparisce... cadi in un sonno profondo.\n";
         // Ferma la speedrun
         stopSpeedrunTimer();
-        if(speedrunTimer.getSeconds() == 0){
+        if (speedrunTimer.getSeconds() == 0) {
             vm.writeOnExitScreen(uitxt
-            + "\nQuanto tempo è passato? Al tuo risveglio, l'anello è ancora al tuo dito, ma non hai idea di dove ti trovi.\nUn vasto, piano prato di erba verde si estende per kilometri, niente oltre che l'erba è visibile fino all'orizzonte.\nIl cielo è illuminato da una grande luna piena. Cosa succederà ora?");
-        }else{
+                    + "\nQuanto tempo è passato? Al tuo risveglio, l'anello è ancora al tuo dito, ma non hai idea di dove ti trovi.\nUn vasto, piano prato di erba verde si estende per kilometri, niente oltre che l'erba è visibile fino all'orizzonte.\nIl cielo è illuminato da una grande luna piena. Cosa succederà ora?");
+        } else {
             vm.writeOnNameScreen(uitxt
-            + "\nQuanto tempo è passato? Al tuo risveglio, l'anello è ancora al tuo dito, ma non hai idea di dove ti trovi.\nUn vasto, piano prato di erba verde si estende per kilometri, niente oltre che l'erba è visibile fino all'orizzonte.\nIl cielo è illuminato da una grande luna piena. Cosa succederà ora?\n\n(Hai completato una run senza mai uscire!\nPer salvare il tuo tempo inserisci il tuo nome.)"); 
-            vm.showNameInputScreen();           
+                    + "\nQuanto tempo è passato? Al tuo risveglio, l'anello è ancora al tuo dito, ma non hai idea di dove ti trovi.\nUn vasto, piano prato di erba verde si estende per kilometri, niente oltre che l'erba è visibile fino all'orizzonte.\nIl cielo è illuminato da una grande luna piena. Cosa succederà ora?\n\n(Hai completato una run senza mai uscire!\nPer salvare il tuo tempo inserisci il tuo nome.)");
+            vm.showNameInputScreen();
         }
+    }
 
-        //System.out.println("Player Name: " + playerName);
+    /**
+     * Inserisce un record nella tabella CLASSIFICA.
+     *
+     * @param nome  il nome da inserire
+     * @param tempo il tempo da inserire
+     */
+    private void insertIntoDatabase(String nome, Time tempo) {
+        String insertSQL = "INSERT INTO CLASSIFICA (USERNAME, TEMPO) VALUES (?, ?)";
 
+        try (Connection conn = DatabaseConnection.connect();
+                PreparedStatement pstmt = conn.prepareStatement(insertSQL)) {
+            pstmt.setString(1, nome);
+            pstmt.setTime(2, tempo);
 
+            pstmt.executeUpdate();
+            conn.commit();
+
+            DatabaseConnection.printClassificaFromDB();
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Errore durante l'inserimento nel database", e);
+        }
+    }
+
+    public static Time convertIntToTime(int intTime) {
+        // Estrai i minuti e i secondi dall'int
+        int minutes = intTime / 100; // Ottiene i minuti
+        int seconds = intTime % 100; // Ottiene i secondi
+
+        // Costruisci un oggetto Time utilizzando valueOf
+        String timeString = String.format("00:%02d:%02d", minutes, seconds);
+        Time time = Time.valueOf(timeString); // Time.valueOf(String timeString)
+
+        return time;
     }
 }

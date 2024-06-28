@@ -8,8 +8,10 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -19,6 +21,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+import db.DatabaseConnection;
 import gameCore.Game.ChoiceHandler;
 
 public class UI {
@@ -43,16 +46,17 @@ public class UI {
     private JTextArea mainTextArea, mainTextAreaExit;
     private final Font normalFont = new Font("Times New Roman", Font.PLAIN, 18);
     private final Font invFont = new Font("Times New Roman", Font.PLAIN, 14);
-    private String campotxt = "";
+    public String campotxt = "";
     private boolean pressed = false;
     public String campoText = "                            Cosa devo fare?";
+    public boolean endGame = false;
 
     /**
      * Creazione dell'interfaccia.
      * 
      * @param cHandler
      */
-    public void createUI(ChoiceHandler cHandler) {// }, InventoryHandler invHandler){
+    public void createUI(ChoiceHandler cHandler) {
 
         // window. Finestra dell'interfaccia
         JFrame window = new JFrame();
@@ -111,6 +115,7 @@ public class UI {
         leaderboardButton.setBorder(null);
         startButtonPanel.add(leaderboardButton);
 
+        // Label per il titolo della classifica
         JLabel leaderboardLabel = new JLabel("I MIGLIORI 10 TEMPI OTTENUTI");
         leaderboardLabel.setForeground(Color.white);
         leaderboardLabel.setFont(normalFont);
@@ -123,15 +128,52 @@ public class UI {
         leaderboardPanel.add(leaderboardLabel);
         window.add(leaderboardPanel);
 
-        // Esempio di aggiunta di etichette di classifica
-        for (int i = 1; i <= 10; i++) {
-            JLabel rankLabel = new JLabel("Posizione " + i);
-            rankLabel.setForeground(Color.white);
-            rankLabel.setFont(normalFont);
-            leaderboardPanel.add(rankLabel);
-        }
+        // Pulsante per tornare al menù dalla classifica
+        backToMenuButton = new JButton("INDIETRO");
+        backToMenuButton.setVisible(true);
+        backToMenuButton.setBackground(Color.black);
+        backToMenuButton.setForeground(Color.white);
+        backToMenuButton.setFont(normalFont);
+        backToMenuButton.setFocusPainted(false);
+        backToMenuButton.addActionListener(cHandler);
+        backToMenuButton.setActionCommand("yes");
+        backToMenuButton.setBorder(null);
+        leaderboardPanel.add(backToMenuButton);
 
-        // Pulsante della classifica di speedrun
+        // ActionListener per il pulsante "CLASSIFICA"
+        leaderboardButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Rimuovi tutti i componenti precedenti tranne il titolo e il pulsante
+                // "INDIETRO"
+                leaderboardPanel.removeAll();
+                leaderboardPanel.add(leaderboardLabel);
+                leaderboardPanel.add(backToMenuButton);
+
+                // Ottieni la classifica dal database e popola la GUI
+                List<String> classifica = DatabaseConnection.printClassificaFromDB();
+                int size = Math.min(classifica.size(), 10); // Limita il numero massimo di punteggi da mostrare a 10
+
+                for (int i = 0; i < size; i++) {
+                    JLabel rankLabel = new JLabel((i + 1) + ". " + classifica.get(i));
+                    rankLabel.setForeground(Color.white);
+                    rankLabel.setFont(normalFont);
+                    leaderboardPanel.add(rankLabel);
+                }
+
+                // Aggiungi il pulsante "INDIETRO" in fondo al pannello
+                leaderboardPanel.add(backToMenuButton);
+
+                // Aggiorna il pannello per riflettere le modifiche
+                leaderboardPanel.revalidate();
+                leaderboardPanel.repaint();
+
+            }
+        });
+
+        window.setVisible(true);
+
+        // Pulsante per tornare al menù dalla classifica
         backToMenuButton = new JButton("INDIETRO");
         backToMenuButton.setVisible(true);
         backToMenuButton.setBackground(Color.black);
@@ -371,13 +413,14 @@ public class UI {
         // Alla pressione dell tasto invio, ricompare la scritta "Cosa devo fare?" e il
         // testo digitato viene salvato in campotxt
         campo.addActionListener((ActionEvent e) -> {
+            if (campoText == "                            Come ti chiami?") {
+                showTitleScreenEndGame();
+                endGame = true;
+            }
             campotxt = campo.getText();
             campo.setForeground(Color.DARK_GRAY);
             campo.setText(campoText);
             pressed = false;
-            if (campoText == "                            Come ti chiami?") {
-                showTitleScreenEndGame();
-            }
         });
         choiceButtonPanel.add(campo);
 
@@ -395,14 +438,15 @@ public class UI {
         submit.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent evt) {
+                if (campoText == "                            Come ti chiami?") {
+                    showTitleScreenEndGame();
+                    endGame = true;
+                }
                 campotxt = campo.getText();
                 submit.setActionCommand("submit");
                 campo.setForeground(Color.DARK_GRAY);
                 campo.setText(campoText);
                 pressed = false;
-                if (campoText == "                            Come ti chiami?") {
-                    showTitleScreenEndGame();
-                }
             }
         });
 
@@ -616,6 +660,7 @@ public class UI {
         getStartButtonPanel().setVisible(true);
         getStartButton().setVisible(true);
         getContinueButton().setVisible(true);
+        getLeaderboardButton().setVisible(true);
         getExitButton1().setVisible(true);
 
         getMainTextArea().setVisible(false);
@@ -627,5 +672,4 @@ public class UI {
         getReturnToMenu().setVisible(false);
         getMainTextAreaExit().setVisible(false);
     }
-
 }
